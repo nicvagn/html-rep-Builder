@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<!--
+    Created for Saskatchewan Horizon Chess Club by Nicolas Vaagen
+
+    This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>SK Horizon Chess Club: Repertoire Builder</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="images/shcc-logo-notxt.png">
+
+  <script src="script.js"></script>
+
+</head>
+<body>
+  <!-- Navbar Section -->
+  <nav class="navbar">
+    <div class="navbar__container">
+      <img id="logo" src="images/shcc-logo-notxt.png"></i></a>
+      <ul class="navbar__menu">
+        <li class="navbar__item">
+          <a href="AddGame.html" class="navbar__links">Add game</a>
+        </li>
+        <li class="navbar__item">
+          <a href="OpenRep.html" class="navbar__links">Open Repertoire</a>
+        </li>
+        <li class="navbar__item">
+          <a href="NewRep.html" class="navbar__links">New Repertoire</a>
+        </li>
+        <li class="navbar__item">
+          <a href="RepBuilder.html" class="navbar__links">View Repertoire</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <div id="OpenRep">
+    <h1>Repertoires Available</h1>
+    <table id="repertoiresTable">
+      <tr>
+        <th>Name:</th>
+      </tr>
+    </table>
+  </div>
+
+  <label for="repUpload">Or, select a local file:</label>
+  <input type="file" id="repUpload" name="repUpload">
+
+</body>
+
+</html>
