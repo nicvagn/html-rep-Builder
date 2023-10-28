@@ -13,75 +13,6 @@
   margin: 0;
 }
 
-.row {
-  display: flex;
-}
-
-.column {
-  flex: 20%;
-}
-
-.centerPane {
-  flex: 60%;
-}
-
-#board{
-  margin-top: 30px;
-  margin-bottom: 0;
-  width: 100%;
-  height: 800px;
-}
-
-Line {
-  display: block;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-  padding: 10px 20px;
-  min-width: 200px;
-
-  height: 100%;
-  width: fit-content;
-  border: none;
-  outline-color: #000;
-  outline-width: 1px;
-  outline-style: solid;
-  background: #FDD401;
-  color: black;
-}
-
-ExampleGame {
-  display: block;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-  padding: 10px 20px;
-  height: 100%;
-  width: fit-content;
-  min-width: 200px;
-  border: none;
-  outline-color: #000;
-  outline-width: 1px;
-  outline-style: solid;
-  background: #FDD401;
-  color: black;
-}
-
-.line:hover {
-  background: #DD1810;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-.exampleGame:hover {
-  background: #DD1810;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.column h1 {
-  margin:0 auto 10px 40px;
-}
-
 /* start navbar styling */
 .navbar {
   background: #1e9c9c;
@@ -135,32 +66,7 @@ ExampleGame {
   transition-duration: 10ms;
 }
 
-
-/* END navbar css */
-
-button {
-  display: block;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-  padding: 10px 20px;
-  height: 100%;
-  width: 100%;
-  border: none;
-  outline-color: #000;
-  outline-width: 1px;
-  outline-style: solid;
-  background: #FDD401;
-  color: black;
-}
-
-
-button:hover {
-  background: #DD1810;
-  transition: all 0.3s ease;
-}
-
-
+/* top bar logo */
 #logo {
   margin: 5px;
   height: 4rem;
@@ -171,9 +77,113 @@ button:hover {
   -o-border-radius: 15%;
 }
 
+/* common css */
+
+button {
+  display: block;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  padding: 10px 20px;
+  height: 100%;
+  width: 100px;
+  border: none;
+  outline-color: #000;
+  outline-width: 1px;
+  outline-style: solid;
+  background: #FDD401;
+  color: black;
+}
+
+button:hover {
+  background: #DD1810;
+  transition: all 0.3s ease;
+}
+
+/* RepViewer css */
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 20%;
+}
+
+.centerPane {
+  flex: 60%;
+}
+
+#board{
+  margin-top: 30px;
+  margin-bottom: 0;
+  width: 100%;
+  height: 800px;
+}
+
+.line {
+  display: block;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  padding: 10px 20px;
+  min-width: 200px;
+
+  height: 100%;
+  width: fit-content;
+  border: none;
+  outline-color: #000;
+  outline-width: 1px;
+  outline-style: solid;
+  background: #FDD401;
+  color: black;
+}
+
+.line:hover {
+  background: #DD1810;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.exampleGame {
+  display: block;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  padding: 10px 20px;
+  height: 100%;
+  width: fit-content;
+  min-width: 200px;
+  border: none;
+  outline-color: #000;
+  outline-width: 1px;
+  outline-style: solid;
+  background: #FDD401;
+  color: black;
+}
+
+.exampleGame:hover {
+  background: #DD1810;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.column h1 {
+  margin:0 auto 10px 40px;
+}
+
+
+/*OpenRep css */
+
 /* the list of repertoires on open rep. pageS */
 #repertoiresTable {
-
   border: 1px solid;
 }
 
+/* add game popup */
+#pop {
+  background: #1e9c9c;
+}
+#navbar-pop {
+  background: cornflowerblue;
+}

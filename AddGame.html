@@ -16,40 +16,37 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>SK Horizon Chess Club: Repertoire Builder</title>
+  <title>SHCC: Add Game</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="images/shcc-logo-notxt.png">
 
   <script src="script.js"></script>
 
 </head>
-<body>
+<body id="pop">
   <!-- Navbar Section -->
-  <nav class="navbar">
-    <div class="navbar__container">
-      <img id="logo" src="images/shcc-logo-notxt.png"></i></a>
-      <ul class="navbar__menu">
-        <li class="navbar__item">
-          <a href="AddGame.html" class="navbar__links">Add game</a>
-        </li>
-        <li class="navbar__item">
-          <a href="OpenRep.html" class="navbar__links">Open Repertoire</a>
-        </li>
-        <li class="navbar__item">
-          <a href="NewRep.html" class="navbar__links">New Repertoire</a>
-        </li>
-        <li class="navbar__item">
-          <a href="RepBuilder.html" class="navbar__links">View Repertoire</a>
-        </li>
-      </ul>
-    </div>
+  <nav id="navbar-pop">
+    <img id="logo" src="images/shcc-logo-notxt.png">
   </nav>
 
 
-  <div id="AddGame">
-    <label for="addGame">Or, select a local file:</label>
-    <input type="file" id="addGame" name="addGame">
+  <div>
+    <table>
+      <!--
+      <tr>
+        <label for="addGameLocal">Select a local file:</label>
+        <input type="file" id="addGameLocal" name="addGame">
+      </tr>
+      -->
+      <tr>
+        <label for="addGameLichess">Lichess game link:</label>
+        <input type="text" id="lichessURL" name="addGameLichess">
+        <label for="Name">Name for game:</label>
+        <input type="text" id="name" name="Name">
+      </tr>
+    </table>
   </div>
+  <button onclick="getTextFromPop('addGame')">Submit</button>
 </body>
 
 </html>

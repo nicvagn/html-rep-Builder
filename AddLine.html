@@ -16,43 +16,37 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>SHCC: Open Repertoire</title>
+  <title>SHCC: Line</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="images/shcc-logo-notxt.png">
 
   <script src="script.js"></script>
 
 </head>
-<body>
+<body id="pop">
   <!-- Navbar Section -->
-  <nav class="navbar">
-    <div class="navbar__container">
-      <img id="logo" src="images/shcc-logo-notxt.png"></i></a>
-      <ul class="navbar__menu">
-        <li class="navbar__item">
-          <a href="OpenRep.html" class="navbar__links">Open Repertoire</a>
-        </li>
-        <li class="navbar__item">
-          <a href="NewRep.html" class="navbar__links">New Repertoire</a>
-        </li>
-        <li class="navbar__item">
-          <a href="RepViewer.html" class="navbar__links">View Repertoire</a>
-        </li>
-      </ul>
-    </div>
+  <nav id="navbar-pop">
+      <img id="logo" src="images/shcc-logo-notxt.png">
   </nav>
 
-  <div id="OpenRep">
-    <h1>Repertoires Available</h1>
-    <table id="repertoiresTable">
+
+  <div>
+    <table>
+      <!--
       <tr>
-        <th>Name:</th>
+        <label for="addGameLocal">Select a local file:</label>
+        <input type="file" id="addGameLocal" name="addGame">
+      </tr>
+      -->
+      <tr>
+        <label for="addLineLichess">Lichess Line link:</label>
+        <input type="text" id="lichessURL" name="addLineLichess">
+        <label for="Name">Name for line:</label>
+        <input type="text" id="name" name="Name">
       </tr>
     </table>
-
-    <label for="repUpload">Or, select a local file:</label>
-    <input type="file" id="repUpload" name="repUpload">
   </div>
+  <button onclick="getTextFromPop('addLine')">Submit</button>
 </body>
 
 </html>

@@ -16,7 +16,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>SHCC: Open Repertoire</title>
+  <title>SHCC: Repertoire Viewer</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="images/shcc-logo-notxt.png">
 
@@ -29,6 +29,7 @@
     <div class="navbar__container">
       <img id="logo" src="images/shcc-logo-notxt.png"></i></a>
       <ul class="navbar__menu">
+
         <li class="navbar__item">
           <a href="OpenRep.html" class="navbar__links">Open Repertoire</a>
         </li>
@@ -42,16 +43,22 @@
     </div>
   </nav>
 
-  <div id="OpenRep">
-    <h1>Repertoires Available</h1>
-    <table id="repertoiresTable">
-      <tr>
-        <th>Name:</th>
-      </tr>
-    </table>
-
-    <label for="repUpload">Or, select a local file:</label>
-    <input type="file" id="repUpload" name="repUpload">
+  <div class="row">
+    <div class="column">
+      <h1>Lines:</h1>
+      <ul>
+        <li><rep-line class="line" onclick="changeBoard(this)" data-url="https://lichess.org/study/embed/1lKalnHv/j70bmUE0" >line 1</rep-line></li>
+      </ul>
+    </div>
+    <div class="centerPane">
+      <iframe id="board" src="https://lichess.org/study/embed/P33OZBhP/F47MCnL8" frameborder=0></iframe>
+    </div>
+    <div class="column">
+      <h1>Instructive games:</h1>
+      <ul>
+        <li><example-game class="exampleGame" onclick="changeBoard(this)" data-url="https://lichess.org/study/embed/m8i4OPaM/C2hyTyCy">Instructive game 1</example-game></li>
+     </ul>
+    </div>
   </div>
 </body>
 
