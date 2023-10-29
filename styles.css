@@ -172,6 +172,15 @@ button:hover {
   margin:0 auto 10px 40px;
 }
 
+#saveBrowser {
+  width: 300px;
+}
+
+#downloadLink{
+  visibility: hidden;
+  margin: 10px 0px 0px 50px;
+}
+
 
 /*OpenRep css */
 

@@ -47,7 +47,6 @@
     <div class="column">
       <h1>Lines:</h1>
       <ul id="lineList">
-        <li><rep-line class="line" onclick="changeBoard(this)" data-url="https://lichess.org/study/embed/1lKalnHv/j70bmUE0" >line 1</rep-line></li>
         <li><button onclick="showAddLine()">Add Line</button></li>
       </ul>
     </div>
@@ -57,11 +56,14 @@
     <div class="column">
       <h1>Instructive games:</h1>
       <ul id="gameList">
-        <li><example-game class="exampleGame" onclick="changeBoard(this)" data-url="https://lichess.org/study/embed/m8i4OPaM/C2hyTyCy">Instructive game 1</example-game></li>
         <li><button onclick="showAddGame()">Add Game</button></li>
       </ul>
     </div>
   </div>
+
+  <button id="resetLines" onclick="resetLines()">reset lines</button>
+  <button id="resetGames" onclick="resetGames()">reset games</button>
+  <button id="saveBrowser">Save to browser permanent local storage</button>
 </body>
 
 </html>

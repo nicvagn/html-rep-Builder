@@ -29,7 +29,6 @@
     <div class="navbar__container">
       <img id="logo" src="images/shcc-logo-notxt.png"></i></a>
       <ul class="navbar__menu">
-
         <li class="navbar__item">
           <a href="OpenRep.html" class="navbar__links">Open Repertoire</a>
         </li>
@@ -47,7 +46,6 @@
     <div class="column">
       <h1>Lines:</h1>
       <ul>
-        <li><rep-line class="line" onclick="changeBoard(this)" data-url="https://lichess.org/study/embed/1lKalnHv/j70bmUE0" >line 1</rep-line></li>
       </ul>
     </div>
     <div class="centerPane">
@@ -56,10 +54,18 @@
     <div class="column">
       <h1>Instructive games:</h1>
       <ul>
-        <li><example-game class="exampleGame" onclick="changeBoard(this)" data-url="https://lichess.org/study/embed/m8i4OPaM/C2hyTyCy">Instructive game 1</example-game></li>
-     </ul>
+      </ul>
+      <div>
+        <h1>Local Repertoires</h1>
+        <ul id="localReps">
+        </ul>
+      </div>
+      <a id="downloadLink" href="#" download="Repertoire.txt">Download</a>
+    </div>
     </div>
   </div>
+
+
 </body>
 
 </html>
