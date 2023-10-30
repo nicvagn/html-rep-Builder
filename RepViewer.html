@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 
 <!--
-    Created for Saskatchewan Horizon Chess Club by Nicolas Vaagen
-
-    This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
+ * a js chess repertoire including lines and example games made for shcc
+ * Copyright (C) 2023 Nicolas Vaagen
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of  MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
 <html lang="en">
@@ -20,9 +28,8 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="images/shcc-logo-notxt.png">
 
-  <script src="script.js"></script>
-
 </head>
+
 <body>
   <!-- Navbar Section -->
   <nav class="navbar">
@@ -43,17 +50,17 @@
   </nav>
 
   <div class="row">
-    <div class="column">
+    <div class="column" id="linesColumn">
       <h1>Lines:</h1>
-      <ul>
+      <ul id="lineList">
       </ul>
     </div>
     <div class="centerPane">
-      <iframe id="board" src="https://lichess.org/study/embed/P33OZBhP/F47MCnL8" frameborder=0></iframe>
+      <iframe id="board" src="https://lichess.org/study/embed/bFTuzK2X/gRXAbJtB" frameborder=0></iframe>
     </div>
-    <div class="column">
+    <div class="column" id="gamesColumn">
       <h1>Instructive games:</h1>
-      <ul>
+      <ul id="gameList">
       </ul>
       <div>
         <h1>Local Repertoires</h1>
@@ -64,8 +71,7 @@
     </div>
     </div>
   </div>
-
-
+  <!--place here so all content is loaded first-->
+  <script src="script.js"></script>
 </body>
-
 </html>

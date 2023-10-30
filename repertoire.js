@@ -1,0 +1,157 @@
+/* a js chess repertoire including lines and example games made for shcc
+ * Copyright (C) 2023 Nicolas Vaagen
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of  MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/**
+ * A chess repertoire
+ */
+export default class Repertoire {
+
+  constructor(_name) {
+    console.log("repertoire with only name made");
+    this.name = _name;
+    this.lineList = document.getElementById("lineList"); //set lineList = to the line list ul
+    this.gameList = document.getElementById("gameList"); //set the gameList ul
+  }
+
+  constructor(_name, _lineList, _gameList) {
+    console.log("rep with name, lineList, gameList made");
+    this.name = _name;
+    //set the game and line list to the ones provided to the constructor
+    this.gameList = _gameList;
+    this.lineList = _lineList;
+  }
+
+  /**
+   * show add game popup to add a game to this line
+   */
+  showAddGame() {
+
+    const windowFeatures = "width=320,height=320,popup";
+    popUp = window.open("AddGame.html", "mozillaWindow", windowFeatures);
+  }
+
+  /**
+   * show the add line popup to add a game to this line
+   */
+  showAddLine() {
+
+    const windowFeatures = "width=320,height=320,popup";
+    popUp = window.open("AddLine.html", "mozillaWindow", windowFeatures);
+  }
+
+  /**
+   * add a game to this repertoire object
+   * @param {string} gameName the name to give to this game
+   * @param {string} url lichess embedded study link
+   */
+  addGame(gameName, url) {
+
+    //create a new element of the type "example-game"
+    let repGame = document.createElement("example-game");
+
+    //set class
+    repGame.setAttribute("class", "repGame");
+
+    //set the custom attribute data-url, the url of the lichess study
+    repGame.setAttribute("data-url", url);
+
+    repGame.innerHTML = gameName;
+
+    //create a new example game with th url and name
+    listItem.innerHTML = '<example-game class="exampleGame" onclick="changeBoard(this)" data-url=' + url + '>' + game_name + '</example-game>';
+
+    //add the game to the repertoire
+    this.gameList.appendChild(listItem);
+  }
+
+  /**
+   * add a line to this repertoire object
+   * @param {string} lineName the name to give to this line
+   * @param {string} url lichess embedded study link
+   */
+  addLine(lineName, url) {
+
+    //create a new element of the type "rep-line"
+    let repLine = document.createElement("rep-line");
+
+    //set class
+    repLine.setAttribute("class", "repLine");
+
+    //set the custom attribute data-url, the url of the lichess study
+    repLine.setAttribute("data-url", url);
+
+    repLine.innerHTML = lineName;
+
+    //add to the list of lines
+    this.lineList.appendChild(repLine);
+  }
+
+
+  /**
+   * reset the lines to a new ul
+   */
+  resetLines() {
+
+    if(confirm("reset lines?")){  //confirm reset lines
+      //get the line column
+      let lineColumn = document.getElementById("lineColumn");
+
+      //remove the old lines ul from the html doc
+      this.lineList.remove();
+
+      //create a new ul and set the id
+      this.lineList = document.createElement('ul');
+      this.lineList.setAttribute('id','lineList');
+
+      //add the newly created line list to the line column
+      lineColumn.appendChild(lineList);
+    }
+  }
+
+  /**
+   * set the example games to an empty ul
+   */
+  resetGames() {
+
+    if(confirm("reset games?")){  //confirm reset games
+      //get the game column
+      let gameColumn = document.getElementById("gameColumn");
+
+      //remove the old lines ul from the html doc
+      this.gameList.remove();
+
+      //create a new ul and set the id
+      this.gameList = document.createElement('ul');
+      this.gameList.setAttribute('id','lineList');
+
+      //add the newly created line list to the line column
+      gameColumn.appendChild(lineList);
+    }
+  }
+
+  /**
+   * save this rep
+   */
+  saveRep() {
+
+    //convert rep to json string
+    let stringify_rep = AddToLocalStorage(this);
+
+    //put the rep in local storage with it's key being it's name
+    localStorage.setItem(stringify_rep, this.name);
+  }
+}

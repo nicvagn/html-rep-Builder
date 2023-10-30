@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 
 <!--
-    Created for Saskatchewan Horizon Chess Club by Nicolas Vaagen
-
-    This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
+ * a js chess repertoire including lines and example games made for shcc
+ * Copyright (C) 2023 Nicolas Vaagen
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of  MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
 <html lang="en">
@@ -39,17 +47,17 @@
       </tr>
       -->
       <tr>
-        <label for="addGameLichess">Lichess game link:</label>
+        <label for="lichessURL">Lichess game link:</label>
         <br>
-        <input type="text" id="lichessURL" name="addGameLichess">
+        <input type="text" id="lichessURL">
         <br>
-        <label for="Name">Name for game:</label>
+        <label for="name">Name for game:</label>
         <br>
-        <input type="text" id="name" name="Name">
+        <input type="text" id="name">
       </tr>
     </table>
   </div>
-  <button onclick="getTextFromPop">Submit</button>
+  <button id="submit" onclick="getTextFromPop('addGame')">Submit</button>
 </body>
 
 </html>
