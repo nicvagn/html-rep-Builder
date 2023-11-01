@@ -15,11 +15,12 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Repertoire } from "repertoire.js"
-import { ExampleGame } from "example-game.js"
-import * as Save from "save-controller.js"
+import { Repertoire as Repertoire} from "./repertoire.js"
+import { ExampleGame as ExampleGame} from "./example-game.js"
+import { RepLine as RepLine } from "./rep-line.js";
+import * as Save from "./save-controller.js"
 
-var openRep = Repertoire; //the currently open rep
+export var openRep = Repertoire; //the currently open rep
 
 //if the custom elements are not defined, def. them
 if (!customElements.get('example-game')) {

@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "chessground": "^9.0.4",
     "jquery": "^3.7.1"
   }
 }

@@ -88,10 +88,12 @@
 /* common css */
 
 #board{
+  margin-left: 10%;
   margin-top: 30px;
   margin-bottom: 0;
-  width: 100%;
-  height: 800px;
+  width: 800px;
+  height: 630px;
+  scrollbar-gutter: none;
 }
 
 button {

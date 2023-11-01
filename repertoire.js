@@ -18,21 +18,30 @@
 /**
  * A chess repertoire
  */
-export default class Repertoire {
+export class Repertoire {
 
-  constructor(_name) {
-    console.log("repertoire with only name made");
-    this.name = _name;
-    this.lineList = document.getElementById("lineList"); //set lineList = to the line list ul
-    this.gameList = document.getElementById("gameList"); //set the gameList ul
-  }
-
+  /**
+   * make a new Rep
+   * @param {string} _name name to give
+   * @param {*} _lineList list of lines in this rep
+   * @param {*} _gameList list of instructive games
+   */
   constructor(_name, _lineList, _gameList) {
     console.log("rep with name, lineList, gameList made");
     this.name = _name;
     //set the game and line list to the ones provided to the constructor
     this.gameList = _gameList;
     this.lineList = _lineList;
+  }
+
+  /**
+   * make a Repertoire with only a name
+   * @param {string} name the rep nama
+   * @returns a Repertoire with a name and nothing else
+   */
+  static repertoireOnlyName(name){
+    console.log("rep with only name called");
+    return new Repertoire(name, [], [])
   }
 
   /**

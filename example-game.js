@@ -19,7 +19,7 @@
  * a chess repertoire example game. It's primary use is in a rep builder GUI, so it needs to have a visual
  * component :. extends button
  */
-export default class ExampleGame extends HTMLButtonElement {
+export class ExampleGame extends HTMLButtonElement {
 
   /**
    * construct a new repertoire game
