@@ -1,3 +1,4 @@
+"use strict";
 /* a js chess repertoire including lines and example games made for shcc
  * Copyright (C) 2023 Nicolas Vaagen
  *
@@ -14,24 +15,44 @@
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+Object.defineProperty(exports, "__esModule", { value: true });
+var repertoire_controller_mjs_1 = require("./repertoire-controller.mjs");
 //open a rep from local storage
+/**
+ * open a repertoire from local storage
+ * @param {string} repName the name of the rep
+ */
 function openRepertoire(repName) {
-    openRep = GetFromLocalStorage(repName);
+    repertoire_controller_mjs_1.openRep = GetFromLocalStorage(repName);
 }
 // this function converts JSON into string to be entered into localStorage
-function AddToLocalStorage(data) {
+/**
+ * converts json into a json string ready to be stored locally in localStorage
+ * @param {*} data the json to be converted to string
+ * @returns JSON converted to string for local storage
+ */
+function createStringForLocalStorage(data) {
     if (typeof data != "string") {
         data = JSON.stringify(data);
     }
     return data;
 }
 // this function gets string from localStorage and converts it into JSON
+/**
+ * retrieve from local storage
+ * @param {string} key the key of the item to be retrieve
+ * @returns the retrieve item
+ */
 function GetFromLocalStorage(key) {
     return JSON.parse(localStorage.getItem(key));
 }
 // A global variable should be defined to hold the URL for the file to be downloaded
 var textFileUrl = null;
-// Function for generating a text file URL containing given text
+/**
+ * For generating a text file URL containing given text
+ * @param {string} txt the text to use when creating the file URL
+ * @returns created URL
+ */
 function generateTextFileUrl(txt) {
     var fileData = new Blob([txt], { type: 'text/plain' });
     // If a file has been previously generated, revoke the existing URL
@@ -43,11 +64,14 @@ function generateTextFileUrl(txt) {
     return textFileUrl;
 }
 ;
-// Generate the file download URL and assign it to the link
+/**
+ * create the download link for rep
+ * Generate the file download URL and assign it to the link
+ */
 function show_download() {
-    var downloadLink = getElementById('downloadLink');
+    var downloadLink = document.getElementById('downloadLink');
     downloadLink.document.getElementById(id).style.visibility = "visible";
     window.addEventListener("load", function () {
-        downloadLink.href = generateTextFileUrl(openRep);
+        downloadLink.href = generateTextFileUrl(repertoire_controller_mjs_1.openRep);
     });
 }

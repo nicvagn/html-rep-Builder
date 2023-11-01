@@ -41,13 +41,10 @@ var ExampleGame = /** @class */ (function (_super) {
     /**
      * construct a new repertoire game
      * @param {string} name the name of the line
-     * @param {string} url a lichess embedded study url
+     * @param {string} pgn the pgn of the game
      */
-    function ExampleGame(name, url) {
-        var _this = this;
-        _this.url = url;
-        _this = _super.call(this, name) || this;
-        return _this;
+    function ExampleGame(name, pgn) {
+        return _super.call(this) || this;
     }
     return ExampleGame;
 }(HTMLButtonElement));

@@ -87,15 +87,6 @@
 
 /* chessground css */
 
-#board{
-  margin-left: 10%;
-  margin-top: 30px;
-  margin-bottom: 0;
-  width: 800px;
-  height: 630px;
-  scrollbar-gutter: none;
-}
-
 .chessground {
   width: 500px;
   height: 500px;
