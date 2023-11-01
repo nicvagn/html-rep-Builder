@@ -15,20 +15,12 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * a chess repertoire line. It's primary use is in a rep builder GUI, so it needs to have a visual
- * component
- */
-export class RepLine extends HTMLButtonElement {
 
-  /**
-   * construct a new repertoire line
-   * @param {string} name the name of the line
-   * @param {string} url a lichess embedded study url
-   */
-  constructor(name, url){
-    this.url = url;
-    this.exampleGames = [];
-    super(name);
-  }
-}
+//add event listeners to various buttons
+const addLineBtn = document.getElementById("addLine");
+const addGameBtn = document.getElementById("addGame");
+
+
+addLineBtn.addEventListener("click", controller.openRep.showAddLine());
+
+addGameBtn.addEventListener("click", controller.openRep.showAddGame());

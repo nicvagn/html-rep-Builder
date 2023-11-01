@@ -24,10 +24,9 @@ export class ExampleGame extends HTMLButtonElement {
   /**
    * construct a new repertoire game
    * @param {string} name the name of the line
-   * @param {string} url a lichess embedded study url
+   * @param {string} pgn the pgn of the game
    */
-  constructor(name, url){
-    this.url = url;
-    super(name);
+  constructor(name:string, pgn:string){
+    super();
   }
 }

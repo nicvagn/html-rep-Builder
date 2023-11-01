@@ -14,12 +14,8 @@
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 //add event listeners to various buttons
-const addLineBtn = document.getElementById("addLine");
-const addGameBtn = document.getElementById("addGame");
-
-
+var addLineBtn = document.getElementById("addLine");
+var addGameBtn = document.getElementById("addGame");
 addLineBtn.addEventListener("click", controller.openRep.showAddLine());
-
 addGameBtn.addEventListener("click", controller.openRep.showAddGame());

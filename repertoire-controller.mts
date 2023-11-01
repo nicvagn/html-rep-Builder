@@ -21,7 +21,7 @@ import { RepLine as RepLine } from "./rep-line.js";
 import * as Save from "./save-controller.js"
 
 //trying chessground
-import { Chessground } from "./node_modules/chessground/dist/chessground.js";
+import { Chessground } from "chessground";
 
 export var openRep = Repertoire; //the currently open rep
 
@@ -38,7 +38,10 @@ Chessground(document.getElementById('chessground'), {
   fen: 'r2q2k1/1p6/p2p4/2pN1rp1/N1Pb2Q1/8/PP1B4/R6K b - - 2 25',
 });
 
-//make a new rep
+/**
+ * make a new repertoire
+ * @returns the rep made
+ */
 function newRepertoire(){
 
   //the open rep
@@ -62,8 +65,10 @@ function newRepertoire(){
   return new_rep;
 }
 
-
-//change the src for the chess board
+/**
+ * change the main the chess board
+ * @param {*} element
+ */
 function changeBoard(element) {
 
   //get the mainBoard
@@ -73,7 +78,10 @@ function changeBoard(element) {
   mainBoard.src = SRC;
 }
 
-//box type is a string so we can tell the input box this came from
+/**
+ * get text from a popup
+ * @param {string} boxType the type of the box
+ */
 function getTextFromPop(boxType) {
 
   let url = document.getElementById("lichessURL").value;
