@@ -85,7 +85,7 @@
   -o-border-radius: 15%;
 }
 
-/* common css */
+/* chessground css */
 
 #board{
   margin-left: 10%;
@@ -95,6 +95,13 @@
   height: 630px;
   scrollbar-gutter: none;
 }
+
+.chessground {
+  width: 500px;
+  height: 500px;
+}
+
+/* common css */
 
 button {
   display: block;
