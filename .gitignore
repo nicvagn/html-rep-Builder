@@ -1,2 +1,5 @@
 /node_modules
 someLinks
+/built
+/storage
+demo.html

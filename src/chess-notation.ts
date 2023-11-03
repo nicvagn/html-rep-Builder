@@ -15,22 +15,35 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Controller } from "./repertoire-controller.js";
+/**
+ * a PGN but with some nice features for chess programming
+ */
+export class PGN {
 
-//add event listeners to various buttons
-const addLineBtn = document.getElementById("addLine");
-const addGameBtn = document.getElementById("addGame");
+  pgn: string;
+
+  /**
+   * new pgn.
+   * @param pgn the basic text pgn
+   */
+  constructor(pgn: string){
+    this.pgn = pgn;
+  }
+}
 
 
-export class newRepertoire{
+/**
+ * a fen but with some nice features
+ */
+export class FEN {
 
-  controller: Controller;
+  public fen: string;
 
-  constructor(controller:Controller){
-    this.controller = controller;
-
-    addLineBtn!.addEventListener("click", controller.openRep.showAddLine());
-
-    addGameBtn!.addEventListener("click", controller.openRep.showAddGame());
+  /**
+   * new fen.
+   * @param fen a fen
+   */
+  constructor(fen: string){
+    this.fen = fen;
   }
 }

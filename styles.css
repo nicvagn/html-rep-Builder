@@ -87,13 +87,28 @@
 
 /* chessground css */
 
-.chessground {
-  width: 500px;
-  height: 500px;
+/* chessground pane and container */
+.centerPane body{
+  display: flex;
+  flex-wrap: wrap;
 }
 
-/* common css */
+.centerPane div {
+  margin: 15px auto;
+}
 
+/* board color */
+.centerPane cg-board {
+  background-color: #bfcfdd;
+}
+
+.chessground {
+  width: 700px;
+  height: 700px;
+}
+
+
+/* common css */
 button {
   display: block;
   justify-content: center;

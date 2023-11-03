@@ -1,8 +1,18 @@
 {
   "compilerOptions": {
-    "outDir":"./built",
-    "allowJs": true,
-    "target": "es5"
-},
-  "include": ["./src/**/*"]
+    "outDir": "./built",
+    "rootDir": "src",
+    "noEmitOnError": false,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "ES2017",
+    "lib": ["DOM", "ES2017"]
+  },
+  "include": ["src/*.ts"],
+  "exclude": []
 }

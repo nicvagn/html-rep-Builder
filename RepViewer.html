@@ -28,11 +28,12 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="images/shcc-logo-notxt.png">
 
+  <script type="module" src="./built/repertoire-controller.js"></script>
+
   <!-- chessground css -->
   <link rel="stylesheet" type="text/css" href="node_modules/chessground/assets/chessground.base.css" />
   <link rel="stylesheet" type="text/css" href="node_modules/chessground/assets/chessground.brown.css" />
   <link rel="stylesheet" type="text/css" href="node_modules/chessground/assets/chessground.cburnett.css" />
-
 </head>
 
 <body>
@@ -63,7 +64,7 @@
     <div class="centerPane">
       <!-- Main Chessboard -->
       <div id="chessground" class="chessground">
-          <!-- board goes here -->
+          <!--board here-->
       </div>
     </div>
     <div class="column" id="gamesColumn">
@@ -77,10 +78,6 @@
       </div>
       <a id="downloadLink" href="#" download="Repertoire.txt">Download</a>
     </div>
-    </div>
   </div>
-
-  <!--place script module here so all content is loaded first-->
-  <script type="module" src="./src/repertoire-controller.mjs"></script>
 </body>
 </html>

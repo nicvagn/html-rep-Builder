@@ -1,4 +1,4 @@
-/* a js chess repertoire including lines and example games made for shcc
+/* a typescript chess repertoire builder. including line and example game viewing made for shcc
  * Copyright (C) 2023 Nicolas Vaagen
  *
  * This program is free software: you can redistribute it and/or modify it
@@ -15,75 +15,96 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { openRep } from "./repertoire-controller.mjs";
+import { openRep } from "./repertoire-controller.js";
+import { Repertoire } from "./repertoire.js";
 
 
-//open a rep from local storage
-/**
- * open a repertoire from local storage
- * @param {string} repName the name of the rep
- */
-function openRepertoire(repName){
+export class SaveController{
 
-  openRep = GetFromLocalStorage(repName);
-}
+  /**
+   * open a repertoire from local storage
+   * @param {string} repName the name of the rep
+   * @returns {JSON} the repertoire you opened as json
+   */
+  public openRepertoire(repKey:string){
 
+    return this.getFromLocalStorage(repKey);
+  }
 
-// this function converts JSON into string to be entered into localStorage
-/**
- * converts json into a json string ready to be stored locally in localStorage
- * @param {*} data the json to be converted to string
- * @returns JSON converted to string for local storage
- */
-function createStringForLocalStorage(data) {
+  /**
+   * converts json into a json string ready to be stored locally in localStorage
+   * @param {JSON} data the json to be converted to string
+   * @returns JSON converted to string for local storage
+   */
+  public static createStringForLocalStorage(data:Object) {
 
-  if (typeof data != "string") {data = JSON.stringify(data);}
-  return data;
-}
+    let stringData: string;
 
-// this function gets string from localStorage and converts it into JSON
-
-/**
- * retrieve from local storage
- * @param {string} key the key of the item to be retrieve
- * @returns the retrieve item
- */
-function GetFromLocalStorage(key) {
-
-  return JSON.parse(localStorage.getItem(key));
-}
-
-// A global variable should be defined to hold the URL for the file to be downloaded
-var textFileUrl = null;
-
-
-/**
- * For generating a text file URL containing given text
- * @param {string} txt the text to use when creating the file URL
- * @returns created URL
- */
-function generateTextFileUrl(txt) {
-
-    let fileData = new Blob([txt], {type: 'text/plain'});
-    // If a file has been previously generated, revoke the existing URL
-    if (textFileUrl !== null) {
-        window.URL.revokeObjectURL(textFile);
+    if (typeof data != "string") {
+       stringData = JSON.stringify(data)!;
     }
-    textFileUrl = window.URL.createObjectURL(fileData);
-    // Returns a reference to the global variable holding the URL
-    return textFileUrl;
-};
+    else
+    {
+      stringData = data;
+      throw new Error("data is already a string.");
+    }
 
 
-/**
- * create the download link for rep
- * Generate the file download URL and assign it to the link
- */
-function show_download(){
+    return stringData; // return stringified data
+  }
 
-  let downloadLink = document.getElementById('downloadLink');
-  downloadLink.document.getElementById(id).style.visibility = "visible";
-  window.addEventListener("load", function(){
-    downloadLink.href = generateTextFileUrl(openRep);
-  });
+  // this function gets string from localStorage and converts it into JSON
+
+  /**
+   * retrieve from local storage
+   * @param {string} key the key of the item to be retrieve
+   * @returns the retrieve item in json
+   */
+  private getFromLocalStorage(key: string):JSON {
+
+    //try to grab element tied to the key
+
+    let gameGrab:string | null = localStorage.getItem(key);
+
+    if(gameGrab != null){
+      return JSON.parse(gameGrab);
+    }
+    else
+    {
+      return JSON.parse("{'error': {'no item at that key'}}");
+    }
+  }
+
+
+  /** We will maybe work with local storage later
+   * For generating a text file URL containing given text
+   * @param {string} txt the text to use when creating the file URL
+   * @returns created URL
+   *
+  private  generateTextFileUrl(txt: string) {
+
+      let fileData = new Blob([txt], {type: 'text/plain'});
+      // If a file has been previously generated, revoke the existing URL
+      if (textFileUrl !== null) {
+          window.URL.revokeObjectURL(textFile);
+      }
+      textFileUrl = window.URL.createObjectURL(fileData);
+      // Returns a reference to the global variable holding the URL
+      return textFileUrl;
+  }
+
+
+  /**
+   * create the download link for rep
+   * Generate the file download URL and assign it to the link
+   *
+  private showDownload(){
+
+    let downloadLink = document.getElementById('downloadLink');
+    downloadLink!.style.visibility = "visible";
+    window.addEventListener("load", function(){
+      downloadLink.HR = generateTextFileUrl(openRep);
+    });
+  }
+  */
 }
