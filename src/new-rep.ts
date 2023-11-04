@@ -15,22 +15,63 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Controller } from "./repertoire-controller.js";
+import { Controller } from "./repertoire-controller.mjs";
 
 //add event listeners to various buttons
 const addLineBtn = document.getElementById("addLine");
 const addGameBtn = document.getElementById("addGame");
+const resetLinesBtn = document.getElementById("resetLines");
+const resetGamesBtn = document.getElementById("resetGames");
+const saveBrowserBtn = document.getElementById("saveBrowser");
 
-
-export class newRepertoire{
+/**
+ * helper for newRep.html aides in creation of new reps
+ */
+export class newRepertoire
+{
 
   controller: Controller;
 
   constructor(controller:Controller){
+
     this.controller = controller;
 
-    addLineBtn!.addEventListener("click", controller.openRep.showAddLine());
+    //add listeners
+    addLineBtn?.addEventListener("click", buttonLnr);
+    addGameBtn?.addEventListener("click", buttonLnr);
+    resetLinesBtn?.addEventListener("click", buttonLnr);
+    resetGamesBtn?.addEventListener("click", buttonLnr)
+    saveBrowserBtn?.addEventListener("click", buttonLnr);
+  }
+}
 
-    addGameBtn!.addEventListener("click", controller.openRep.showAddGame());
+/**
+ * the listener for the addGame and addLine buttons
+ * @param event the event that triggered
+ */
+function buttonLnr(event: Event)
+{
+  if(event.target == addLineBtn)
+  {
+    //addLineBtn was the target
+  }
+  else if(event.target == addGameBtn)
+  {
+    //add game btn was the target
+  }
+  else if(event.target == resetLinesBtn)
+  {
+    //reset lines
+  }
+  else if(event.target == resetGamesBtn)
+  {
+    //reset games
+  }
+  else if(event.target == saveBrowserBtn)
+  {
+    //save to browser
+  }
+  else{
+    throw Error("event target was: " + event.target + " this is not one of the buttons.");
   }
 }

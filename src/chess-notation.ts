@@ -37,13 +37,13 @@ export class PGN {
  */
 export class FEN {
 
-  public fen: string;
+  public readonly stringFEN: string;
 
   /**
    * new fen.
    * @param fen a fen
    */
   constructor(fen: string){
-    this.fen = fen;
+    this.stringFEN = fen;
   }
 }

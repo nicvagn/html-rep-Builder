@@ -19,6 +19,7 @@
 * {
   box-sizing: border-box;
   margin: 0;
+  font-family: 'Bebas Neue', sans-serif;
 }
 
 /* start navbar styling */
@@ -28,11 +29,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 8rem;
+  font-size: 6rem;
   position: sticky;
   top: 0;
   z-index: 999;
-  font-family: 'Bebas Neue', san9A978Es-serif;
   min-width: 750px;
 }
 
@@ -53,6 +53,7 @@
   align-items: center;
   list-style: none;
   text-align: center;
+  padding-right: 60px;
 }
 
 .navbar__links {
@@ -63,14 +64,15 @@
   text-decoration: none;
   padding: 0 1rem;
   height: 100%;
-
-  height: 80px;
+  cursor: pointer;
+  outline: none;
+  height: 60px;
   font-size: xx-large;
 }
 
 .navbar__links:hover{
   box-shadow: inset 5em 5em #FDD401;
-  color: #000;
+  color: black;
   transition-duration: 10ms;
 }
 
@@ -94,12 +96,12 @@
 }
 
 .centerPane div {
-  margin: 15px auto;
+  margin: 20px auto;
 }
 
 /* board color */
 .centerPane cg-board {
-  background-color: #bfcfdd;
+  background-color: #1e9c9c;
 }
 
 .chessground {
@@ -114,6 +116,7 @@ button {
   justify-content: center;
   align-items: center;
   text-decoration: none;
+  min-height: 60px;
   padding: 10px 20px;
   height: 100%;
   width: 100px;
@@ -121,8 +124,13 @@ button {
   outline-color: #000;
   outline-width: 1px;
   outline-style: solid;
-  background: #FDD401;
-  color: black;
+  background: #064742;
+  color: #fff;
+  margin: 15px 15px;
+}
+
+body {
+  background-color: #adbebd;
 }
 
 button:hover {
@@ -130,18 +138,28 @@ button:hover {
   transition: all 0.3s ease;
 }
 
+ul{
+  list-style-type: none;
+}
+
 /* RepViewer css */
+
+#repName {
+  display: block;
+  text-align: center;
+  background-color: #FDD401;
+}
 
 .row {
   display: flex;
 }
 
 .column {
-  flex: 20%;
+  flex: 17.5%;
 }
 
 .centerPane {
-  flex: 60%;
+  flex: 70%;
 }
 
 .repLine {
@@ -204,8 +222,18 @@ button:hover {
   margin: 10px 0px 0px 50px;
 }
 
+/* New rep css */
 
-/*OpenRep css */
+#newRepButtons {
+  display: inline-flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.newRep{ /* when new rep is clicked, these items are shown */
+  visibility: hidden;
+}
+/* OpenRep css */
 
 /* the list of repertoires on open rep. pageS */
 #repertoiresTable {

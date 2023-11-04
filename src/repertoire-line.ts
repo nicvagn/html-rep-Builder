@@ -25,7 +25,7 @@ import { PGN } from "./chess-notation.js"
 export class RepertoireLine extends HTMLButtonElement {
 
   name: string;
-  pgn: string;
+  pgn: string; //main pgn of the line
   exampleGames?: [ExampleGame];
 
   /**

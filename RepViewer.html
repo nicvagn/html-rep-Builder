@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="images/shcc-logo-notxt.png">
 
-  <script type="module" src="./built/repertoire-controller.js"></script>
+  <script type="module" src="./built/repertoire-controller.mjs"></script>
 
   <!-- chessground css -->
   <link rel="stylesheet" type="text/css" href="node_modules/chessground/assets/chessground.base.css" />
@@ -43,41 +43,62 @@
       <img id="logo" src="images/shcc-logo-notxt.png">
       <ul class="navbar__menu">
         <li class="navbar__item">
-          <a href="OpenRep.html" class="navbar__links">Open Repertoire</a>
+          <button id="newRepTop" class="navbar__links">New</button>
         </li>
         <li class="navbar__item">
-          <a href="NewRep.html" class="navbar__links">New Repertoire</a>
-        </li>
-        <li class="navbar__item">
-          <a href="RepViewer.html" class="navbar__links">View Repertoire</a>
+          <button id="openRepTop" class="navbar__links">Open</button>
         </li>
       </ul>
     </div>
   </nav>
 
+  <!-- main content -->
   <div class="row">
     <div class="column" id="linesColumn">
+
       <h1>Lines:</h1>
+
       <ul id="lineList">
+        <li class="newRep"><button id="addLine">Add Line</button></li>
       </ul>
+
     </div>
     <div class="centerPane">
+      <h2 id="repName">Placeholder Name</h2>
+
       <!-- Main Chessboard -->
       <div id="chessground" class="chessground">
-          <!--board here-->
+        <!--board here-->
       </div>
+
     </div>
     <div class="column" id="gamesColumn">
+
       <h1>Instructive games:</h1>
+
       <ul id="gameList">
+        <li class="newRep"><button id="addGame" class="newRep">Add Game</button></li>
       </ul>
+
       <div>
-        <h1>Local Repertoires</h1>
+        <h1>Local <br>Repertoires:</h1>
+
         <ul id="localReps">
         </ul>
       </div>
+
       <a id="downloadLink" href="#" download="Repertoire.txt">Download</a>
+
     </div>
   </div>
+
+  <div id="newRepButtons" class="newRep">
+
+    <button id="resetLines">reset lines</button>
+    <button id="resetGames">reset games</button>
+    <button id="saveBrowser">Save to browser permanent local storage</button>
+
+  </div>
+
 </body>
 </html>

@@ -25,6 +25,7 @@ export class Repertoire {
 
   name: string;  // the name of the repertoire
   lineList?: [RepertoireLine];  // array of lines in this rep
+  openLine?: RepertoireLine; //the currently open line, may not be defined
 
   /**
    * make a new Rep
@@ -32,7 +33,8 @@ export class Repertoire {
    * @param _lineList list of lines in this rep
    * @param _gameList list of instructive games
    */
-  constructor(_name: string, _lineList?: [RepertoireLine]) {
+  constructor(_name: string, _lineList?: [RepertoireLine])
+  {
     console.log("rep with name:" + _name + ", Line List: " + _lineList + "made");
     this.name = _name;
 
@@ -45,7 +47,8 @@ export class Repertoire {
    * @param {string} name the rep nama
    * @returns a Repertoire with a name and nothing else
    */
-  public static repertoireOnlyName(name:string){
+  public static repertoireOnlyName(name:string)
+  {
 
     console.log("rep with only name called");
     return new Repertoire(name);
@@ -55,7 +58,8 @@ export class Repertoire {
    * add a line to this repertoire object
    * @param repLine - a RepertoireLine
    */
-  public addLine(repLine:RepertoireLine) {
+  public addLine(repLine:RepertoireLine)
+  {
 
     //if the line list is undefined
     if(this.lineList == undefined){
@@ -70,7 +74,8 @@ export class Repertoire {
   /**
    * reset the lineList to undefined
    */
-  resetLines() {
+  resetLines()
+  {
 
     if(this.lineList == undefined){
       return; // if line list is already undefined
@@ -84,7 +89,8 @@ export class Repertoire {
   /**
    * save this rep
    */
-  saveRep() {
+  saveRep()
+  {
 
     //convert rep to json string
     let stringify_rep = SaveController.createStringForLocalStorage(this);

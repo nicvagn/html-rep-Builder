@@ -15,66 +15,71 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { openRep } from "./repertoire-controller.js";
+
 import { Repertoire } from "./repertoire.js";
 
-
-export class SaveController{
+/**
+ * a helper class full of static methods to aid in saving to local storage
+ */
+export class SaveController {
 
   /**
-   * open a repertoire from local storage
-   * @param {string} repName the name of the rep
-   * @returns {JSON} the repertoire you opened as json
+   * Save a Repertoire to Local Storage
+   * @param { string } key the key to put this under in local storage
+   * @param { Repertoire } rep the repertoire to save to local storage
    */
-  public openRepertoire(repKey:string){
+  public static saveRepToLocal(key: string, rep: Repertoire): void
+  {
+    let jsonRep = JSON.stringify(rep);
 
-    return this.getFromLocalStorage(repKey);
+    this.putLocal(key, jsonRep);
   }
 
   /**
-   * converts json into a json string ready to be stored locally in localStorage
-   * @param {JSON} data the json to be converted to string
-   * @returns JSON converted to string for local storage
+   * get a repertoire from local storage
+   * @param {string} repKey the name of the rep
+   * @returns {Repertoire} the repertoire you opened as json
    */
-  public static createStringForLocalStorage(data:Object) {
+  public static getRepertoireFromLocal(repKey: string): Repertoire
+  {
+    let obj = SaveController.getFromLocal(repKey);
 
-    let stringData: string;
-
-    if (typeof data != "string") {
-       stringData = JSON.stringify(data)!;
+    //check to make sure what we have is a rep
+    if (obj instanceof Repertoire) {
+      return obj;
+    } else {
+      throw Error("Returned obj not a repertoire");
     }
-    else
-    {
-      stringData = data;
-      throw new Error("data is already a string.");
-    }
-
-
-    return stringData; // return stringified data
   }
-
-  // this function gets string from localStorage and converts it into JSON
 
   /**
    * retrieve from local storage
    * @param {string} key the key of the item to be retrieve
    * @returns the retrieve item in json
    */
-  private getFromLocalStorage(key: string):JSON {
-
+  private static getFromLocal(key: string): Object {
     //try to grab element tied to the key
 
-    let gameGrab:string | null = localStorage.getItem(key);
+    let grab: string | null = localStorage.getItem(key);
 
-    if(gameGrab != null){
-      return JSON.parse(gameGrab);
-    }
-    else
-    {
-      return JSON.parse("{'error': {'no item at that key'}}");
+    if (grab != null) {
+      return JSON.parse(grab);
+    } else {
+      throw Error("Retried obj null");
     }
   }
 
+  /**
+   * put a object in local storage. We will turn it into JSON and store it
+   * @param key the key to put that object's json under in local. The key is used to retrieve the item
+   * @param object a javascript object to be put into storage
+   */
+  private static putLocal(key: string, object: Object) {
+    //create a stringified version of the object
+    let strObject = JSON.stringify(object);
+
+    localStorage.setItem(key, strObject);
+  }
 
   /** We will maybe work with local storage later
    * For generating a text file URL containing given text

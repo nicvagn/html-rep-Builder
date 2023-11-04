@@ -33,18 +33,7 @@
   <link rel="stylesheet" type="text/css" href="node_modules/chessground/assets/chessground.brown.css" />
   <link rel="stylesheet" type="text/css" href="node_modules/chessground/assets/chessground.cburnett.css" />
 
-  <script type="module" src="repertoire-controller.js"></script>
-
-  <script>
-    //add event listeners to various buttons
-    const addLineBtn = document.getElementById("addLine");
-    const addGameBtn = document.getElementById("addGame");
-
-    addLineBtn.addEventListener("click", openRep.showAddLine());
-
-    addGameBtn.addEventListener("click", openRep.showAddGame());
-  </script>
-
+  <script type="module" src="./built/repertoire-controller.mjs"></script>
 </head>
 
 <body>
@@ -54,13 +43,13 @@
       <img id="logo" src="images/shcc-logo-notxt.png">
       <ul class="navbar__menu">
         <li class="navbar__item">
-          <a href="OpenRep.html" class="navbar__links">Open Repertoire</a>
+          <button class="navbar__links">Open</button>
         </li>
         <li class="navbar__item">
-          <a href="NewRep.html" class="navbar__links">New Repertoire</a>
+          <a href="NewRep.html" class="navbar__links">New</a>
         </li>
         <li class="navbar__item">
-          <a href="RepViewer.html" class="navbar__links">View Repertoire</a>
+          <a href="RepViewer.html" class="navbar__links">View</a>
         </li>
       </ul>
     </div>
@@ -68,31 +57,54 @@
 
   <!-- main content -->
   <div class="row">
-    <div class="column">
+
+    <div class="column" id="linesColumn">
+
       <h1>Lines:</h1>
+
       <ul id="lineList">
         <li><button id="addLine">Add Line</button></li>
       </ul>
+
     </div>
     <div class="centerPane">
+
+      <h2 id="repName">Placeholder Name</h2>
+
       <!-- Main Chessboard -->
       <div id="chessground" class="chessground">
+          <!--board here-->
       </div>
+
     </div>
-    <div class="column">
+
+    <div class="column" id="gamesColumn">
+
       <h1>Instructive games:</h1>
+
       <ul id="gameList">
-        <li><button onclick="showAddGame()">Add Game</button></li>
+        <li><button id="addGame">Add Game</button></li>
       </ul>
+
+      <div>
+        <h1>Local Repertoires:</h1>
+
+        <ul id="localReps">
+        </ul>
+      </div>
+
+      <a id="downloadLink" href="#" download="Repertoire.txt">Download</a>
+
     </div>
   </div>
 
-  <button id="resetLines" onclick="resetLines()">reset lines</button>
-  <button id="resetGames" onclick="resetGames()">reset games</button>
-  <button id="saveBrowser">Save to browser permanent local storage</button>
+  <div id="newRepButtons">
 
+    <button id="resetLines" >reset lines</button>
+    <button id="resetGames" >reset games</button>
+    <button id="saveBrowser">Save to browser permanent local storage</button>
 
+  </div>
 
 </body>
-
 </html>

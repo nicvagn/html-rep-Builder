@@ -44,7 +44,8 @@ export class BoardState {
    */
   public switchFen(fen:FEN) {
 
-    this.board.set({fen:fen});
+    console.log(fen.stringFEN)
+    this.board.set({fen: fen.stringFEN});
   }
 
   /**
