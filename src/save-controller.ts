@@ -21,7 +21,8 @@ import { Repertoire } from "./repertoire.js";
 /**
  * a helper class full of static methods to aid in saving to local storage
  */
-export class SaveController {
+export class SaveController
+{
 
   /**
    * Save a Repertoire to Local Storage
@@ -45,7 +46,8 @@ export class SaveController {
     let obj = SaveController.getFromLocal(repKey);
 
     //check to make sure what we have is a rep
-    if (obj instanceof Repertoire) {
+    if (obj instanceof Repertoire)
+    {
       return obj;
     } else {
       throw Error("Returned obj not a repertoire");

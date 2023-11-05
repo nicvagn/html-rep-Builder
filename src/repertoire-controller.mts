@@ -146,7 +146,7 @@ export class Controller
   public displayExampleGame(exampleGame: ExampleGame)
   {
     //just for testing if I can change the fen
-    this.boardState.switchFen(exampleGame.FEN.stringFEN);
+    this.boardState.switchFen(exampleGame.FEN);
   }
 
   /**
@@ -179,15 +179,33 @@ export class Controller
     window.open("AddLine.html", "mozillaWindow", windowFeatures);
   }
 
+  /**
+   * the listener for the top new button
+   * @param event the click event
+   */
   public async topBtnNew(event:Event)
   {
     console.log("top btn new" + event);
 
+    const newRepItems:Array<HTMLElement> = Array.from(
+      document.getElementsByClassName("newRep") as HTMLCollectionOf<HTMLElement>,
+    );
+
+    newRepItems.forEach(element => {
+      element.style.visibility ="visible";
+    });
+
+
+    //if there is an open rep
     if(this.openRep != null && this.openRep != undefined)
     {
-      let oldOpenRep: string = SaveController.createStringForLocalStorage(this.openRep);
-      SaveController.
+      if(confirm("Do you want to save the open repertoire?"))
+      {
+        //save the rep with the key being it's name
+        SaveController.saveRepToLocal(this.openRep.name,this.openRep);
+      }
     }
+
     //make a new rep and assign it to the openRep
     this.openRep = await this.newRepertoire();
   }

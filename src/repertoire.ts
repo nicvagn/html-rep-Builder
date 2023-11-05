@@ -76,7 +76,6 @@ export class Repertoire {
    */
   resetLines()
   {
-
     if(this.lineList == undefined){
       return; // if line list is already undefined
     }
@@ -91,11 +90,6 @@ export class Repertoire {
    */
   saveRep()
   {
-
-    //convert rep to json string
-    let stringify_rep = SaveController.createStringForLocalStorage(this);
-
-    //put the rep in local storage with it's key being it's name
-    localStorage.setItem(stringify_rep, this.name);
+    SaveController.getRepertoireFromLocal(this.name);
   }
 }

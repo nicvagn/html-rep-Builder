@@ -16,7 +16,7 @@
  */
 
 import { Chessground } from "../node_modules/chessground/dist/chessground.js";
-import { FEN } from "../node_modules/chessground/dist/types.js";
+import { FEN } from "./chess-notation.js";
 
 /**
  * a wrapper around Chessground
@@ -42,8 +42,8 @@ export class BoardState {
    * change the board position to given fen
    * @param fen the fen to change too
    */
-  public switchFen(fen:FEN) {
-
+  public switchFen(fen:FEN)
+  {
     console.log(fen.stringFEN)
     this.board.set({fen: fen.stringFEN});
   }
@@ -52,12 +52,12 @@ export class BoardState {
    * change the orientation of the chessboard
    * @param boardSide can be "black" or "white"
    */
-  public changeOrientation(boardSide:String) {
-
-    if(boardSide = "white"){
+  public changeOrientation(boardSide:String)
+  {
+    if(boardSide == "white"){
       this.board.set({orientation: "white"});
     }
-    else if(boardSide = "black"){
+    else if(boardSide == "black"){
       this.board.set({orientation: "black"});
     }
     else{
