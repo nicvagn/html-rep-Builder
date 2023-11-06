@@ -15,9 +15,9 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Controller } from "./repertoire-controller.mjs";
+//import { Controller, controller } from "./repertoire-controller.mjs";
 
-//add event listeners to various buttons
+//get the various NewRepertoire buttons
 const addLineBtn = document.getElementById("addLine");
 const addGameBtn = document.getElementById("addGame");
 const resetLinesBtn = document.getElementById("resetLines");
@@ -27,21 +27,33 @@ const saveBrowserBtn = document.getElementById("saveBrowser");
 /**
  * helper for newRep.html aides in creation of new reps
  */
-export class newRepertoire
-{
-
-  controller: Controller;
-
-  constructor(controller:Controller){
-
-    this.controller = controller;
-
+export class NewRepertoireController {
+  constructor()
+  {
     //add listeners
     addLineBtn?.addEventListener("click", buttonLnr);
     addGameBtn?.addEventListener("click", buttonLnr);
     resetLinesBtn?.addEventListener("click", buttonLnr);
-    resetGamesBtn?.addEventListener("click", buttonLnr)
+    resetGamesBtn?.addEventListener("click", buttonLnr);
     saveBrowserBtn?.addEventListener("click", buttonLnr);
+  }
+
+  /**
+   * show add game popup to add a game to this line
+   */
+  public showAddGame()
+  {
+    const windowFeatures = "width=320,height=320,popup";
+    window.open("AddGame.html", "mozillaWindow", windowFeatures);
+  }
+
+  /**
+   * show the add line popup to add a game to this line
+   */
+  public showAddLine()
+  {
+    const windowFeatures = "width=320,height=320,popup";
+    window.open("AddLine.html", "mozillaWindow", windowFeatures);
   }
 }
 
@@ -53,25 +65,34 @@ function buttonLnr(event: Event)
 {
   if(event.target == addLineBtn)
   {
+    console.log("Add Line btn");
     //addLineBtn was the target
   }
   else if(event.target == addGameBtn)
   {
+    console.log("Add game Btn");
     //add game btn was the target
   }
   else if(event.target == resetLinesBtn)
   {
+    console.log("reset Lines btn");
+
     //reset lines
   }
   else if(event.target == resetGamesBtn)
   {
+    console.log("reset games btn");
+
     //reset games
   }
   else if(event.target == saveBrowserBtn)
   {
+    console.log("save browser btn");
+
     //save to browser
   }
-  else{
+  else
+  {
     throw Error("event target was: " + event.target + " this is not one of the buttons.");
   }
 }

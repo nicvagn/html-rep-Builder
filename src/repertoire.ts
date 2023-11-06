@@ -23,20 +23,24 @@ import { SaveController } from "./save-controller.js";
  */
 export class Repertoire {
 
-  name: string;  // the name of the repertoire
+  name: string;
   lineList?: [RepertoireLine];  // array of lines in this rep
   openLine?: RepertoireLine; //the currently open line, may not be defined
 
   /**
    * make a new Rep
    * @param {string} _name name to give
-   * @param _lineList list of lines in this rep
-   * @param _gameList list of instructive games
+   * @param lineList list of lines in this rep
+   * @param gameList list of instructive games
    */
-  constructor(_name: string, _lineList?: [RepertoireLine])
+  constructor(_name?: string, _lineList?: [RepertoireLine])
   {
     console.log("rep with name:" + _name + ", Line List: " + _lineList + "made");
-    this.name = _name;
+
+    if(_name == undefined){
+      this.name = prompt("What would you like to call the new repertoire?")!;
+    }
+    this.name = _name!;
 
     //set the game and line list to the ones provided to the constructor
     this.lineList = _lineList;
@@ -44,14 +48,22 @@ export class Repertoire {
 
   /**
    * make a Repertoire with only a name
-   * @param {string} name the rep nama
+   * @param {string} _name? would be this reps name
    * @returns a Repertoire with a name and nothing else
    */
-  public static repertoireOnlyName(name:string)
+  public repertoireOnlyName(_name?:string)
   {
-
-    console.log("rep with only name called");
-    return new Repertoire(name);
+    if(this.name != undefined && this.name != null)
+    {
+      this.name = prompt("What would you like to call the new repertoire?")!;
+      console.log("rep with only name called, with no name");
+    }
+    else
+    {
+      this.name = _name!;
+      console.log("rep with only name called, with a name");
+    }
+    return new Repertoire(this.name);
   }
 
   /**
@@ -60,7 +72,6 @@ export class Repertoire {
    */
   public addLine(repLine:RepertoireLine)
   {
-
     //if the line list is undefined
     if(this.lineList == undefined){
       this.lineList = [repLine];
@@ -86,7 +97,7 @@ export class Repertoire {
   }
 
   /**
-   * save this rep
+   * save this rep to local storage with its key being it's name
    */
   saveRep()
   {

@@ -22,6 +22,7 @@ import { RepertoireLine } from "./repertoire-line.js";
 import { BoardState } from "./board-state.js"
 import { PGN, FEN } from "./chess-notation.js";
 import { SaveController } from "./save-controller.js";
+import { NewRepertoireController } from "./new-repertoire-controller.js";
 
 //if the custom elements are not defined, def. them
 if (!customElements.get('example-game')) {
@@ -40,9 +41,11 @@ const openBtnTop = document.getElementById("openRepTop");
  */
 export class Controller
 {
-  openRep?: Repertoire;
-  openLine?: RepertoireLine;
-  public readonly boardState: BoardState;
+  openRepName?: string; //name of the open rep
+  openRep?: Repertoire;   //open rep
+  openLine?: RepertoireLine;  //open line
+  public readonly boardState: BoardState; //the board state, for changing the visual board
+  newRepController?: NewRepertoireController;  //class containing the functions to aid in showing the new rep interface, and making them work
 
   boardSpot = document.getElementById("chessground"); //the place to init the chessboard
   repNameElement: HTMLElement = document.getElementById("repName")!;  //for the current rep name
@@ -72,7 +75,6 @@ export class Controller
     this.boardState = new BoardState(this.boardSpot!);
 
     //add listeners to top buttons
-
     if(newBtnTop == null){
       throw console.error("new top btn null");
     }
@@ -82,7 +84,7 @@ export class Controller
 
     //add listeners to the navbar btn
     newBtnTop.addEventListener("click", this.topBtnNew);
-    openBtnTop.addEventListener("click", this.topBtnOpen)
+    openBtnTop.addEventListener("click", this.topBtnOpen);
   }
 
   /**
@@ -123,20 +125,42 @@ export class Controller
   }
 
   /**
-   * make a new repertoire
-   * @returns the rep made
+   * make a new repertoire, promoting the user for it's name
+   * and displaying all the controls for making one
    */
-  public async newRepertoire(name?: string)
+  public newRepertoire(): void
   {
-    //if no name was given in function call, ask for one
-    if (name == undefined) {
-      name = prompt("Enter the name you would like to give this Repertoire.")!; //would never be null, right?
+
+    //make a new repertoire controller for the new rep
+    this.newRepController = new NewRepertoireController();
+
+    //get all the new repertoire buttons
+    const newRepItems:Array<HTMLElement> = Array.from(
+      document.getElementsByClassName("newRep") as HTMLCollectionOf<HTMLElement>,
+    );
+
+    //make them visible
+    newRepItems.forEach(element => {
+      element.style.visibility ="visible";
+    });
+
+    //if there is an open rep
+    if(this.openRep != null && this.openRep != undefined)
+    {
+      if(confirm("Do you want to save the open repertoire to browser storage?"))
+      {
+        //save the rep with the key being it's name
+        SaveController.saveRepToLocal(this.openRep.name,this.openRep);
+        console.log("Rep saved");
+      }
     }
 
-    //the open rep
-    let new_rep = new Repertoire(name);
+    this.openRepName = prompt("New rep name?")!;
+    //set the open rep name
+    this.setNameElement(this.openRepName);
 
-    return new_rep;
+    //make a new rep
+    this.openRep = new Repertoire(this.openRepName);
   }
 
   /**
@@ -147,24 +171,6 @@ export class Controller
   {
     //just for testing if I can change the fen
     this.boardState.switchFen(exampleGame.FEN);
-  }
-
-  /**
-   * show add game popup to add a game to this line
-   */
-  public showAddGame()
-  {
-    const windowFeatures = "width=320,height=320,popup";
-    window.open("AddGame.html", "mozillaWindow", windowFeatures);
-  }
-
-  /**
-   * show the add line popup to add a game to this line
-   */
-  public showAddLine()
-  {
-    const windowFeatures = "width=320,height=320,popup";
-    window.open("AddLine.html", "mozillaWindow", windowFeatures);
   }
 
   /**
@@ -185,33 +191,13 @@ export class Controller
    */
   public async topBtnNew(event:Event)
   {
-    console.log("top btn new" + event);
-
-    const newRepItems:Array<HTMLElement> = Array.from(
-      document.getElementsByClassName("newRep") as HTMLCollectionOf<HTMLElement>,
-    );
-
-    newRepItems.forEach(element => {
-      element.style.visibility ="visible";
-    });
-
-
-    //if there is an open rep
-    if(this.openRep != null && this.openRep != undefined)
-    {
-      if(confirm("Do you want to save the open repertoire?"))
-      {
-        //save the rep with the key being it's name
-        SaveController.saveRepToLocal(this.openRep.name,this.openRep);
-      }
-    }
-
-    //make a new rep and assign it to the openRep
-    this.openRep = await this.newRepertoire();
+    console.log(event);
+    //make a new rep, but with this being rep controller
+    controller.newRepertoire();
   }
 }
 
-//the main controller
+//the main controller, needed to make button be able to call controller functions
 export const controller:Controller = new Controller("the best");
 
 //will be called when the page is loaded init stuff here

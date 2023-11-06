@@ -21,7 +21,8 @@ import { FEN } from "./chess-notation.js";
 /**
  * a wrapper around Chessground
  */
-export class BoardState {
+export class BoardState
+{
 
   boardRoot:HTMLElement;
   private config = { viewOnly: true };
@@ -31,7 +32,8 @@ export class BoardState {
    * create a new chessground chess board
    * @param boardRoot the root element to  put the board in
    */
-  constructor(boardRoot: HTMLElement){
+  constructor(boardRoot: HTMLElement)
+  {
 
     this.boardRoot = boardRoot;
 
