@@ -44,7 +44,7 @@ export class BoardState
    * change the board position to given fen
    * @param fen the fen to change too
    */
-  public switchFen(fen:FEN)
+  public switchFen(fen:FEN):void
   {
     console.log(fen.stringFEN)
     this.board.set({fen: fen.stringFEN});
@@ -54,7 +54,7 @@ export class BoardState
    * change the orientation of the chessboard
    * @param boardSide can be "black" or "white"
    */
-  public changeOrientation(boardSide:String)
+  public changeOrientation(boardSide:String):void
   {
     if(boardSide == "white"){
       this.board.set({orientation: "white"});

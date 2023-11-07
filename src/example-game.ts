@@ -16,13 +16,13 @@
  */
 
 import { PGN } from "./chess-notation.js";
-import { FEN } from "./chess-notation.js"
+import { FEN } from "./chess-notation.js";
 
 /**
  * a chess repertoire example game. It's primary use is in a rep builder GUI, so it needs to have a visual
  * component :. extends button
  */
-export class ExampleGame extends HTMLButtonElement {
+export class ExampleGame {
 
   public name: string; //game name
   public PGN: PGN;  //example game pgn
@@ -35,7 +35,6 @@ export class ExampleGame extends HTMLButtonElement {
    */
   constructor(name:string, pgn:PGN){
 
-    super();
     this.name = name;
     this.PGN = pgn;
   }

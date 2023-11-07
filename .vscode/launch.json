@@ -1,0 +1,11 @@
+{
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "attach",
+      "name": "Attach to browser",
+      "port": 9222
+    }
+  ]
+}
+///usr/bin/chromium-browser --remote-debugging-port=9222 --user-data-dir=remote-debug-profile

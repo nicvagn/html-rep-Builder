@@ -51,7 +51,7 @@ export class Repertoire {
    * @param {string} _name? would be this reps name
    * @returns a Repertoire with a name and nothing else
    */
-  public repertoireOnlyName(_name?:string)
+  public repertoireOnlyName(_name?:string):Repertoire
   {
     if(this.name != undefined && this.name != null)
     {
@@ -70,7 +70,7 @@ export class Repertoire {
    * add a line to this repertoire object
    * @param repLine - a RepertoireLine
    */
-  public addLine(repLine:RepertoireLine)
+  public addLine(repLine:RepertoireLine):void
   {
     //if the line list is undefined
     if(this.lineList == undefined){
@@ -85,7 +85,7 @@ export class Repertoire {
   /**
    * reset the lineList to undefined
    */
-  resetLines()
+  resetLines():void
   {
     if(this.lineList == undefined){
       return; // if line list is already undefined
@@ -99,7 +99,7 @@ export class Repertoire {
   /**
    * save this rep to local storage with its key being it's name
    */
-  saveRep()
+  public saveRep():void
   {
     SaveController.getRepertoireFromLocal(this.name);
   }

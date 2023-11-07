@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <!--
- * a js chess repertoire including lines and example games made for shcc
+ * a typescript chess repertoire including lines and example games made for shcc
  * Copyright (C) 2023 Nicolas Vaagen
  *
  * This program is free software: you can redistribute it and/or modify it
@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="images/shcc-logo-notxt.png">
 
-  <script type="module" src="./built/repertoire-controller.mjs"></script>
+  <script type="module" src="./built/new-repertoire-controller.mjs"></script>
 </head>
 
 <body id="pop">
@@ -57,7 +57,7 @@
       </tr>
     </table>
   </div>
-  <button id="submit" onclick="getTextFromPop('addGame')">Submit</button>
+  <button id="submit" result="dte" onclick="submit(this.window)">Submit</button>
 
 </body>
 

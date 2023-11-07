@@ -18,15 +18,16 @@
 /**
  * a PGN but with some nice features for chess programming
  */
-export class PGN {
-
+export class PGN
+{
   pgn: string;
 
   /**
    * new pgn.
    * @param pgn the basic text pgn
    */
-  constructor(pgn: string){
+  constructor(pgn: string)
+  {
     this.pgn = pgn;
   }
 }
@@ -35,15 +36,16 @@ export class PGN {
 /**
  * a fen but with some nice features
  */
-export class FEN {
-
+export class FEN
+{
   public readonly stringFEN: string;
 
   /**
    * new fen.
    * @param fen a fen
    */
-  constructor(fen: string){
+  constructor(fen: string)
+  {
     this.stringFEN = fen;
   }
 }

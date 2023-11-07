@@ -22,21 +22,21 @@ import { PGN } from "./chess-notation.js"
  * a chess repertoire line. It's primary use is in a rep builder GUI, so it needs to have a visual
  * component
  */
-export class RepertoireLine extends HTMLButtonElement {
+export class RepertoireLine
+{
 
   name: string;
-  pgn: string; //main pgn of the line
+  pgn?: PGN; //main pgn of the line
   exampleGames?: [ExampleGame];
 
   /**
    * construct a new repertoire line
    * @param {string} name the name of the line
    */
-  constructor(name: string, exampleGames?: [ExampleGame]) {
+  constructor(name: string, exampleGames?: [ExampleGame])
+  {
 
-    super();
     this.name = name;
-    this.pgn = "";
 
     if (exampleGames != undefined) {
       //if there is a value for exampleGames
@@ -47,7 +47,8 @@ export class RepertoireLine extends HTMLButtonElement {
   /**
    * reset the gameList to undefined
    */
-  public resetGames() {
+  public resetGames():void
+  {
 
     if (this.exampleGames == undefined) {
       return; // if game list is already undefined
@@ -64,7 +65,8 @@ export class RepertoireLine extends HTMLButtonElement {
    * @param {string} gameName the name to give to this game
    * @param {PGN} pgn pgn of the game
    */
-  public addGame(gameName: string, pgn: PGN) {
+  public addGame(gameName: string, pgn: PGN):void
+  {
 
     //create new example game with pgn
     let game = new ExampleGame(gameName, pgn);

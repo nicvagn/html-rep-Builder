@@ -59,7 +59,8 @@ export class SaveController
    * @param {string} key the key of the item to be retrieve
    * @returns the retrieve item in json
    */
-  private static getFromLocal(key: string): Object {
+  private static getFromLocal(key: string): Object
+  {
     //try to grab element tied to the key
 
     let grab: string | null = localStorage.getItem(key);

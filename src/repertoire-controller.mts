@@ -1,4 +1,5 @@
-/* a typescript chess repertoire builder. including line and example game viewing made for shcc
+/**************************************************************
+ * a typescript chess repertoire builder. including line and example game viewing made for shcc
  * Copyright (C) 2023 Nicolas Vaagen
  *
  * This program is free software: you can redistribute it and/or modify it
@@ -13,24 +14,17 @@
  *
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+ ************************************************************/
 
 //nrv stuff
 import { Repertoire } from "./repertoire.js";
-import { ExampleGame } from "./example-game.js"
+import { ExampleGame } from "./example-game.js";
 import { RepertoireLine } from "./repertoire-line.js";
-import { BoardState } from "./board-state.js"
+import { BoardState } from "./board-state.js";
 import { PGN, FEN } from "./chess-notation.js";
 import { SaveController } from "./save-controller.js";
-import { NewRepertoireController } from "./new-repertoire-controller.js";
+import { NewRepertoireController } from "./new-repertoire-controller.mjs";
 
-//if the custom elements are not defined, def. them
-if (!customElements.get('example-game')) {
-  customElements.define('example-game', ExampleGame, { extends: "button"});
-}
-if (!customElements.get('rep-line')) {
-  customElements.define('rep-line', RepertoireLine, { extends: "button"});
-}
 
 //top navbar buttons
 const newBtnTop = document.getElementById("newRepTop");
@@ -54,7 +48,6 @@ export class Controller
   text_PGN: string = "1. e4 e5 {A surprising move. I did not expect this from my opponent.} 2. Nf3 Nc6 3. Bb5 a6 {Here I was thinking about taking on c6, but eventually decided to preserve my bishop.} 4. Ba4 ({Usually, I play} 4.Bxc6) 4…Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O {etc.}";
   obj_pgn: PGN = new PGN(this.text_PGN);
   test_game: ExampleGame = new ExampleGame("test game", this.obj_pgn);
-
   test_FENS: [FEN, FEN] =  [new FEN("rnbq1rk1/ppp2ppp/3p1n2/4p3/1bP1P3/2N3P1/PP1PNPBP/R1BQK2R b KQ - 1 6 "), new FEN("r2q1rk1/pp2ppbp/1n3np1/3P4/P2P1N2/1QN5/1P3PPP/R1B1K2R b KQ - 2 13")];
 
   /**
@@ -90,7 +83,7 @@ export class Controller
   /**
    * set the rep name by asking for user input
    */
-  private setNameElement(name: string)
+  private setNameElement(name: string):void
   {
     this.openRep = new Repertoire(name!); //the currently open rep
 
@@ -132,7 +125,7 @@ export class Controller
   {
 
     //make a new repertoire controller for the new rep
-    this.newRepController = new NewRepertoireController();
+    this.newRepController = new NewRepertoireController(controller);
 
     //get all the new repertoire buttons
     const newRepItems:Array<HTMLElement> = Array.from(
@@ -167,7 +160,7 @@ export class Controller
    * change the game on the main board to passed ExampleGame
    * @param {ExampleGame} exampleGame example game to change the main board too
    */
-  public displayExampleGame(exampleGame: ExampleGame)
+  public displayExampleGame(exampleGame: ExampleGame):void
   {
     //just for testing if I can change the fen
     this.boardState.switchFen(exampleGame.FEN);
@@ -177,7 +170,7 @@ export class Controller
    * the navBar btn listener
    * @param event - the click event that triggered this
    */
-  public topBtnOpen(event:Event)
+  public topBtnOpen(event:Event):void
   {
     console.log("top btn open" + event);
 
