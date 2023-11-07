@@ -1,4 +1,5 @@
-/* a typescript chess repertoire builder. including line and example game viewing made for shcc
+/*************************************************************
+ * a typescript chess repertoire builder. including line and example game viewing made for shcc
  * Copyright (C) 2023 Nicolas Vaagen
  *
  * This program is free software: you can redistribute it and/or modify it
@@ -13,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+ ************************************************************/
 
 import { PGN } from "./chess-notation.js";
 import { FEN } from "./chess-notation.js";
@@ -22,7 +23,8 @@ import { FEN } from "./chess-notation.js";
  * a chess repertoire example game. It's primary use is in a rep builder GUI, so it needs to have a visual
  * component :. extends button
  */
-export class ExampleGame {
+export class ExampleGame
+{
 
   public name: string; //game name
   public PGN: PGN;  //example game pgn
@@ -33,10 +35,9 @@ export class ExampleGame {
    * @param {string} name the name of the line
    * @param {PGN} pgn the pgn of the game
    */
-  constructor(name:string, pgn:PGN){
-
+  constructor(name:string, pgn:PGN)
+  {
     this.name = name;
     this.PGN = pgn;
   }
-
 }

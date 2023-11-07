@@ -49,6 +49,7 @@ export class Controller
   obj_pgn: PGN = new PGN(this.text_PGN);
   test_game: ExampleGame = new ExampleGame("test game", this.obj_pgn);
   test_FENS: [FEN, FEN] =  [new FEN("rnbq1rk1/ppp2ppp/3p1n2/4p3/1bP1P3/2N3P1/PP1PNPBP/R1BQK2R b KQ - 1 6 "), new FEN("r2q1rk1/pp2ppbp/1n3np1/3P4/P2P1N2/1QN5/1P3PPP/R1B1K2R b KQ - 2 13")];
+  testLine: RepertoireLine = new RepertoireLine("Line 1", [this.test_game]);
 
   /**
    * construct a new rep with a name maybe
@@ -78,8 +79,16 @@ export class Controller
     //add listeners to the navbar btn
     newBtnTop.addEventListener("click", this.topBtnNew);
     openBtnTop.addEventListener("click", this.topBtnOpen);
+
+    this.test();
   }
 
+  test()
+  {
+
+    //test data
+    this.openRep?.addLine(this.testLine);
+  }
   /**
    * set the rep name by asking for user input
    */

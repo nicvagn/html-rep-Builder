@@ -1,4 +1,5 @@
-/* a typescript chess repertoire builder. including line and example game viewing made for shcc
+/**************************************************************
+ * a typescript chess repertoire builder. including line and example game viewing made for shcc
  * Copyright (C) 2023 Nicolas Vaagen
  *
  * This program is free software: you can redistribute it and/or modify it
@@ -13,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+ ************************************************************/
 
 import { ExampleGame } from "./example-game.js";
 import { PGN } from "./chess-notation.js"
@@ -22,12 +23,18 @@ import { PGN } from "./chess-notation.js"
  * a chess repertoire line. It's primary use is in a rep builder GUI, so it needs to have a visual
  * component
  */
-export class RepertoireLine
+export class RepertoireLine extends HTMLButtonElement
 {
 
   name: string;
   pgn?: PGN; //main pgn of the line
   exampleGames?: [ExampleGame];
+
+  //get the div where a ul is created for the line list where the games go
+  gameListRoot:HTMLElement = document.getElementById("lineList")!;
+
+  exampleGamesList?:HTMLUListElement;
+
 
   /**
    * construct a new repertoire line
@@ -35,7 +42,7 @@ export class RepertoireLine
    */
   constructor(name: string, exampleGames?: [ExampleGame])
   {
-
+    super();
     this.name = name;
 
     if (exampleGames != undefined) {
@@ -76,6 +83,22 @@ export class RepertoireLine
     } else {
       this.exampleGames.push(game);
     }
+
+    //add game to the DOM
+    if(this.exampleGamesList != undefined || this.exampleGamesList != null)
+    {
+      this.exampleGamesList.appendChild(game);
+    }
+    else
+    {
+      //create ul exampleGameList
+      this.exampleGamesList = document.createElement("ul");
+      this.exampleGamesList.appendChild(game);
+
+      //put it at it's root
+      this.gameListRoot.appendChild(this.exampleGamesList);
+    }
+
 
     /*
     /create a new element of the type "example-game"
