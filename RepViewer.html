@@ -28,8 +28,6 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="images/shcc-logo-notxt.png">
 
-
-
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script type="module" src="./built/repertoire-controller.mjs"></script>
 
@@ -61,9 +59,10 @@
 
       <h1>Lines:</h1>
 
-      <ul id="lineList">
-        <li class="newRep"><button id="addLine" class="newRep">Add Line</button></li>
-      </ul>
+      <!-- place for the line list, we will create a ul in ts -->
+      <div id="lineList"></div>
+
+      <button id="addLine" class="newRep">Add Line</button>
 
     </div>
     <div class="centerPane">
