@@ -101,6 +101,7 @@ export class Repertoire {
    */
   public saveRep():void
   {
-    SaveController.getRepertoireFromLocal(this.name);
+    //SaveController.getRepertoireFromLocal(this.name);
+    console.log("save Rep Pressed");
   }
 }

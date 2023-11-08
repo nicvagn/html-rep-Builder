@@ -113,29 +113,26 @@
 /* common css */
 button {
   display: block;
-  justify-content: center;
   align-items: center;
   text-decoration: none;
-  min-height: 60px;
   padding: 10px 20px;
-  height: 100%;
   width: 100px;
   border: none;
-  outline-color: #000;
-  outline-width: 1px;
-  outline-style: solid;
+  outline-style: none;
   background: #064742;
   color: #fff;
   margin: 15px 15px;
-}
-
-body {
-  background-color: #adbebd;
+  height: 70px;
+  font-size: medium;
 }
 
 button:hover {
   background: #DD1810;
   transition: all 0.3s ease;
+}
+
+body {
+  background-color: #adbebd;
 }
 
 ul{

@@ -19,7 +19,8 @@
 import { BoardState } from "./board-state.js";
 import { ExampleGame } from "./example-game.js";
 import { RepertoireLine } from "./repertoire-line.js";
-import { Controller } from "./repertoire-controller.mjs";
+import { controller } from "./repertoire-controller.mjs";
+import { AddGame, AddLine } from "./add-buttons.mjs";
 //import { Controller, controller } from "./repertoire-controller.mjs";
 
 //get the various NewRepertoire buttons
@@ -40,9 +41,8 @@ export class NewRepertoireController
   gameList: Array<ExampleGame>;
   lineList: Array<RepertoireLine>;
   boardState: BoardState;
-  controller: Controller;
 
-  constructor(controller:Controller)
+  constructor()
   {
     //add listeners
     addLineBtn?.addEventListener("click", buttonLnr);
@@ -58,7 +58,6 @@ export class NewRepertoireController
     newRepertoireController = this;
 
     //make a reference for the original controller
-    this.controller = controller;
     this.boardState = controller.boardState;
 
     //test data
@@ -69,6 +68,7 @@ export class NewRepertoireController
   public addGame():void
   {
     //add game
+    let addGame = new AddGame();
   }
 
   /**
@@ -77,6 +77,7 @@ export class NewRepertoireController
   public addLine():void
   {
     //add line
+    let addLine = new AddLine;
   }
 
   public resetLines():void

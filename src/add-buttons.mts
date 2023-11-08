@@ -1,4 +1,4 @@
-/*************************************************************
+/************************************************************
  * a typescript chess repertoire builder. including line and example game viewing made for shcc
  * Copyright (C) 2023 Nicolas Vaagen
  *
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************/
+
 import { ExampleGame } from "./example-game.js";
 import { RepertoireLine } from "./repertoire-line.js";
 import { Repertoire } from "./repertoire.js";
@@ -36,8 +37,8 @@ export class AddLine
 /**
  * add a game to a repertoire. Class hae methods and functions to help with this
  */
-export class AddGame {
-
+export class AddGame
+{
   constructor()
   {
     console.log("AddGame Constructed");
