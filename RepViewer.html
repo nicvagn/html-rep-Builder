@@ -28,13 +28,15 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="images/shcc-logo-notxt.png">
 
+  <!--JQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script type="module" src="./built/repertoire-controller.mjs"></script>
 
   <!-- chessground css -->
   <link rel="stylesheet" type="text/css" href="node_modules/chessground/assets/chessground.base.css" />
   <link rel="stylesheet" type="text/css" href="node_modules/chessground/assets/chessground.brown.css" />
   <link rel="stylesheet" type="text/css" href="node_modules/chessground/assets/chessground.cburnett.css" />
+
+  <script type="module" src="built/repertoire-controller.mjs"></script>
 </head>
 
 <body>
@@ -60,9 +62,9 @@
       <h1>Lines:</h1>
 
       <!-- place for the line list, we will create a ul in ts -->
-      <div id="lineList"></div>
-
-      <button id="addLine" class="newRep">Add Line</button>
+      <div id="lineList">
+        <button id="addLine" class="newRep">Add Line</button>
+      </div>
 
     </div>
     <div class="centerPane">
@@ -78,9 +80,10 @@
 
       <h1>Instructive games:</h1>
 
-      <ul id="gameList">
-        <li class="newRep"><button id="addGame" class="newRep">Add Game</button></li>
-      </ul>
+      <!-- place for open lines game list, we will create a ul in ts -->
+      <div id="gameList">
+        <button id="addGame" class="newRep">Add Game</button>
+      </div>
 
       <div>
         <h1>Local <br>Repertoires:</h1>
@@ -89,7 +92,7 @@
         </ul>
       </div>
 
-      <a id="downloadLink" href="#" download="Repertoire.txt">Download</a>
+      <a id="downloadLink" href="#" download="Repertoire.json">Download</a>
 
     </div>
   </div>

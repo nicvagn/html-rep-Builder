@@ -60,32 +60,23 @@ export class NewRepertoireController
     //make a reference for the original controller
     this.controller = controller;
     this.boardState = controller.boardState;
+
+    //test data
     this.gameList = [new ExampleGame("game", controller.obj_pgn)];
     this.lineList = [new RepertoireLine("Line")]
   }
 
-  /**
-   * show add game popup to add a game to this line
-   */
-  public showAddGame():void
+  public addGame():void
   {
-    console.log("showAddGame() entered");
-    const windowFeatures = "width=1200, height=800, popup";
-    window.open("AddGame.html", "mozillaWindow", windowFeatures);
-  }
-
-  public addGame():void {
-
+    //add game
   }
 
   /**
    * show the add line popup to add a game to this line
    */
-  public showAddLine():void
+  public addLine():void
   {
-    console.log("showAddLine() entered");
-    const windowFeatures = "width=320,height=320,popup";
-    window.open("AddLine.html", "mozillaWindow", windowFeatures);
+    //add line
   }
 
   public resetLines():void
@@ -114,13 +105,13 @@ function buttonLnr(event: Event):void
   {
     console.log("Add Line btn");
     //addLineBtn was the target
-    newRepertoireController.showAddLine();
+    newRepertoireController.addLine();
   }
   else if(event.target == addGameBtn)
   {
     console.log("Add game Btn");
     //add game btn was the target
-    newRepertoireController.showAddGame();
+    newRepertoireController.addGame();
   }
   else if(event.target == resetLinesBtn)
   {
@@ -145,28 +136,3 @@ function buttonLnr(event: Event):void
     throw Error("event target was: " + event.target + " this is not one of the buttons.");
   }
 }
-
-/**
- * a submit function for the popup windows
- */
-export function submit(sender:any):boolean
-{
-  alert("the result from pop " + sender.getAttribute("result"));
-  try {
-    window.opener.HandlePopupResult(sender.getAttribute("result"));
-  }
-  catch (err) {}
-  window.close();
-  return false;
-}
-
-/*
-function CloseMySelf(sender) {
-  try {
-      window.opener.HandlePopupResult(sender.getAttribute("result"));
-  }
-  catch (err) {}
-  window.close();
-  return false;
-}
-*/

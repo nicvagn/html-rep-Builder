@@ -2,5 +2,8 @@
   "dependencies": {
     "chessground": "^9.0.4",
     "jquery": "^3.7.1"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.5.27"
   }
 }

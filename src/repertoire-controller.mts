@@ -1,4 +1,4 @@
-/**************************************************************
+/*************************************************************
  * a typescript chess repertoire builder. including line and example game viewing made for shcc
  * Copyright (C) 2023 Nicolas Vaagen
  *
