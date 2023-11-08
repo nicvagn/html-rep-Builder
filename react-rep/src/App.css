@@ -1,0 +1,273 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+/* start navbar styling */
+.navbar {
+  background: #1e9c9c;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 6rem;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  min-width: 750px;
+}
+
+.navbar__container {
+  display: flex;
+  justify-content: space-between;
+  height: 80px;
+  z-index: 1;
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 50px;
+  padding-left: 50px;
+}
+
+.navbar__menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  text-align: center;
+  padding-right: 60px;
+}
+
+.navbar__links {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  padding: 0 1rem;
+  height: 100%;
+  cursor: pointer;
+  outline: none;
+  height: 60px;
+  font-size: xx-large;
+}
+
+.navbar__links:hover{
+  box-shadow: inset 5em 5em #FDD401;
+  color: black;
+  transition-duration: 10ms;
+}
+
+/* top bar logo */
+#logo {
+  margin: 5px;
+  height: 4rem;
+  border-radius: 15%;
+  -webkit-border-radius: 15%;
+  -moz-border-radius: 15%;
+  -ms-border-radius: 15%;
+  -o-border-radius: 15%;
+}
+
+/* chessground css */
+
+/* chessground pane and container */
+.centerPane body{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.centerPane div {
+  margin: 20px auto;
+}
+
+/* board color */
+.centerPane cg-board {
+  background-color: #1e9c9c;
+}
+
+.chessground {
+  width: 700px;
+  height: 700px;
+}
+
+
+/* common css */
+button {
+  display: block;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  min-height: 60px;
+  padding: 10px 20px;
+  height: 100%;
+  width: 100px;
+  border: none;
+  outline-color: #000;
+  outline-width: 1px;
+  outline-style: solid;
+  background: #064742;
+  color: #fff;
+  margin: 15px 15px;
+}
+
+body {
+  background-color: #adbebd;
+}
+
+button:hover {
+  background: #DD1810;
+  transition: all 0.3s ease;
+}
+
+ul{
+  list-style-type: none;
+}
+
+/* RepViewer css */
+
+#repName {
+  display: block;
+  text-align: center;
+  background-color: #FDD401;
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 17.5%;
+}
+
+.centerPane {
+  flex: 70%;
+}
+
+.repLine {
+  display: block;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  padding: 10px 20px;
+  min-width: 200px;
+
+  height: 100%;
+  width: fit-content;
+  border: none;
+  outline-color: #000;
+  outline-width: 1px;
+  outline-style: solid;
+  background: #FDD401;
+  color: black;
+}
+
+.repLine:hover {
+  background: #DD1810;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.repGame {
+  display: block;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  padding: 10px 20px;
+  height: 100%;
+  width: fit-content;
+  min-width: 200px;
+  border: none;
+  outline-color: #000;
+  outline-width: 1px;
+  outline-style: solid;
+  background: #FDD401;
+  color: black;
+}
+
+.repGame:hover {
+  background: #DD1810;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.column h1 {
+  margin:0 auto 10px 40px;
+}
+
+#saveBrowser {
+  width: 300px;
+}
+
+#downloadLink{
+  visibility: hidden;
+  margin: 10px 0px 0px 50px;
+}
+
+/* New rep css */
+
+#newRepButtons {
+  display: inline-flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.newRep{ /* when new rep is clicked, these items are shown */
+  visibility: hidden;
+}
+/* OpenRep css */
+
+/* the list of repertoires on open rep. pageS */
+#repertoiresTable {
+  border: 1px solid;
+}
+
+/* add game popup */
+#pop {
+  background: #1e9c9c;
+  position: relative;
+}
+#navbar-pop {
+  background: cornflowerblue;
+}

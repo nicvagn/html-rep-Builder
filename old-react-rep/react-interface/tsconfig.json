@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./react-interface/src",
+    "outDir": "./built",
     "rootDir": "src",
     "noEmitOnError": false,
     "strict": true,

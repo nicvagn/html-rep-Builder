@@ -25,11 +25,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>SHCC: Repertoire Viewer</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="../css/styles.css" />
   <link rel="icon" href="images/shcc-logo-notxt.png">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script type="module" src="./built/repertoire-controller.mjs"></script>
+  <script type="module" src="../built/repertoire-controller.mjs"></script>
 
   <script type="module">
     import { createRoot } from 'react-dom/client';
@@ -45,9 +45,9 @@
   </script>
 
   <!-- chessground css -->
-  <link rel="stylesheet" type="text/css" href="node_modules/chessground/assets/chessground.base.css" />
-  <link rel="stylesheet" type="text/css" href="node_modules/chessground/assets/chessground.brown.css" />
-  <link rel="stylesheet" type="text/css" href="node_modules/chessground/assets/chessground.cburnett.css" />
+  <link rel="stylesheet" type="text/css" href="../node_modules/chessground/assets/chessground.base.css" />
+  <link rel="stylesheet" type="text/css" href="../node_modules/chessground/assets/chessground.brown.css" />
+  <link rel="stylesheet" type="text/css" href="../node_modules/chessground/assets/chessground.cburnett.css" />
 </head>
 
 <body>
@@ -97,8 +97,7 @@
       <div>
         <h1>Local <br>Repertoires:</h1>
 
-        <ul id="localReps">
-        </ul>
+        <div id="localReps"></div>
       </div>
 
       <a id="downloadLink" href="#" download="Repertoire.txt">Download</a>

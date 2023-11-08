@@ -1,4 +1,5 @@
-/* a js chess repertoire including lines and example games made for shcc
+/**************************************************************
+ * a typescript chess repertoire builder. including line and example game viewing made for shcc
  * Copyright (C) 2023 Nicolas Vaagen
  *
  * This program is free software: you can redistribute it and/or modify it
@@ -13,9 +14,38 @@
  *
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
+ ************************************************************/
+/**
+ * a PGN but with some nice features for chess programming
  */
-//add event listeners to various buttons
-var addLineBtn = document.getElementById("addLine");
-var addGameBtn = document.getElementById("addGame");
-addLineBtn.addEventListener("click", controller.openRep.showAddLine());
-addGameBtn.addEventListener("click", controller.openRep.showAddGame());
+export class PGN
+{
+  pgn: string;
+
+  /**
+   * new pgn.
+   * @param pgn the basic text pgn
+   */
+  constructor(pgn: string)
+  {
+    this.pgn = pgn;
+  }
+}
+
+
+/**
+ * a fen but with some nice features
+ */
+export class FEN
+{
+  public readonly stringFEN: string;
+
+  /**
+   * new fen.
+   * @param fen a fen
+   */
+  constructor(fen: string)
+  {
+    this.stringFEN = fen;
+  }
+}

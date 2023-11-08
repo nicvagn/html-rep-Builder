@@ -16,7 +16,9 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************/
 
-//nrv stuff
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
 import { Repertoire } from "./repertoire.js";
 import { ExampleGame } from "./example-game.js";
 import { RepertoireLine } from "./repertoire-line.js";
@@ -24,6 +26,34 @@ import { BoardState } from "./board-state.js";
 import { PGN, FEN } from "./chess-notation.js";
 import { SaveController } from "./save-controller.js";
 import { NewRepertoireController } from "./new-repertoire-controller.mjs";
+
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.tsx</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
+  );
+}
+
+export default App;
+
+
+
+//nrv stuff
 
 
 //top navbar buttons
@@ -56,7 +86,7 @@ export class Controller
    */
   constructor(name?: string)
   {
-    if (name != undefined) {
+    if (name !== undefined) {
       this.openRep = new Repertoire(name); //the currently open rep
     } else {
       name = prompt("What would you like to call this repertoire?")!;
@@ -106,7 +136,7 @@ export class Controller
    */
   public getOpenLine(): RepertoireLine
   {
-    if (this.openLine != undefined) {
+    if (this.openLine !== undefined) {
       return this.openLine;
     } else {
       throw Error("no open line.");
@@ -119,7 +149,7 @@ export class Controller
    */
   public getOpenRep(): Repertoire
   {
-    if (this.openRep != undefined) {
+    if (this.openRep !== undefined) {
       return this.openRep;
     } else {
       throw Error("no open repertoire.");

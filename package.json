@@ -1,6 +1,32 @@
 {
   "dependencies": {
+    "@types/react": "^18.2.36",
+    "@types/react-dom": "^18.2.14",
     "chessground": "^9.0.4",
-    "jquery": "^3.7.1"
-  }
+    "jquery": "^3.7.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "name": "html-rep-builder",
+  "description": "A repertoire builder made for the Saskatchewan Horizon Chess Club.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "console.log(\"hello\")"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicvagn/html-rep-Builder.git"
+  },
+  "keywords": [
+    "repretoire",
+    "builder"
+  ],
+  "author": "Nicolas Vaagen",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/nicvagn/html-rep-Builder/issues"
+  },
+  "homepage": "https://github.com/nicvagn/html-rep-Builder#readme"
 }
