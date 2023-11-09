@@ -1,5 +1,6 @@
-/**************************************************************
- * a typescript chess repertoire builder. including line and example game viewing made for shcc
+/*********************************************************************************
+ * a typescript chess repertoire builder. including line and example game viewing
+ * made for shcc: Saskatchewan Horizon Chess Club
  * Copyright (C) 2023 Nicolas Vaagen
  *
  * This program is free software: you can redistribute it and/or modify it
@@ -14,28 +15,26 @@
  *
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
- ************************************************************/
+ *********************************************************************************/
 
 import { BoardState } from "./board-state.js";
 import { ExampleGame } from "./example-game.js";
 import { RepertoireLine } from "./repertoire-line.js";
 import { controller } from "./repertoire-controller.mjs";
-import { AddGame, AddLine } from "./add-buttons.mjs";
-//import { Controller, controller } from "./repertoire-controller.mjs";
+
 
 //get the various NewRepertoire buttons
-const addLineBtn = document.getElementById("addLine");
-const addGameBtn = document.getElementById("addGame");
+const editLineBtn = document.getElementById("editLine");
 const resetLinesBtn = document.getElementById("resetLines");
 const resetGamesBtn = document.getElementById("resetGames");
 const saveBrowserBtn = document.getElementById("saveBrowser");
 
-let newRepertoireController: NewRepertoireController;
+let editRepertoireController: EditRepertoireController;
 
 /**
- * helper for newRep.html aides in creation of new reps
+ * helper for creating new reps
  */
-export class NewRepertoireController
+export class EditRepertoireController
 {
 
   gameList: Array<ExampleGame>;
@@ -44,18 +43,15 @@ export class NewRepertoireController
 
   constructor()
   {
+    console.log("EditRepertoireController constructed");
     //add listeners
-    addLineBtn?.addEventListener("click", buttonLnr);
-    addGameBtn?.addEventListener("click", buttonLnr);
+    editLineBtn?.addEventListener("click", buttonLnr);
     resetLinesBtn?.addEventListener("click", buttonLnr);
     resetGamesBtn?.addEventListener("click", buttonLnr);
     saveBrowserBtn?.addEventListener("click", buttonLnr);
 
-    //show all the new repertoire elements
-    $(".newRep").show();
-
     //make a local file scope variable, so the button listeners can access the controller class
-    newRepertoireController = this;
+    editRepertoireController = this;
 
     //make a reference for the original controller
     this.boardState = controller.boardState;
@@ -65,19 +61,16 @@ export class NewRepertoireController
     this.lineList = [new RepertoireLine("Line")]
   }
 
-  public addGame():void
-  {
-    //add game
-    let addGame = new AddGame();
-  }
-
   /**
-   * show the add line popup to add a game to this line
+   *  edit a line, you can add games to a line, change the name, etc. Shows a popup
+   * to accomplish this
    */
-  public addLine():void
+  public editLine():void
   {
-    //add line
-    let addLine = new AddLine;
+    //edit line
+    console.log("EditLine entered");
+    const windowFeatures = "width=500, height=400,popup";
+    window.open("AddPgn.html", "mozillaWindow", windowFeatures);
   }
 
   public resetLines():void
@@ -102,35 +95,29 @@ export class NewRepertoireController
  */
 function buttonLnr(event: Event):void
 {
-  if(event.target == addLineBtn)
+  if(event.target == editLineBtn)
   {
-    console.log("Add Line btn");
-    //addLineBtn was the target
-    newRepertoireController.addLine();
-  }
-  else if(event.target == addGameBtn)
-  {
-    console.log("Add game Btn");
-    //add game btn was the target
-    newRepertoireController.addGame();
+    console.log("Edit Line btn was the target");
+
+    editRepertoireController.editLine();
   }
   else if(event.target == resetLinesBtn)
   {
     console.log("reset Lines btn");
     //reset lines
-    newRepertoireController.resetLines();
+    editRepertoireController.resetLines();
   }
   else if(event.target == resetGamesBtn)
   {
     console.log("reset games btn");
     //reset games
-    newRepertoireController.resetLines();
+    editRepertoireController.resetGames();
   }
   else if(event.target == saveBrowserBtn)
   {
     console.log("save browser btn");
     //save to browser
-    newRepertoireController.saveToBrowser();
+    editRepertoireController.saveToBrowser();
   }
   else
   {

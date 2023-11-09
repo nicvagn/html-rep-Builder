@@ -8,4 +8,4 @@
     }
   ]
 }
-///usr/bin/chromium-browser --remote-debugging-port=9222 --user-data-dir=remote-debug-profile
+// /usr/bin/chromium-browser --remote-debugging-port=9222 --user-data-dir=remote-debug-profile

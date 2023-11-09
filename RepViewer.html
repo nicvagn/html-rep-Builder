@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 
-<!--
- * a js chess repertoire including lines and example games made for shcc
+<!--******************************************************************************
+ * a typescript chess repertoire builder. including line and example game viewing
+ * made for shcc: Saskatchewan Horizon Chess Club
  * Copyright (C) 2023 Nicolas Vaagen
  *
  * This program is free software: you can redistribute it and/or modify it
@@ -16,7 +17,7 @@
  *
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+ ********************************************************************************-->
 
 <html lang="en">
 
@@ -28,14 +29,15 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="images/shcc-logo-notxt.png">
 
-  <!--JQuery -->
+  <!-- JQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
   <!-- chessground css -->
-  <link rel="stylesheet" type="text/css" href="node_modules/chessground/assets/chessground.base.css" />
-  <link rel="stylesheet" type="text/css" href="node_modules/chessground/assets/chessground.brown.css" />
-  <link rel="stylesheet" type="text/css" href="node_modules/chessground/assets/chessground.cburnett.css" />
+  <link rel="stylesheet" type="text/css" href="./node_modules/chessground/assets/chessground.base.css" />
+  <link rel="stylesheet" type="text/css" href="./node_modules/chessground/assets/chessground.brown.css" />
+  <link rel="stylesheet" type="text/css" href="./node_modules/chessground/assets/chessground.cburnett.css" />
 
+  <!-- our module -->
   <script type="module" src="built/repertoire-controller.mjs"></script>
 </head>
 
@@ -47,6 +49,9 @@
       <ul class="navbar__menu">
         <li class="navbar__item">
           <button id="newRepTop" class="navbar__links">New</button>
+        </li>
+        <li class="navbar__item">
+          <button id="editRepTop" class="navbar__links">Edit</button>
         </li>
         <li class="navbar__item">
           <button id="openRepTop" class="navbar__links">Open</button>
@@ -63,16 +68,16 @@
 
       <!-- place for the line list, we will create a ul in ts -->
       <div id="lineList">
-        <button id="addLine" class="newRep">Add Line</button>
       </div>
 
     </div>
     <div class="centerPane">
+
       <h2 id="repName">Placeholder Name</h2>
 
       <!-- Main Chessboard -->
       <div id="chessground" class="chessground">
-        <!--board here-->
+        <!-- board here -->
       </div>
 
     </div>
@@ -82,7 +87,6 @@
 
       <!-- place for open lines game list, we will create a ul in ts -->
       <div id="gameList">
-        <button id="addGame" class="newRep">Add Game</button>
       </div>
 
       <div>
@@ -97,11 +101,17 @@
     </div>
   </div>
 
-  <div id="newRepButtons" class="newRep">
+  <div id="newRepButtons" class="editRep">
 
-    <button id="resetLines">reset lines</button>
     <button id="resetGames">reset games</button>
-    <button id="saveBrowser">Save to browser permanent local storage</button>
+    <button id="resetLines">reset lines</button>
+    <button id="editLine" class="wideBtn">add PGN's</button>
+    <button id="saveBrowser" class="wideBtn">save to browser permanent local storage</button>
+
+    <label for="fileInput" class="fileInput">
+      add PGN
+    </label>
+    <input id="fileInput" type="file"/>
 
   </div>
 

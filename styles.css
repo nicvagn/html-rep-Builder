@@ -1,5 +1,6 @@
-/*
- * a js chess repertoire including lines and example games made for shcc
+/*********************************************************************************
+ * a typescript chess repertoire builder. including line and example game viewing
+ * made for shcc: Saskatchewan Horizon Chess Club
  * Copyright (C) 2023 Nicolas Vaagen
  *
  * This program is free software: you can redistribute it and/or modify it
@@ -14,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+ *********************************************************************************/
 
 * {
   box-sizing: border-box;
@@ -73,7 +74,11 @@
 .navbar__links:hover{
   box-shadow: inset 5em 5em #FDD401;
   color: black;
-  transition-duration: 10ms;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
 }
 
 /* top bar logo */
@@ -127,8 +132,13 @@ button {
 }
 
 button:hover {
-  background: #DD1810;
+  background: #FDD401;
+  color: #000;
   transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
 }
 
 body {
@@ -191,7 +201,7 @@ ul{
   padding: 10px 20px;
   height: 100%;
   width: fit-content;
-  min-width: 200px;
+  width: 200px;
   border: none;
   outline-color: #000;
   outline-width: 1px;
@@ -210,7 +220,7 @@ ul{
   margin:0 auto 10px 40px;
 }
 
-#saveBrowser {
+.wideBtn {
   width: 300px;
 }
 
@@ -223,13 +233,44 @@ ul{
 
 #newRepButtons {
   display: inline-flex;
-  justify-content: flex-start;
+  justify-content: center;
   width: 100%;
 }
 
-.newRep{ /* when new rep is clicked, these items are shown */
+#fileInput {
+  display: none;
+}
+
+.fileInput {
+  align-items: center;
+  text-decoration: none;
+  width: 100px;
+  border: none;
+  outline-style: none;
+  background: #064742;
+  color: #fff;
+  height: 70px;
+  font-size: medium;
+  display: inline-flex;
+  padding: 6px 12px;
+  cursor: pointer;
+  background-color: #064742;
+}
+
+.fileInput:hover {
+  background: #FDD401;
+  color: #000;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+}
+
+.editRep{ /* when new rep is clicked, these items are shown */
   visibility: hidden;
 }
+
 /* OpenRep css */
 
 /* the list of repertoires on open rep. pageS */
@@ -239,9 +280,10 @@ ul{
 
 /* add game popup */
 #pop {
-  background: #1e9c9c;
+  background: #adbebd;
   position: relative;
 }
 #navbar-pop {
-  background: cornflowerblue;
+  background:  #1e9c9c;
 }
+

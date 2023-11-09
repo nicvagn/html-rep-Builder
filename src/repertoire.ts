@@ -1,4 +1,6 @@
-/* a typescript chess repertoire builder. including line and example game viewing made for shcc
+/*********************************************************************************
+ * a typescript chess repertoire builder. including line and example game viewing
+ *  made for shcc: Saskatchewan Horizon Chess Club
  * Copyright (C) 2023 Nicolas Vaagen
  *
  * This program is free software: you can redistribute it and/or modify it
@@ -13,15 +15,16 @@
  *
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+ *********************************************************************************/
 
 import { RepertoireLine } from "./repertoire-line.js";
-import { SaveController } from "./save-controller.js";
+//import { SaveController } from "./save-controller.js";
 
 /**
  * A chess repertoire
  */
-export class Repertoire {
+export class Repertoire
+{
 
   name: string;
   lineList?: [RepertoireLine];  // array of lines in this rep
@@ -37,7 +40,8 @@ export class Repertoire {
   {
     console.log("rep with name:" + _name + ", Line List: " + _lineList + "made");
 
-    if(_name == undefined){
+    if(_name == undefined)
+    {
       this.name = prompt("What would you like to call the new repertoire?")!;
     }
     this.name = _name!;
@@ -73,7 +77,8 @@ export class Repertoire {
   public addLine(repLine:RepertoireLine):void
   {
     //if the line list is undefined
-    if(this.lineList == undefined){
+    if(this.lineList == undefined)
+    {
       this.lineList = [repLine];
     }
     else  //otherwise, push it on
