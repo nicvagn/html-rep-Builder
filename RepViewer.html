@@ -37,8 +37,6 @@
   <link rel="stylesheet" type="text/css" href="./node_modules/chessground/assets/chessground.brown.css" />
   <link rel="stylesheet" type="text/css" href="./node_modules/chessground/assets/chessground.cburnett.css" />
 
-  <!-- our module -->
-  <script type="module" src="built/repertoire-controller.mjs"></script>
 </head>
 
 <body>
@@ -66,9 +64,8 @@
 
       <h1>Lines:</h1>
 
-      <!-- place for the line list, we will create a ul in ts -->
-      <div id="lineList">
-      </div>
+      <!-- place for the line list  -->
+      <div id="lineList"></div>
 
     </div>
     <div class="centerPane">
@@ -85,16 +82,12 @@
 
       <h1>Instructive games:</h1>
 
-      <!-- place for open lines game list, we will create a ul in ts -->
-      <div id="gameList">
-      </div>
+      <!-- place for open lines game list -->
+      <div id="gameList"></div>
 
-      <div>
-        <h1>Local <br>Repertoires:</h1>
+      <h1>Local <br>Repertoires:</h1>
 
-        <ul id="localReps">
-        </ul>
-      </div>
+      <div id="localReps"></div>
 
       <a id="downloadLink" href="#" download="Repertoire.json">Download</a>
 
@@ -105,15 +98,15 @@
 
     <button id="resetGames">reset games</button>
     <button id="resetLines">reset lines</button>
-    <button id="editLine" class="wideBtn">add PGN's</button>
+    <label for="fileInput" class="fileInput">Add PGN</label>
     <button id="saveBrowser" class="wideBtn">save to browser permanent local storage</button>
 
-    <label for="fileInput" class="fileInput">
-      add PGN
-    </label>
+
     <input id="fileInput" type="file"/>
 
   </div>
 
+  <!-- our module -->
+  <script type="module" src="built/repertoire-controller.mjs"></script>
 </body>
 </html>

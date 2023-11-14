@@ -33,9 +33,7 @@ export class SaveController
    */
   public static saveRepToLocal(key: string, rep: Repertoire): void
   {
-    let jsonRep = JSON.stringify(rep);
-
-    //this.putLocal(key, jsonRep);
+    this.putLocal(key, rep);
   }
 
   /**
@@ -51,7 +49,9 @@ export class SaveController
     if (obj instanceof Repertoire)
     {
       return obj;
-    } else {
+    }
+    else
+    {
       throw Error("Returned obj not a repertoire");
     }
   }
@@ -79,11 +79,15 @@ export class SaveController
    * @param key the key to put that object's json under in local. The key is used to retrieve the item
    * @param object a javascript object to be put into storage
    */
-  private static putLocal(key: string, object: Object) {
+  private static putLocal(key: string, object: Object)
+  {
+    console.log("putLocal() entered. Key: " + key + "object: " + object);
+
     //create a stringified version of the object
     let strObject = JSON.stringify(object);
 
-    localStorage.setItem(key, strObject);
+    console.log("strObject: " + strObject);
+    //localStorage.setItem(key, strObject);
   }
 
   /** We will maybe work with local storage later

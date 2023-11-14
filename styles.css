@@ -134,6 +134,7 @@ button {
 button:hover {
   background: #FDD401;
   color: #000;
+  cursor: pointer;
   transition: all 0.3s ease;
   -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
@@ -176,13 +177,13 @@ ul{
   text-decoration: none;
   padding: 10px 20px;
   min-width: 200px;
-
   height: 100%;
+  min-height: 50px;
   width: fit-content;
   border: none;
   outline-color: #000;
   outline-width: 1px;
-  outline-style: solid;
+  outline-style: dashed;
   background: #FDD401;
   color: black;
 }
@@ -200,12 +201,13 @@ ul{
   text-decoration: none;
   padding: 10px 20px;
   height: 100%;
+  min-height: 50px;
   width: fit-content;
   width: 200px;
   border: none;
   outline-color: #000;
   outline-width: 1px;
-  outline-style: solid;
+  outline-style: dashed;
   background: #FDD401;
   color: black;
 }
@@ -227,6 +229,7 @@ ul{
 #downloadLink{
   visibility: hidden;
   margin: 10px 0px 0px 50px;
+  cursor: pointer;
 }
 
 /* New rep css */
@@ -242,19 +245,19 @@ ul{
 }
 
 .fileInput {
+  display: block;
   align-items: center;
   text-decoration: none;
+  padding: 10px 20px;
   width: 100px;
   border: none;
   outline-style: none;
   background: #064742;
   color: #fff;
+  margin: 15px 15px;
   height: 70px;
   font-size: medium;
-  display: inline-flex;
-  padding: 6px 12px;
   cursor: pointer;
-  background-color: #064742;
 }
 
 .fileInput:hover {
@@ -266,6 +269,7 @@ ul{
   -ms-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
 }
+
 
 .editRep{ /* when new rep is clicked, these items are shown */
   visibility: hidden;

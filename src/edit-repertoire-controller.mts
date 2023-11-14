@@ -21,6 +21,7 @@ import { BoardState } from "./board-state.js";
 import { ExampleGame } from "./example-game.js";
 import { RepertoireLine } from "./repertoire-line.js";
 import { controller } from "./repertoire-controller.mjs";
+import { FEN } from "./chess-notation.js";
 
 
 //get the various NewRepertoire buttons
@@ -57,7 +58,7 @@ export class EditRepertoireController
     this.boardState = controller.boardState;
 
     //test data
-    this.gameList = [new ExampleGame("game", controller.obj_pgn)];
+    this.gameList = [new ExampleGame("game", controller.obj_pgn, new FEN("rnb1kbnr/pp2pppp/3p4/q1p5/2P2P2/6P1/PP1PP2P/RNBQKBNR w KQkq - 1 4"))];
     this.lineList = [new RepertoireLine("Line")]
   }
 

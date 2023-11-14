@@ -1,4 +1,6 @@
-/* a typescript chess repertoire builder. including line and example game viewing made for shcc
+/*********************************************************************************
+ * a typescript chess repertoire builder. including line and example game viewing
+ * made for shcc: Saskatchewan Horizon Chess Club
  * Copyright (C) 2023 Nicolas Vaagen
  *
  * This program is free software: you can redistribute it and/or modify it
@@ -13,10 +15,12 @@
  *
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+ *********************************************************************************/
+
 
 import { ExampleGame } from "./example-game.js";
 import { PGN } from "./chess-notation.js"
+import { controller } from "./repertoire-controller.mjs";
 
 /**
  * a chess repertoire line. It's primary use is in a rep builder GUI, so it needs to have a visual
@@ -24,19 +28,33 @@ import { PGN } from "./chess-notation.js"
  */
 export class RepertoireLine
 {
-
   name: string;
   pgn?: PGN; //main pgn of the line
-  exampleGames?: [ExampleGame];
+  exampleGames: Array<ExampleGame> = []; //example games for th current line
+
+  //line sutton for display on the DOM
+  public lineBtn: JQuery<HTMLElement>;
 
   /**
    * construct a new repertoire line
    * @param {string} name the name of the line
    */
-  constructor(name: string, exampleGames?: [ExampleGame])
+  constructor(name: string, exampleGames?: ExampleGame[])
   {
 
     this.name = name;
+
+    //create the visual button for the gui
+    this.lineBtn =
+    $('<button/>', {
+      text: name,
+      id: name,
+    });
+
+    //create the visual rep of the game on construction
+    $(this.lineBtn).addClass("repLine");
+
+    $(this.lineBtn).on("click", this.exampleGames, this.setOpenLine);
 
     if (exampleGames != undefined) {
       //if there is a value for exampleGames
@@ -45,18 +63,17 @@ export class RepertoireLine
   }
 
   /**
-   * reset the gameList to undefined
+   * reset the gameList to empty
    */
   public resetGames():void
   {
-
-    if (this.exampleGames == undefined) {
-      return; // if game list is already undefined
+    if (this.exampleGames.length == 0) {
+      return; // if game list is already empty
     }
     if (confirm("reset games?")) {
       //confirm reset games
-      //make the example games list undefined again
-      this.exampleGames = undefined;
+      //make the example games list empty again
+      this.exampleGames = [];
     }
   }
 
@@ -65,29 +82,18 @@ export class RepertoireLine
    * @param {string} gameName the name to give to this game
    * @param {PGN} pgn pgn of the game
    */
-  public addGame(gameName: string, pgn: PGN):void
+  public addGame(game: ExampleGame):void
   {
+    //add the game to our list
+    this.exampleGames.push(game);
 
-    //create new example game with pgn
-    let game = new ExampleGame(gameName, pgn);
+  }
 
-    if (this.exampleGames == undefined) {
-      this.exampleGames = [game];
-    } else {
-      this.exampleGames.push(game);
-    }
-
-    /*
-    /create a new element of the type "example-game"
-    let repGame = document.createElement("example-game");
-    /set class
-    repGame.setAttribute("class", "repGame");
-    /set the custom attribute data-url, the url of the lichess study
-    repGame.setAttribute("data-url", pgn);
-    repGame.innerHTML = gameName;
-    /create a new example game with th url and name
-    listItem.innerHTML = '<example-game class="exampleGame" onclick="changeBoard(this)" data-url=' + url + '>' + game_name + '</example-game>';
-    /add the game to the repertoire
-    this.exampleGames.appendChild(listItem);*/
+  /**
+   * set this as the open line
+   */
+  private setOpenLine():void
+  {
+    controller.setOpenLine(this);
   }
 }
