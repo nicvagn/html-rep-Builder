@@ -58,18 +58,18 @@ export class ExampleGame
     //create the visual rep of the game on construction
     this.gameBtn.addClass("repGame");
 
-    this.gameBtn.on("click", this.FEN, this.showGame);
+    this.gameBtn.on("click", {game:this}, function (event)
+    {
+      event.data.game.showGame(event.data.game);
+    });
   }
 
   /**
-   * pass game on to controller to display
-   * @param event event that triggered this function call
+   * change the main board to display this game
+   * @param game the ExampleGame to show
    */
-  private showGame(event:any)
+  public showGame(game:ExampleGame)
   {
-    console.log("showGame() entered.");
-    console.log("EVENT: " + event)
-    console.log("EVENT FEN: " + event.data.FEN);
-    controller.changeExampleGame(event.data);
+    controller.changeExampleGame(game.FEN);
   }
 }

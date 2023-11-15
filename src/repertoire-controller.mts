@@ -19,12 +19,10 @@
 
 //nrv stuff
 import { Repertoire } from "./repertoire.js";
-import { BoardState } from "./board-state.js";
+import { BoardState } from "./board-state.mjs";
 import { PGN, FEN } from "./chess-notation.js";
 import { SaveController } from "./save-controller.js";
 import { EditRepertoireController } from "./edit-repertoire-controller.mjs";
-
-
 
 /**
  * the main controller , handles repertoire creation, keeps track of open stuff and does the dishes
@@ -71,25 +69,30 @@ export class Controller
       event.data.controller.newRepertoire();
       //show the edit stuff
       event.data.controller.editRepertoire();
-      //  todo: make this make a new rep
     });
 
-    $( "#openRepTop" ).on("click", { controller: this}, function (event)
-    {
-      console.log("top btn open " + event);
+    $( "#openRepTop" ).on("click", { controller: this }, function (event)
+      {
+        console.log("top btn open " + event);
 
-      const windowFeatures = "width=320,height=320,popup";
-      //open openRepWindow
-      window.open("AddLine.html", "mozillaWindow", windowFeatures);
-    });
+        const windowFeatures = "width=320,height=320,popup";
+        //open openRepWindow
+        window.open("AddLine.html", "mozillaWindow", windowFeatures);
+      });
 
-    $( "#editRepTop" ).on("click", { controller: this}, function (event)
-    {
-      console.log("top btn edit " + event);
+    $( "#editRepTop" ).on("click", { controller: this }, function (event)
+      {
+        console.log("top btn edit " + event);
 
-      //show all the controls for editing
-      event.data.controller.editRepertoire();
-    });
+        //show all the controls for editing
+        event.data.controller.editRepertoire();
+      });
+
+    //add event handlers to forward an back btn's
+    $( "#boardCtrlBack" ).on("click", { boardState:this.boardState }, function (event)
+      {
+        event.data.boardState.undoMove()
+      });
   }
 
   /**
@@ -120,8 +123,10 @@ export class Controller
   /**
    * make a new repertoire, promoting the user for it's name if not provided.
    * and displaying all the controls for making one. And set it as the open rep
+   * and return it
+   * @returns a new rep
    */
-  public newRepertoire(name?:string): void
+  public newRepertoire(name?:string): Repertoire
   {
 
     //empty the line display on the dom
@@ -160,6 +165,7 @@ export class Controller
 
     //show the editing stuff
     this.editRepertoire();
+    return this.openRep;
   }
 
   /**
@@ -189,37 +195,9 @@ export class Controller
    */
   public changeExampleGame(fen: FEN): void
   {
-    console.log("changeExampleGame() entered, with FEN " + fen.stringFEN);
+    console.log("changeExampleGame() entered, with FEN " + fen);
     //just for testing if I can change the fen
     this.boardState.switchFen(fen);
   }
 }
 
-
-  /**
-   * the navBar btn listener
-   * @param event - the click event that triggered this
-   *
-  public topBtnOpen(event: Event): void
-  {
-    console.log("top btn open" + event);
-
-    const windowFeatures = "width=320,height=320,popup";
-    window.open("AddLine.html", "mozillaWindow", windowFeatures);
-  }
-
-
-  /**
-   * the listener for the top edit button
-   * @param event the click event
-   *
-  public async topBtnEdit(event: Event)
-  {
-    console.log(event);
-
-    console.log("topBtn edit lnr");
-
-    //show all the controls for editing
-    this.editRepertoire();
-  }
-*/

@@ -17,35 +17,38 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************************/
 
-
+//nrv stuff
 import { ExampleGame } from "./example-game.js";
 import { PGN } from "./chess-notation.js"
-import { Repertoire } from "./repertoire.js";
+
+
 
 /**
  * a chess repertoire line. It's primary use is in a rep builder GUI, so it needs to have a visual
  * component
  */
-export class RepertoireLine {
+export class RepertoireLine
+{
   name: string;
-  inRep: Repertoire; //the rep this line is in
-  pgn?: PGN; //main pgn of the line
+  pgn: PGN; //main pgn of the line
 
   exampleGames: ExampleGame[] = new Array<ExampleGame>(); //example games for th current line
+
 
   //line sutton for display on the DOM
   public lineBtn: JQuery<HTMLElement>;
 
   /**
    * construct a new repertoire line
-   * @param {string} name the name of the line
-   * @param rep the repertoire that contains this line
+   * @param name the name of the line
+   * @param pgn the pgn of this line
+   * @param exampleGames any example games of this line in action
    */
-  constructor(name: string, rep:Repertoire, exampleGames?: ExampleGame[])
+  constructor(name: string, pgn:PGN, exampleGames?: ExampleGame[])
   {
     console.log("repertoire line with name: " + name + " constructed.")
     this.name = name;
-    this.inRep = rep;
+    this.pgn = pgn;
 
     //create the visual button for the gui
     this.lineBtn = $("<button/>", {
@@ -53,8 +56,6 @@ export class RepertoireLine {
       id: name,
       line:this
     });
-
-    //create the visual rep of the game on construction
     this.lineBtn.addClass("repLine");
 
     if (exampleGames != undefined) {
@@ -97,15 +98,6 @@ export class RepertoireLine {
   }
 
   /**
-   * set this line as te open line for a repertoire
-   */
-  public setAsOpenLine():void
-  {
-    console.log("setAsOpenLineEntered");
-    this.inRep.setOpenLine(this);
-  }
-
-  /**
    * display array gameList in html page
    */
   public updateGameDisplay(): void
@@ -126,10 +118,10 @@ export class RepertoireLine {
       game.gameBtn.appendTo($( '#gameList' ));
 
       game.gameBtn.on("click", { game:game }, function (event)
-      {
-        console.log("game clicked with name: " + game.name);
-        event.target;
-      });
+        {
+          console.log("game clicked with name: " + game.name);
+          event.data.game.showGame(game);
+        });
     });
   }
 }

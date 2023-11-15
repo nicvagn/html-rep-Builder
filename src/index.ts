@@ -23,7 +23,7 @@ import { ExampleGame } from "./example-game.js";
 import { FEN, PGN } from "./chess-notation.js";
 
 
-export var controller:Controller;
+export const controller:Controller = new Controller();
 
 
 //will be called when the page is loaded init stuff here
@@ -32,7 +32,6 @@ document.addEventListener("DOMContentLoaded",  () =>
   //the main controller, needed to make button be able to call controller functions
   console.log("loaded");
 
-  controller = new Controller();
 
   controller.newRepertoire("the only");
   let rep = controller.getOpenRep();
@@ -42,8 +41,8 @@ document.addEventListener("DOMContentLoaded",  () =>
   let game2 = new ExampleGame("Game 2", new PGN("XXX"), new FEN("rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2" ));
 
   //lines
-  let line1: RepertoireLine = new RepertoireLine("Line 1", rep);
-  let line2: RepertoireLine = new RepertoireLine("Line 2", rep);
+  let line1: RepertoireLine = new RepertoireLine("Line 1", new PGN(""));
+  let line2: RepertoireLine = new RepertoireLine("Line 2", new PGN(""));
 
   //add games to lines
   line1.addGame(game1);

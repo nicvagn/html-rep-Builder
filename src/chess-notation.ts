@@ -1,4 +1,6 @@
-/* a typescript chess repertoire builder. including line and example game viewing made for shcc
+/*********************************************************************************
+ * a typescript chess repertoire builder. including line and example game viewing
+ *  made for shcc: Saskatchewan Horizon Chess Club
  * Copyright (C) 2023 Nicolas Vaagen
  *
  * This program is free software: you can redistribute it and/or modify it
@@ -13,14 +15,14 @@
  *
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+ *********************************************************************************/
 
 /**
  * a PGN but with some nice features for chess programming
  */
 export class PGN
 {
-  pgn: string;
+  stringPgn: string;
 
   /**
    * new pgn.
@@ -28,7 +30,7 @@ export class PGN
    */
   constructor(pgn: string)
   {
-    this.pgn = pgn;
+    this.stringPgn = pgn;
   }
 }
 

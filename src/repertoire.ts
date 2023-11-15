@@ -20,6 +20,8 @@
 import { RepertoireLine } from "./repertoire-line.js";
 //import { SaveController } from "./save-controller.js";
 
+
+
 /**
  * A chess repertoire
  */
@@ -100,8 +102,8 @@ export class Repertoire
 
       line.lineBtn.on("click", { line:line }, function (event)
       {
-        line.updateGameDisplay();
-        console.log("line btn clicked Event line list: " + event.data.line.inRep.lineList);
+        //update this lines game display
+        event.data.line.updateGameDisplay();
       });
     });
   }
@@ -130,6 +132,7 @@ export class Repertoire
     console.log("save Rep Pressed");
   }
 
+  /*  relic of trying to make event handlers work
   public getLineByName(name: String): RepertoireLine
   {
     console.log("Name we are looking for " + name);
@@ -143,6 +146,9 @@ export class Repertoire
     }
     throw new Error("The line list does not contain a line with the name: " + name);
   }
+  */
+
+
 
   /**
    * get the open line, throws error if no open line

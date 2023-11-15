@@ -1,4 +1,6 @@
-/* a typescript chess repertoire builder. including line and example game viewing made for shcc
+/*********************************************************************************
+ * a typescript chess repertoire builder. including line and example game viewing
+ * made for shcc: Saskatchewan Horizon Chess Club
  * Copyright (C) 2023 Nicolas Vaagen
  *
  * This program is free software: you can redistribute it and/or modify it
@@ -13,20 +15,22 @@
  *
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+ *********************************************************************************/
 
-import { Chessground } from "../node_modules/chessground/dist/chessground.js";
+import { Chessground } from '../node_modules/chessground/dist/chessground.js';
 import { FEN } from "./chess-notation.js";
+import { Chess } from "./chess.js"
 
 /**
- * a wrapper around Chessground
+ * a wrapper around Chessground and chess.js
  */
 export class BoardState
 {
-
   boardRoot:HTMLElement;
   private config = { viewOnly: true };
   private board;
+  private chess: Chess;
+  private backBtn: JQuery<HTMLElement>;
 
   /**
    * create a new chessground chess board
@@ -35,9 +39,22 @@ export class BoardState
   constructor(boardRoot: HTMLElement)
   {
 
+    console.log("BoardTate Constructed.")
     this.boardRoot = boardRoot;
 
     this.board = Chessground(boardRoot, this.config);
+
+    //chess.js record of what is on the board
+    this.chess = new Chess();
+
+    //get back btn from DOM
+    this.backBtn = $("#boardCtrlBac");
+
+    this.backBtn.on("click", function ()
+      {
+        console.log("backBtn clicked");
+      }
+    );
   }
 
   /**
@@ -48,6 +65,8 @@ export class BoardState
   {
     console.log(fen.stringFEN)
     this.board.set({fen: fen.stringFEN});
+    this.chess.load(fen.stringFEN);
+    console.log(this.chess.ascii())
   }
 
   /**
@@ -65,5 +84,13 @@ export class BoardState
     else{
       throw Error("boardSide must be black or white");
     }
+  }
+
+  /**
+   * undo last move
+   */
+  public undoMove()
+  {
+
   }
 }
