@@ -109,6 +109,26 @@
   background-color: #1e9c9c;
 }
 
+/* board control btn's */
+#boardCtrl {
+  display: inline-flex;
+  margin: 0;
+  justify-content: center;
+  width: 100%;
+}
+
+#boardCtrlAhead {
+  height: 50px;
+  width: 300px;
+  margin: 0;
+}
+
+#boardCtrlBack {
+  height: 50px;
+  width: 300px;
+  margin: 0;
+}
+
 .chessground {
   width: 700px;
   height: 700px;
@@ -172,8 +192,6 @@ ul{
 
 .repLine {
   display: block;
-  justify-content: center;
-  align-items: center;
   text-decoration: none;
   padding: 10px 20px;
   min-width: 200px;
@@ -197,7 +215,6 @@ ul{
 .repGame {
   display: block;
   justify-content: center;
-  align-items: center;
   text-decoration: none;
   padding: 10px 20px;
   height: 100%;
@@ -246,7 +263,7 @@ ul{
 
 .fileInput {
   display: block;
-  align-items: center;
+  text-align: center;
   text-decoration: none;
   padding: 10px 20px;
   width: 100px;

@@ -41,7 +41,9 @@ export class RepertoireLine {
    * @param {string} name the name of the line
    * @param rep the repertoire that contains this line
    */
-  constructor(name: string, rep:Repertoire, exampleGames?: ExampleGame[]) {
+  constructor(name: string, rep:Repertoire, exampleGames?: ExampleGame[])
+  {
+    console.log("repertoire line with name: " + name + " constructed.")
     this.name = name;
     this.inRep = rep;
 
@@ -49,11 +51,11 @@ export class RepertoireLine {
     this.lineBtn = $("<button/>", {
       text: name,
       id: name,
+      line:this
     });
 
     //create the visual rep of the game on construction
-    $(this.lineBtn).addClass("repLine");
-    $(this.lineBtn).on("click", this.setAsOpenLine);
+    this.lineBtn.addClass("repLine");
 
     if (exampleGames != undefined) {
       //if there is a value for exampleGames
@@ -99,6 +101,7 @@ export class RepertoireLine {
    */
   public setAsOpenLine():void
   {
+    console.log("setAsOpenLineEntered");
     this.inRep.setOpenLine(this);
   }
 
@@ -107,15 +110,26 @@ export class RepertoireLine {
    */
   public updateGameDisplay(): void
   {
-    console.log("updateGameDisplay entered");
+    console.log("updateGameDisplay() entered");
+
+    console.log("=======================================");
 
     //empty the doc game list
-    $("#gameList").replaceWith("<div id='gameList'> </div>");
+    $("#gameList").replaceWith("<div id='gameList'> <h1>hi</h1> </div>");
 
-    //loop trough the example game list of the open line, and add their game buttons to the dom
-    for (let i = 0; i < this.exampleGames.length; i++)
+    console.log("example Games List length: " + this.exampleGames.length);
+
+
+    this.exampleGames.forEach((game) =>
     {
-      $("#gameList").appendTo(this.exampleGames[i].gameBtn);
-    }
+      console.log("game added to gameList: " + game.name);
+      game.gameBtn.appendTo($( '#gameList' ));
+
+      game.gameBtn.on("click", { game:game }, function (event)
+      {
+        console.log("game clicked with name: " + game.name);
+        event.target;
+      });
+    });
   }
 }

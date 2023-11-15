@@ -39,28 +39,24 @@ export class Repertoire
   {
     console.log("rep with name:" + _name + ", Line List: " + _lineList + "made");
 
-    if(_name != undefined){
+    if (_name != undefined)
+    {
       this.name = _name;
     }
     else
     {
       this.setName();
     }
-
-
     if (_lineList != undefined)
     {
       this.lineList = _lineList!;
     }
-
-
-    //set the game and line list to the ones provided to the constructor
   }
 
   /**
    * set the name field if none was provided
    */
-  public async setName(): Promise<string>
+  public setName(): void
   {
     let name;
     do  //don't let the name be undefined
@@ -69,9 +65,8 @@ export class Repertoire
     }
     while (name == undefined);
 
-    $("#repName").html(name)
-
-    return name;
+    //set the repName label on the dom
+    $("#repName").html(name);
   }
 
   /**
@@ -81,6 +76,34 @@ export class Repertoire
   public addLine(repLine: RepertoireLine): void
   {
     this.lineList.push(repLine);
+
+    this.updateLineDisplay();
+  }
+
+  /**
+   * display the lines on the DOM
+   */
+  public updateLineDisplay(): void
+  {
+    console.log("updateLineDisplay() entered");
+    console.log("----------------------------------");
+    console.log("Line List: ");
+
+    //empty the doc line list
+    $("#lineList").replaceWith("<div id='lineList'> </div>");
+
+    //for each LINE append to the line list spot
+    this.lineList.forEach((line) =>
+    {
+      console.log("line: " + line.name);
+      line.lineBtn.appendTo($( "#lineList" ));
+
+      line.lineBtn.on("click", { line:line }, function (event)
+      {
+        line.updateGameDisplay();
+        console.log("line btn clicked Event line list: " + event.data.line.inRep.lineList);
+      });
+    });
   }
 
   /**
@@ -93,6 +116,8 @@ export class Repertoire
       //confirm reset lines
       //make the line empty again
       this.lineList = new Array<RepertoireLine>();
+      //empty the doc line list
+      $("#lineList").replaceWith("<div id='lineList'> </div>");
     }
   }
 
@@ -141,5 +166,6 @@ export class Repertoire
   public setOpenLine(line: RepertoireLine): void
   {
     this.openLine = line;
+    line.updateGameDisplay();
   }
 }

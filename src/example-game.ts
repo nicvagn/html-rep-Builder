@@ -38,9 +38,8 @@ export class ExampleGame
 
   /**
    * construct a new repertoire game
-   * @param {string} name the name of the line
+   * @param {string} name the name of the game
    * @param {PGN} pgn the pgn of the game
-   * @param {number} index of this game for getting from the controller
    */
   constructor(name: string, pgn: PGN, fen:FEN)
   {
@@ -52,14 +51,14 @@ export class ExampleGame
     //create the visual button for the gui
     this.gameBtn =
     $('<button/>', {
-      text: name, //set text 1 to 10
+      text: this.name, //set text 1 to 10
       id: name,
     });
 
     //create the visual rep of the game on construction
-    $(this.gameBtn).addClass("repGame");
+    this.gameBtn.addClass("repGame");
 
-    $(this.gameBtn).on("click", this.FEN, this.showGame);
+    this.gameBtn.on("click", this.FEN, this.showGame);
   }
 
   /**

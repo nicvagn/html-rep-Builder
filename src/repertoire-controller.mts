@@ -76,7 +76,7 @@ export class Controller
 
     $( "#openRepTop" ).on("click", { controller: this}, function (event)
     {
-      console.log("top btn open" + event);
+      console.log("top btn open " + event);
 
       const windowFeatures = "width=320,height=320,popup";
       //open openRepWindow
@@ -90,45 +90,12 @@ export class Controller
       //show all the controls for editing
       event.data.controller.editRepertoire();
     });
-
-  }
-
-
-  /**
-   * display the lines on the DOM
-   */
-  public updateLineDisplay(): void
-  {
-    //if there is no open rep throw an error
-    if(this.openRep == undefined)
-    {
-      throw Error("openRep is undefined")
-    }
-
-    //if there are no lines exit
-    if(this.openRep.lineList == undefined)
-    {
-      throw Error("openRep.lineList is undefined")
-    }
-
-    console.log("updateLineDisplay() entered");
-    console.log("Line List:" + this.openRep!.lineList);
-
-    //empty the doc line list
-    $("#lineList").replaceWith("<div id='lineList'> </div>");
-
-    //for each game append to the game list spot
-    this.openRep!.lineList!.forEach((line) =>
-    {
-      console.log("line:" + line.name + "lineBtn:" + line.lineBtn);
-      line.lineBtn.appendTo($("#lineList"));
-    });
   }
 
   /**
    * set the rep name by asking for user input
    */
-  private setNameElement(name: string): void
+  public setNameElement(name: string): void
   {
     console.log("set name element entered with name: " + name)
     //set the name element
@@ -156,7 +123,11 @@ export class Controller
    */
   public newRepertoire(name?:string): void
   {
-    console.log("newRepertoire entered with name " + name)
+
+    //empty the line display on the dom
+    $("#lineList").replaceWith("<div id='lineList'> </div>");
+
+    console.log("newRepertoire entered with name: " + name)
     //if there is an open rep
     if (this.openRep != null && this.openRep != undefined)
     {
@@ -180,11 +151,10 @@ export class Controller
       this.openRep = new Repertoire(name);
       this.openRepName = name;
       this.setNameElement(this.openRepName);
-
     }
     else
     {
-      //make a new rep
+      //make a new rep. will ask for a name
       this.openRep = new Repertoire();
     }
 
