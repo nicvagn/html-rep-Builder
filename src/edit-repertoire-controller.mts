@@ -17,12 +17,13 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************************/
 
+/*
 import { BoardState } from "./board-state.js";
 import { ExampleGame } from "./example-game.js";
 import { RepertoireLine } from "./repertoire-line.js";
-import { controller } from "./repertoire-controller.mjs";
+import { controller } from "./index.js";
 import { FEN } from "./chess-notation.js";
-
+*/
 
 //get the various NewRepertoire buttons
 const editLineBtn = document.getElementById("editLine");
@@ -38,10 +39,6 @@ let editRepertoireController: EditRepertoireController;
 export class EditRepertoireController
 {
 
-  gameList: Array<ExampleGame>;
-  lineList: Array<RepertoireLine>;
-  boardState: BoardState;
-
   constructor()
   {
     console.log("EditRepertoireController constructed");
@@ -54,12 +51,7 @@ export class EditRepertoireController
     //make a local file scope variable, so the button listeners can access the controller class
     editRepertoireController = this;
 
-    //make a reference for the original controller
-    this.boardState = controller.boardState;
-
     //test data
-    this.gameList = [new ExampleGame("game", controller.obj_pgn, new FEN("rnb1kbnr/pp2pppp/3p4/q1p5/2P2P2/6P1/PP1PP2P/RNBQKBNR w KQkq - 1 4"))];
-    this.lineList = [new RepertoireLine("Line")]
   }
 
   /**

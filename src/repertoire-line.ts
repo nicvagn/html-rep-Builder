@@ -20,17 +20,18 @@
 
 import { ExampleGame } from "./example-game.js";
 import { PGN } from "./chess-notation.js"
-import { controller } from "./repertoire-controller.mjs";
+import { Repertoire } from "./repertoire.js";
 
 /**
  * a chess repertoire line. It's primary use is in a rep builder GUI, so it needs to have a visual
  * component
  */
-export class RepertoireLine
-{
+export class RepertoireLine {
   name: string;
+  inRep: Repertoire; //the rep this line is in
   pgn?: PGN; //main pgn of the line
-  exampleGames: Array<ExampleGame> = []; //example games for th current line
+
+  exampleGames: ExampleGame[] = new Array<ExampleGame>(); //example games for th current line
 
   //line sutton for display on the DOM
   public lineBtn: JQuery<HTMLElement>;
@@ -38,23 +39,21 @@ export class RepertoireLine
   /**
    * construct a new repertoire line
    * @param {string} name the name of the line
+   * @param rep the repertoire that contains this line
    */
-  constructor(name: string, exampleGames?: ExampleGame[])
-  {
-
+  constructor(name: string, rep:Repertoire, exampleGames?: ExampleGame[]) {
     this.name = name;
+    this.inRep = rep;
 
     //create the visual button for the gui
-    this.lineBtn =
-    $('<button/>', {
+    this.lineBtn = $("<button/>", {
       text: name,
       id: name,
     });
 
     //create the visual rep of the game on construction
     $(this.lineBtn).addClass("repLine");
-
-    $(this.lineBtn).on("click", this.exampleGames, this.setOpenLine);
+    $(this.lineBtn).on("click", this.setAsOpenLine);
 
     if (exampleGames != undefined) {
       //if there is a value for exampleGames
@@ -65,35 +64,58 @@ export class RepertoireLine
   /**
    * reset the gameList to empty
    */
-  public resetGames():void
-  {
+  public resetGames(): void {
     if (this.exampleGames.length == 0) {
       return; // if game list is already empty
     }
     if (confirm("reset games?")) {
       //confirm reset games
       //make the example games list empty again
-      this.exampleGames = [];
+      this.exampleGames = new Array<ExampleGame>();
     }
   }
 
   /**
-   * create a game and add it to this repertoire object
-   * @param {string} gameName the name to give to this game
-   * @param {PGN} pgn pgn of the game
+   * add an example game to this line
+   * @param game ExampleGame to add
    */
-  public addGame(game: ExampleGame):void
+  public addGame(game: ExampleGame): void
   {
     //add the game to our list
     this.exampleGames.push(game);
-
   }
 
   /**
-   * set this as the open line
+   * get the example games for this line
+   * @returns this lines example games
    */
-  private setOpenLine():void
+  public getGames():ExampleGame[]
   {
-    controller.setOpenLine(this);
+    return this.exampleGames;
+  }
+
+  /**
+   * set this line as te open line for a repertoire
+   */
+  public setAsOpenLine():void
+  {
+    this.inRep.setOpenLine(this);
+  }
+
+  /**
+   * display array gameList in html page
+   */
+  public updateGameDisplay(): void
+  {
+    console.log("updateGameDisplay entered");
+
+    //empty the doc game list
+    $("#gameList").replaceWith("<div id='gameList'> </div>");
+
+    //loop trough the example game list of the open line, and add their game buttons to the dom
+    for (let i = 0; i < this.exampleGames.length; i++)
+    {
+      $("#gameList").appendTo(this.exampleGames[i].gameBtn);
+    }
   }
 }

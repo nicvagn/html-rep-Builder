@@ -21,7 +21,7 @@
 //import { event } from "jquery";
 import { PGN } from "./chess-notation.js";
 import { FEN } from "./chess-notation.js";
-import { controller  } from "./repertoire-controller.mjs";
+import { controller } from "./index.js";
 
 /**
  * a chess repertoire example game. It's primary use is in a rep builder GUI, so it needs to have a visual
