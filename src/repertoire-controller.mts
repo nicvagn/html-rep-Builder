@@ -87,12 +87,6 @@ export class Controller
         //show all the controls for editing
         event.data.controller.editRepertoire();
       });
-
-    //add event handlers to forward an back btn's
-    $( "#boardCtrlBack" ).on("click", { boardState:this.boardState }, function (event)
-      {
-        event.data.boardState.undoMove()
-      });
   }
 
   /**
@@ -114,8 +108,7 @@ export class Controller
     if (this.openRep != undefined)
     {
       return this.openRep;
-    } else
-    {
+    } else {
       throw Error("no open repertoire.");
     }
   }
@@ -143,9 +136,7 @@ export class Controller
         {
           SaveController.saveRepToLocal(this.openRep.name, this.openRep);
           console.log("Rep saved");
-        }
-        else
-        {
+        } else {
           throw new Error("newRepertoire: this.openRep.name undefined");
         }
       }
@@ -156,9 +147,7 @@ export class Controller
       this.openRep = new Repertoire(name);
       this.openRepName = name;
       this.setNameElement(this.openRepName);
-    }
-    else
-    {
+    } else {
       //make a new rep. will ask for a name
       this.openRep = new Repertoire();
     }
@@ -200,4 +189,3 @@ export class Controller
     this.boardState.switchFen(fen);
   }
 }
-

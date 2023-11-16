@@ -107,10 +107,9 @@ export class RepertoireLine
     console.log("=======================================");
 
     //empty the doc game list
-    $("#gameList").replaceWith("<div id='gameList'> <h1>hi</h1> </div>");
+    $("#gameList").replaceWith("<div id='gameList'> </div>");
 
     console.log("example Games List length: " + this.exampleGames.length);
-
 
     this.exampleGames.forEach((game) =>
     {

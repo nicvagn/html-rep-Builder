@@ -17,6 +17,8 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************************/
 
+//import { event } from "jquery";
+
 /*
 import { BoardState } from "./board-state.js";
 import { ExampleGame } from "./example-game.js";
@@ -48,10 +50,26 @@ export class EditRepertoireController
     resetGamesBtn?.addEventListener("click", buttonLnr);
     saveBrowserBtn?.addEventListener("click", buttonLnr);
 
+    //set the file input...
+    $( "#fileInput" ).on("change", null , (event) =>
+    {
+      //the event target will be the input element
+      const addPGNBtn:HTMLInputElement = event.target as HTMLInputElement;
+
+      if(addPGNBtn.files == null)
+      {
+        throw Error("addPGNBtn.files is null.");
+      }
+
+      let file = addPGNBtn.files[0]; //get the first file
+
+      let name = file.name;
+
+      console.log(name);
+    });
+
     //make a local file scope variable, so the button listeners can access the controller class
     editRepertoireController = this;
-
-    //test data
   }
 
   /**

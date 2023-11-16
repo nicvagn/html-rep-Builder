@@ -19,7 +19,7 @@
 
 import { Chessground } from '../node_modules/chessground/dist/chessground.js';
 import { FEN } from "./chess-notation.js";
-import { Chess } from "./chess.js"
+import { Chess, Move } from "./chess.js"
 
 /**
  * a wrapper around Chessground and chess.js
@@ -31,6 +31,7 @@ export class BoardState
   private board;
   private chess: Chess;
   private backBtn: JQuery<HTMLElement>;
+  private forwardBtn: JQuery<HTMLElement>;
 
   /**
    * create a new chessground chess board
@@ -47,14 +48,23 @@ export class BoardState
     //chess.js record of what is on the board
     this.chess = new Chess();
 
-    //get back btn from DOM
-    this.backBtn = $("#boardCtrlBac");
+    //get backBtn and forwardBtn from DOM
+    this.backBtn = $( "#boardCtrlBack" );
+    this.forwardBtn = $( "#boardCtrlAhead" );
 
-    this.backBtn.on("click", function ()
+
+    this.backBtn.on("click", { boardState:this }, function (event)
       {
         console.log("backBtn clicked");
+        event.data.boardState.moveBack();
       }
     );
+
+    this.forwardBtn.on("click", { boardState:this }, function (event)
+      {
+        console.log("forwardBtn clicked");
+        event.data.boardState.moveForward();
+      });
   }
 
   /**
@@ -75,10 +85,12 @@ export class BoardState
    */
   public changeOrientation(boardSide:String):void
   {
-    if(boardSide == "white"){
+    if(boardSide == "white")
+    {
       this.board.set({orientation: "white"});
     }
-    else if(boardSide == "black"){
+    else if(boardSide == "black")
+    {
       this.board.set({orientation: "black"});
     }
     else{
@@ -87,10 +99,40 @@ export class BoardState
   }
 
   /**
+   * make a move
+   * @param move a chess move in Algebraic Notation
+   */
+  public move(move:string):void
+  {
+    let possibleMoves = this.chess.moves();
+
+    if(!possibleMoves.includes(move))
+    {
+      console.log("Move: " + move);
+      console.log("possible moves: " + possibleMoves);
+      throw new Error("Illegal move.");
+    }
+
+    //make the move on the visual, and virtual board
+   let lastMove:Move = this.chess.move(move);
+
+   //move on the chessground
+   this.board.move(lastMove.from, lastMove.to)
+  }
+
+  /**
    * undo last move
    */
-  public undoMove()
+  public moveBack()
   {
+    console.log("moveBack entered.");
+  }
 
+  /**
+   * move forward
+   */
+  public moveForward()
+  {
+    console.log("moveForward entered");
   }
 }

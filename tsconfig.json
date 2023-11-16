@@ -12,7 +12,8 @@
     "moduleResolution": "NodeNext",
     "target": "ESNext",
     "lib": ["DOM", "ESNext"],
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "removeComments": false
   },
   "include": ["src/*.ts", "src/*.mts"],
   "exclude": []
