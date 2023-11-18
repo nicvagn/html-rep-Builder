@@ -19,7 +19,8 @@
 
 import { Chessground } from '../node_modules/chessground/dist/chessground.js';
 import { FEN } from "./chess-notation.js";
-import { Chess, Move } from "./chess.js"
+import { Chess, Move } from "./chess.js";
+import start from './main.mjs';
 
 /**
  * a wrapper around Chessground and chess.js
@@ -28,10 +29,16 @@ export class BoardState
 {
   boardRoot:HTMLElement;
   private config = { viewOnly: true };
+  private pgnViewer;
   private board;
   private chess: Chess;
   private backBtn: JQuery<HTMLElement>;
   private forwardBtn: JQuery<HTMLElement>;
+
+  //a map from move number to move
+  private moves = new Map<number, Move>;
+
+  private moveNumber:number = 0;
 
   /**
    * create a new chessground chess board
@@ -39,11 +46,12 @@ export class BoardState
    */
   constructor(boardRoot: HTMLElement)
   {
-
     console.log("BoardTate Constructed.")
     this.boardRoot = boardRoot;
 
     this.board = Chessground(boardRoot, this.config);
+    this.pgnViewer = start(boardRoot, { chessground: this.config});
+
 
     //chess.js record of what is on the board
     this.chess = new Chess();
@@ -51,7 +59,6 @@ export class BoardState
     //get backBtn and forwardBtn from DOM
     this.backBtn = $( "#boardCtrlBack" );
     this.forwardBtn = $( "#boardCtrlAhead" );
-
 
     this.backBtn.on("click", { boardState:this }, function (event)
       {
@@ -74,7 +81,9 @@ export class BoardState
   public switchFen(fen:FEN):void
   {
     console.log(fen.stringFEN)
-    this.board.set({fen: fen.stringFEN});
+    this.pgnViewer.setGround(
+      this.board
+      )
     this.chess.load(fen.stringFEN);
     console.log(this.chess.ascii())
   }
@@ -87,11 +96,11 @@ export class BoardState
   {
     if(boardSide == "white")
     {
-      this.board.set({orientation: "white"});
+//      this.board.set({orientation: "white"});
     }
     else if(boardSide == "black")
     {
-      this.board.set({orientation: "black"});
+//      this.board.set({orientation: "black"});
     }
     else{
       throw Error("boardSide must be black or white");
@@ -114,10 +123,13 @@ export class BoardState
     }
 
     //make the move on the visual, and virtual board
-   let lastMove:Move = this.chess.move(move);
+    let lastMove:Move = this.chess.move(move);
 
-   //move on the chessground
-   this.board.move(lastMove.from, lastMove.to)
+    //add to our move map
+    this.moves.set(this.moveNumber, lastMove);
+
+    //move on the chessground
+//    this.board.move(lastMove.from, lastMove.to)
   }
 
   /**
@@ -126,6 +138,7 @@ export class BoardState
   public moveBack()
   {
     console.log("moveBack entered.");
+    this.moveNumber--;
   }
 
   /**
@@ -134,5 +147,6 @@ export class BoardState
   public moveForward()
   {
     console.log("moveForward entered");
+    this.moveNumber++;
   }
 }

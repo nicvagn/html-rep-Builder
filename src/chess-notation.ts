@@ -17,6 +17,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************************/
 
+
 /**
  * a PGN but with some nice features for chess programming
  */
@@ -31,6 +32,7 @@ export class PGN
   constructor(pgn: string)
   {
     this.stringPgn = pgn;
+    console.log();
   }
 }
 

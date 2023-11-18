@@ -24,8 +24,7 @@ import { FEN } from "./chess-notation.js";
 import { controller } from "./index.js";
 
 /**
- * a chess repertoire example game. It's primary use is in a rep builder GUI, so it needs to have a visual
- * component :. extends button
+ * a chess repertoire example game.
  */
 export class ExampleGame
 {

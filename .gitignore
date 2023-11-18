@@ -1,6 +1,4 @@
-/node_modules
-someLinks
-/built
-/storage
-demo.html
-/remote-debug-profile
+*.log
+.DS_Store
+node_modules
+dist
