@@ -2,7 +2,7 @@
   "name": "ts-rep-builder",
   "version": "1.0.0",
   "description": "a chess repertoire builder made for SHCC",
-  "main": "index.js",
+  "main": "b",
   "scripts": {
     "eslint": "./node_modules/.bin/eslint src/*"
   },
@@ -23,11 +23,12 @@
   "type": "module",
   "dependencies": {
     "chessground": "^9.0.4",
-    "eslint": "^8.54.0",
-    "ts-loader": "^9.5.1",
-    "typescript": "^5.2.2"
+    "jquery": "^3.7.1"
   },
   "devDependencies": {
+    "typescript": "^5.2.2",
+    "ts-loader": "^9.5.1",
+    "eslint": "^8.54.0",
     "@types/jquery": "^3.5.27",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "@typescript-eslint/parser": "^6.11.0",
