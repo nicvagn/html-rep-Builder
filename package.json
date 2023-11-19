@@ -22,6 +22,7 @@
   "homepage": "https://github.com/nicvagn/html-rep-Builder#readme",
   "type": "module",
   "dependencies": {
+    "chessground": "^9.0.4",
     "eslint": "^8.54.0",
     "ts-loader": "^9.5.1",
     "typescript": "^5.2.2"

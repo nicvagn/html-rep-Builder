@@ -495,6 +495,11 @@ chalk@^4.0.0, chalk@^4.1.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
+chessground@^9.0.4:
+  version "9.0.4"
+  resolved "https://registry.yarnpkg.com/chessground/-/chessground-9.0.4.tgz#47d2f24e54234164084b60bcc2a69e499d506206"
+  integrity sha512-KeZd/kcXSKQOGO6LOKu/3bAyVSMh7hgPPharMF15HMfNlHfcBpIVZIDAQRO2PNaNMzPWl0LKc05uFHt0D+lZGA==
+
 chrome-trace-event@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/chrome-trace-event/-/chrome-trace-event-1.0.3.tgz#1015eced4741e15d06664a957dbbf50d041e26ac"

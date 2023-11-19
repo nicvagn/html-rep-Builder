@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outFile": "dist/bundle.js",
+    "outDir": "built",
     "rootDir": "src",
     "noEmitOnError": false,
     "strict": true,
