@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./built",
+    "outFile": "dist/bundle.js",
     "rootDir": "src",
     "noEmitOnError": false,
     "strict": true,
@@ -8,13 +8,13 @@
     "noUnusedParameters": true,
     "noImplicitThis": true,
     "noImplicitReturns": true,
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "target": "ESNext",
-    "lib": ["DOM", "ESNext"],
+    "sourceMap": true,
+    "target": "es5",
+    "moduleDetection": "force",
+    "lib": ["DOM", "ES2016"],
     "esModuleInterop": true,
-    "removeComments": false
+    "removeComments": false,
   },
-  "include": ["src/*.ts", "src/*.mts"],
+  "include": ["src"],
   "exclude": []
 }

@@ -26,7 +26,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>SHCC: Repertoire Viewer</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="css/styles.css" />
   <link rel="icon" href="images/shcc-logo-notxt.png">
 
   <!-- JQuery -->
@@ -113,6 +113,7 @@
   </div>
 
   <!-- our module -->
-  <script type="module" src="built/index.js"></script>
+  <script>var exports = {};</script> <!--A hack to fix the Uncaught ReferenceError: exports is not defined-->
+  <script type="module" src="dist/index.mjs"></script>
 </body>
 </html>
