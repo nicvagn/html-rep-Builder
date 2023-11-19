@@ -19,7 +19,7 @@
 
 //nrv stuff
 import { ExampleGame } from "./example-game.js";
-import { PGN } from "./chess-notation.js"
+import { PGN } from "./chess-notation.mjs"
 
 
 

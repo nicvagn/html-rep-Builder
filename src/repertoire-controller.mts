@@ -20,7 +20,7 @@
 //nrv stuff
 import { Repertoire } from "./repertoire.js";
 import { BoardState } from "./board-state.mjs";
-import { PGN, FEN } from "./chess-notation.js";
+import { PGN, FEN } from "./chess-notation.mjs";
 import { SaveController } from "./save-controller.js";
 import { EditRepertoireController } from "./edit-repertoire-controller.mjs";
 

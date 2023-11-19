@@ -18,7 +18,7 @@
  *********************************************************************************/
 
 import { Chessground } from '../node_modules/chessground/dist/chessground.js';
-import { FEN } from "./chess-notation.js";
+import { FEN } from "./chess-notation.mjs";
 import { Chess, Move } from "./chess.js"
 
 /**
@@ -83,7 +83,7 @@ export class BoardState
    * change the orientation of the chessboard
    * @param boardSide can be "black" or "white"
    */
-  public changeOrientation(boardSide:String):void
+  public changeOrientation(boardSide:string):void
   {
     if(boardSide == "white")
     {
@@ -104,7 +104,7 @@ export class BoardState
    */
   public move(move:string):void
   {
-    let possibleMoves = this.chess.moves();
+    const possibleMoves = this.chess.moves();
 
     if(!possibleMoves.includes(move))
     {
@@ -114,7 +114,7 @@ export class BoardState
     }
 
     //make the move on the visual, and virtual board
-   let lastMove:Move = this.chess.move(move);
+   const lastMove:Move = this.chess.move(move);
 
    //move on the chessground
    this.board.move(lastMove.from, lastMove.to)

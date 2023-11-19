@@ -17,11 +17,10 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************************/
 
-
 //import { event } from "jquery";
-import { PGN } from "./chess-notation.js";
-import { FEN } from "./chess-notation.js";
-import { controller } from "./index.mjs";
+import { PGN } from "./chess-notation.mjs";
+import { FEN } from "./chess-notation.mjs";
+import { controller } from "./index.js";
 
 /**
  * a chess repertoire example game. It's primary use is in a rep builder GUI, so it needs to have a visual
