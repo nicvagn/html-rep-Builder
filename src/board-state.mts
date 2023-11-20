@@ -18,7 +18,6 @@
  *********************************************************************************/
 
 /*global $ */ //for eslint
-import { Chessground } from '../node_modules/chessground/dist/chessground.js';
 import { FEN } from "./chess-notation.mjs";
 import { Chess, Move } from "./chess.js"
 
