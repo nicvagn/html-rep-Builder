@@ -29,11 +29,13 @@
   "dependencies": {
     "chessground": "^9.0.4",
     "chessops": "^0.12.8",
-    "eslint": "^8.54.0",
-    "ts-loader": "^9.5.1",
-    "typescript": "^5.2.2"
+    "chessground": "^9.0.4",
+    "jquery": "^3.7.1"
   },
   "devDependencies": {
+    "typescript": "^5.2.2",
+    "ts-loader": "^9.5.1",
+    "eslint": "^8.54.0",
     "@types/jquery": "^3.5.27",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "@typescript-eslint/parser": "^6.11.0",

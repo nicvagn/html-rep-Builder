@@ -34,15 +34,15 @@ document.addEventListener("DOMContentLoaded",  () =>
 
 
   controller.newRepertoire("the only");
-  let rep = controller.getOpenRep();
+  const rep = controller.getOpenRep();
 
   //example games
-  let game1 = new ExampleGame("Game 1", new PGN("xxx"),new FEN("rnbq1rk1/ppp2ppp/3p1n2/4p3/1bP1P3/2N3P1/PP1PNPBP/R1BQK2R b KQ - 1 6"));
-  let game2 = new ExampleGame("Game 2", new PGN("XXX"), new FEN("rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2" ));
+  const game1 = new ExampleGame("Game 1", new PGN("xxx"),new FEN("rnbq1rk1/ppp2ppp/3p1n2/4p3/1bP1P3/2N3P1/PP1PNPBP/R1BQK2R b KQ - 1 6"));
+  const game2 = new ExampleGame("Game 2", new PGN("XXX"), new FEN("rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2" ));
 
   //lines
-  let line1: RepertoireLine = new RepertoireLine("Line 1", new PGN(""));
-  let line2: RepertoireLine = new RepertoireLine("Line 2", new PGN(""));
+  const line1: RepertoireLine = new RepertoireLine("Line 1", new PGN(""));
+  const line2: RepertoireLine = new RepertoireLine("Line 2", new PGN(""));
 
   //add games to lines
   line1.addGame(game1);
