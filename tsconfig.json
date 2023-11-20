@@ -1,20 +1,38 @@
 {
   "compilerOptions": {
-    "outFile": "dist/bundle.js",
-    "rootDir": "src",
-    "noEmitOnError": false,
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitThis": true,
-    "noImplicitReturns": true,
-    "sourceMap": true,
-    "target": "es5",
-    "moduleDetection": "force",
-    "lib": ["DOM", "ES2016"],
-    "esModuleInterop": true,
-    "removeComments": false,
+
+    //make typescript more authoritarian
+    "strict": true,	//strict type checking, I think
+    "noUnusedLocals": true,  //no unused local variables
+    "noUnusedParameters": true,	//no unused parameters
+    "noImplicitThis": true,	//this.xxx not xxx
+    "noImplicitReturns": true,	//I think this makes sure you return a value if you said yor would
+
+    //but not that authoritarian
+    "noEmitOnError": false,  // does emit source on error
+    "removeComments": false,	//do not remove comment's when compiling to js
+    "sourceMap": true,	//map between source and output js
+    "explainFiles": true,	//ts explains why files are included
+
+    //dir options
+    "outDir": "out",	// out dir for compiled source
+    "rootDir": "src",	// where the source comes from
+
+    //declarations
+    "declaration": true, //gives us .d.ts files for our output
+    "declarationDir": "./types", // configure the root directory for where declaration files are emitted.
+
+    //target stuff, be careful changing this can cause headache
+    "target": "es6",  //we need this, or we can not import. It tries to use require
+    "lib": ["DOM", "ES2016"],	//DOM is needed to control the browser, ES2016 just seemed good nuf
+
+    //module stuff, be careful
+    "moduleResolution": "node",  //node style module resolution
+    "moduleDetection": "force",  //makes everything a module
+    "esModuleInterop": true,	//something to do with allowing commonjs modules to play nice with es6 modules
+    "skipLibCheck": true, //nothing bad ever happens in other peoples code
   },
-  "include": ["src"],
+  "include": ["src"],	//include our src dir
   "exclude": []
 }
+

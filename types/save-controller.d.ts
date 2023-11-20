@@ -20,60 +20,29 @@ import { Repertoire } from "./repertoire.js";
 /**
  * a helper class full of static methods to aid in saving to local storage
  */
-var SaveController = /** @class */ (function () {
-    function SaveController() {
-    }
+export declare class SaveController {
     /**
      * Save a Repertoire to Local Storage
      * @param { string } key the key to put this under in local storage
      * @param { Repertoire } rep the repertoire to save to local storage
      */
-    SaveController.saveRepToLocal = function (key, rep) {
-        this.putLocal(key, rep);
-    };
+    static saveRepToLocal(key: string, rep: Repertoire): void;
     /**
      * get a repertoire from local storage
      * @param {string} repKey the name of the rep
      * @returns {Repertoire} the repertoire you opened as json
      */
-    SaveController.getRepertoireFromLocal = function (repKey) {
-        var obj = SaveController.getFromLocal(repKey);
-        //check to make sure what we have is a rep
-        if (obj instanceof Repertoire) {
-            return obj;
-        }
-        else {
-            throw Error("Returned obj not a repertoire");
-        }
-    };
+    static getRepertoireFromLocal(repKey: string): Repertoire;
     /**
      * retrieve from local storage
      * @param {string} key the key of the item to be retrieve
      * @returns the retrieve item in json
      */
-    SaveController.getFromLocal = function (key) {
-        //try to grab element tied to the key
-        var grab = localStorage.getItem(key);
-        if (grab != null) {
-            return JSON.parse(grab);
-        }
-        else {
-            throw Error("Retried obj null");
-        }
-    };
+    private static getFromLocal;
     /**
      * put a object in local storage. We will turn it into JSON and store it
      * @param key the key to put that object's json under in local. The key is used to retrieve the item
      * @param object a javascript object to be put into storage
      */
-    SaveController.putLocal = function (key, object) {
-        console.log("putLocal() entered. Key: " + key + "object: " + object);
-        //create a stringified version of the object
-        var strObject = JSON.stringify(object);
-        console.log("strObject: " + strObject);
-        //localStorage.setItem(key, strObject);
-    };
-    return SaveController;
-}());
-export { SaveController };
-//# sourceMappingURL=save-controller.js.map
+    private static putLocal;
+}

@@ -1,10 +1,15 @@
 {
-  "name": "ts-rep-builder",
+  "name": "my-webpack-project",
   "version": "1.0.0",
-  "description": "a chess repertoire builder made for SHCC",
+  "description": "My webpack project",
   "main": "index.js",
   "scripts": {
-    "eslint": "./node_modules/.bin/eslint src/*"
+    "eslint": "./node_modules/.bin/eslint src/*",
+    "build": "webpack --mode=production --node-env=production",
+    "build:dev": "webpack --mode=development",
+    "build:prod": "webpack --mode=production --node-env=production",
+    "watch": "webpack --watch",
+    "serve": "webpack serve"
   },
   "repository": {
     "type": "git",
@@ -22,6 +27,8 @@
   "homepage": "https://github.com/nicvagn/html-rep-Builder#readme",
   "type": "module",
   "dependencies": {
+    "chessground": "^9.0.4",
+    "chessops": "^0.12.8",
     "eslint": "^8.54.0",
     "ts-loader": "^9.5.1",
     "typescript": "^5.2.2"
@@ -30,6 +37,16 @@
     "@types/jquery": "^3.5.27",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "@typescript-eslint/parser": "^6.11.0",
-    "webpack": "^5.89.0"
+    "@webpack-cli/generators": "^3.0.7",
+    "css-loader": "^6.8.1",
+    "html-webpack-plugin": "^5.5.3",
+    "prettier": "^3.1.0",
+    "sass": "^1.69.5",
+    "sass-loader": "^13.3.2",
+    "style-loader": "^3.3.3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1",
+    "workbox-webpack-plugin": "^7.0.0"
   }
 }

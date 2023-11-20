@@ -16,42 +16,28 @@
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************************/
-import { controller } from "./index.mjs";
+/// <reference types="jquery" />
+/// <reference types="jquery" />
+import { PGN } from "./chess-notation.mjs";
+import { FEN } from "./chess-notation.mjs";
 /**
  * a chess repertoire example game. It's primary use is in a rep builder GUI, so it needs to have a visual
  * component :. extends button
  */
-var ExampleGame = /** @class */ (function () {
+export declare class ExampleGame {
+    name: string;
+    PGN: PGN;
+    FEN: FEN;
+    gameBtn: JQuery<HTMLElement>;
     /**
      * construct a new repertoire game
      * @param {string} name the name of the game
      * @param {PGN} pgn the pgn of the game
      */
-    function ExampleGame(name, pgn, fen) {
-        console.log("Example Game constructed.");
-        this.name = name;
-        this.PGN = pgn;
-        this.FEN = fen;
-        //create the visual button for the gui
-        this.gameBtn =
-            $('<button/>', {
-                text: this.name,
-                id: name,
-            });
-        //create the visual rep of the game on construction
-        this.gameBtn.addClass("repGame");
-        this.gameBtn.on("click", { game: this }, function (event) {
-            event.data.game.showGame(event.data.game);
-        });
-    }
+    constructor(name: string, pgn: PGN, fen: FEN);
     /**
      * change the main board to display this game
      * @param game the ExampleGame to show
      */
-    ExampleGame.prototype.showGame = function (game) {
-        controller.changeExampleGame(game.FEN);
-    };
-    return ExampleGame;
-}());
-export { ExampleGame };
-//# sourceMappingURL=example-game.js.map
+    showGame(game: ExampleGame): void;
+}

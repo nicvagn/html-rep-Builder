@@ -1,5 +1,15 @@
-# html-rep-Builder
-A repertoire builder made for the Saskatchewan Horizon Chess Club.
+# 🚀 Welcome to your new awesome project!
 
-ATM it is Typescript, html and css. Uses Chessground (https://github.com/lichess-org/chessground) and 
-Chess.js (https://github.com/jhlywa/chess.js)
+This project has been created using **webpack-cli**, you can now run
+
+```
+npm run build
+```
+
+or
+
+```
+yarn build
+```
+
+to bundle your application
