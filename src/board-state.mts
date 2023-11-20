@@ -166,51 +166,18 @@ export class BoardState
 
 /*
 this will be my implementation of a pgn parser
-a large portion was copied from https://github.com/ebemunk/chess-dataviz/blob/master/scripts/stats.js
+a large portion was copied from lichess
 */
 
-//precompile regexes for performance
-//not sure if this makes that much difference, but seems to help
-//const splitBy = /\r?\n\r?\n(?=\[)/g;
-const r1 = /\[SetUp|FEN\]/;
-const r2 = /^(\[(.|\r?\n)*\])(\r?\n)*1.(\r?\n|.)*$/g;
-const r3 = /\r?\n/g;
-const r4 = /(\{[^}]+\})+?/g;
-const r5 = /\d+\./g;
-const r6 = /\.\.\./g;
-const r7 = /\*/g;
-const r8 = /(1-0)?(0-1)?(1\/2-1\/2)?/g;
-const r9 = /\s+/;
-const r10 = /,,+/g;
 
 
 /**
  * for parsing pgn
  */
-export function PgnParser(pgn:string)
+function PgnParser(pgn:string)
 {
 
-  //don't bother with Set-up games
-	if( r1.test(pgn) ) {
-		return;
-	}
+ console.log(pgn);
 
-  //regexes stolen from chess.js
-	const gameMoves = pgn
-	.replace(pgn.replace(r2, '$1'), '') //strip away header text
-	.replace(r3, ' ') //join multiple lines
-	.replace(r4, '') //remove comments
-	.replace(r5, '') //remove move numbers
-	.replace(r6, '') //remove ...
-	.replace(r7, '') //remove *
-	.replace(r8, '') //remove results
-	.trim()
-	.split(r9) //split by space
-	//get rid of empty moves
-	.join(',')
-	.replace(r10, ',')
-	.split(',');
-
-  console.log(gameMoves);
 }
 

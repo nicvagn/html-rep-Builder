@@ -56,7 +56,3 @@ export declare class BoardState {
      */
     moveForward(): void;
 }
-/**
- * for parsing pgn
- */
-export declare function PgnParser(pgn: string): void;
