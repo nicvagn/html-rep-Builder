@@ -1,5 +1,6 @@
 import LichessPgnViewer from './lichess-pgn-viewer.js';
 
+
 const pgns = {
   empty: ``,
   mammoth1: `

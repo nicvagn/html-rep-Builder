@@ -21,6 +21,9 @@
 import { FEN } from "./chess-notation.mjs";
 import { Chess, Move } from "./chess.js"
 
+import LichessPgnViewer from './lichess-pgn-viewer.js';
+import Chessground  from "./lichess-pgn-viewer.js"
+
 
 /**
  * a wrapper around Chessground and chess.js
@@ -28,11 +31,12 @@ import { Chess, Move } from "./chess.js"
 export class BoardState
 {
   boardRoot:HTMLElement;
-  private config = { viewOnly: true };
+  private config = { viewOnly: true, fen: 'r2q2k1/1p6/p2p4/2pN1rp1/N1Pb2Q1/8/PP1B4/R6K b - - 2 25',};
   private board;
   private chess: Chess;
   private backBtn: JQuery<HTMLElement>;
   private forwardBtn: JQuery<HTMLElement>;
+  private PgnViewer: typeof LichessPgnViewer;
 
   /**
    * create a new chessground chess board
@@ -44,7 +48,10 @@ export class BoardState
     console.log("BoardTate Constructed.")
     this.boardRoot = boardRoot;
 
+    this.PgnViewer = LichessPgnViewer(boardRoot, this.config);
     this.board = Chessground(boardRoot, this.config);
+    this.board.
+    this.PgnViewer.setGround(this.board)
 
     //chess.js record of what is on the board
     this.chess = new Chess();

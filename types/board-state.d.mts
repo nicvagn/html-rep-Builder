@@ -27,6 +27,7 @@ export declare class BoardState {
     private chess;
     private backBtn;
     private forwardBtn;
+    private PgnViewer;
     /**
      * create a new chessground chess board
      * @param boardRoot the root element to  put the board in
