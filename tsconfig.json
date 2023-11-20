@@ -12,7 +12,7 @@
     "noEmitOnError": false,  // does emit source on error
     "removeComments": false,	//do not remove comment's when compiling to js
     "sourceMap": true,	//map between source and output js
-    "explainFiles": true,	//ts explains why files are included
+    //"explainFiles": true,	//ts explains why files are included
 
     //dir options
     "outDir": "out",	// out dir for compiled source
