@@ -31,12 +31,28 @@ import Chessground  from "./lichess-pgn-viewer.js"
 export class BoardState
 {
   boardRoot:HTMLElement;
-  private config = { viewOnly: true, fen: 'r2q2k1/1p6/p2p4/2pN1rp1/N1Pb2Q1/8/PP1B4/R6K b - - 2 25',};
-  private board;
+  private config = {
+    viewOnly: true,
+    pgn: `[Event "Rated Blitz game"]
+    [Site "https://lichess.org/IMxmoURQ"]
+    [Date "2023.11.20"]
+    [White "nrv773"]
+    [Black "Aboodi916"]
+    [Result "0-1"]
+    [UTCDate "2023.11.20"]
+    [UTCTime "04:28:11"]
+    [Variant "Standard"]
+    [TimeControl "180+2"]
+    [ECO "A20"]
+    [Opening "English Opening: King's English Variation"]
+    [Termination "Normal"]
+    [Annotator "lichess.org"]
+
+    1. c4 e5 { A20 English Opening: King's English Variation } 2. g3 Bc5 3. Nc3 Nc6 4. Bg2 d6 5. a3 a6 6. b4 Ba7 7. e3 Rb8 8. Nge2 Bg4 9. O-O Qd7 10. d4 exd4 11. exd4 Nxd4 12. c5 Nxe2+ 13. Nxe2 Nf6 14. Re1 O-O 15. Qc2 dxc5 16. bxc5 Bh3 17. Rd1 Qc8 18. Bf3 b6 19. c6 b5 20. Rb1 Qe6 21. Nf4 Qc8 22. Nxh3 Qxh3 23. Bf4 Bb6 24. Rb4 Ng4 25. Bxg4 Qxg4 26. Bxc7 Qf5 27. Bxb8 Rxb8 28. c7 Rc8 29. Rd8+ Rxd8 30. cxd8=Q+ Bxd8 31. a4 Qxc2 { White resigns. } 0-1`};
   private chess: Chess;
   private backBtn: JQuery<HTMLElement>;
   private forwardBtn: JQuery<HTMLElement>;
-  private PgnViewer: typeof LichessPgnViewer;
+  private PgnViewer;
 
   /**
    * create a new chessground chess board
@@ -49,9 +65,9 @@ export class BoardState
     this.boardRoot = boardRoot;
 
     this.PgnViewer = LichessPgnViewer(boardRoot, this.config);
-    this.board = Chessground(boardRoot, this.config);
-    this.board.
-    this.PgnViewer.setGround(this.board)
+    //this.board = Chessground(boardRoot, this.config);
+    //this.PgnViewer.withGround(this.board);
+    console.log(this.PgnViewer);
 
     //chess.js record of what is on the board
     this.chess = new Chess();
@@ -82,7 +98,7 @@ export class BoardState
   public switchFen(fen:FEN):void
   {
     console.log(fen.stringFEN)
-    this.board.set({fen: fen.stringFEN});
+    this.PgnViewer.togglePgn()
     this.chess.load(fen.stringFEN);
     console.log(this.chess.ascii())
   }

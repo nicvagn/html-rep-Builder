@@ -57,7 +57,8 @@
   padding-right: 60px;
 }
 
-.navbar__links {
+/*for the buttons*/
+.navbarBtn {
   color: #fff;
   display: flex;
   align-items: center;
@@ -67,11 +68,15 @@
   height: 100%;
   cursor: pointer;
   outline: none;
+  border: none;
   height: 60px;
   font-size: xx-large;
+  background: #064742;
+  color: #000;
+  cursor: pointer;
 }
 
-.navbar__links:hover{
+.navbarBtn:hover{
   box-shadow: inset 5em 5em #FDD401;
   color: black;
   transition: all 0.3s ease;
@@ -95,38 +100,17 @@
 /* chessground css */
 
 /* chessground pane and container */
-.centerPane body{
-  display: flex;
-  flex-wrap: wrap;
-}
 
-.centerPane div {
-  margin: 20px auto;
+#chessgroundContainer{
+  width: fit-content;
+  margin: 0 auto;
+
+  align-self: center;
 }
 
 /* board color */
 .centerPane cg-board {
   background-color: #1e9c9c;
-}
-
-/* board control btn's */
-#boardCtrl {
-  display: inline-flex;
-  margin: 0;
-  justify-content: center;
-  width: 100%;
-}
-
-#boardCtrlAhead {
-  height: 50px;
-  width: 300px;
-  margin: 0;
-}
-
-#boardCtrlBack {
-  height: 50px;
-  width: 300px;
-  margin: 0;
 }
 
 .chessground {
@@ -136,20 +120,6 @@
 
 
 /* common css */
-button {
-  display: block;
-  align-items: center;
-  text-decoration: none;
-  padding: 10px 20px;
-  width: 100px;
-  border: none;
-  outline-style: none;
-  background: #064742;
-  color: #fff;
-  margin: 15px 15px;
-  height: 70px;
-  font-size: medium;
-}
 
 button:hover {
   background: #FDD401;
@@ -239,9 +209,7 @@ ul{
   margin:0 auto 10px 40px;
 }
 
-.wideBtn {
-  width: 300px;
-}
+
 
 #downloadLink{
   visibility: hidden;
@@ -290,6 +258,36 @@ ul{
 
 .editRep{ /* when new rep is clicked, these items are shown */
   visibility: hidden;
+}
+
+.editRep button {
+  display: block;
+  align-items: center;
+  text-decoration: none;
+  padding: 10px 20px;
+  width: 100px;
+  border: none;
+  outline-style: none;
+  background: #064742;
+  color: #fff;
+  margin: 15px 15px;
+  height: 70px;
+  font-size: medium;
+}
+
+.editRep .wideBtn {
+  width: 300px;
+}
+
+.editRep button:hover {
+  background: #FDD401;
+  color: #000;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
 }
 
 /* OpenRep css */

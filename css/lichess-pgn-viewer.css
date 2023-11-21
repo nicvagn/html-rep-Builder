@@ -8,6 +8,7 @@
   width: 100%;
 }
 
+/* before nrv
 cg-container {
   position: absolute;
   width: 100%;
@@ -15,6 +16,17 @@ cg-container {
   display: block;
   top: 0;
 }
+*/
+
+cg-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: block;
+  top: 0;
+}
+
+
 
 cg-board {
   position: absolute;
@@ -547,7 +559,7 @@ cg-board square.current-premove {
 
 .lpv__player {
   font-size: 0.8em;
-  background: hsl(37, 5%, 18%);
+  background:  #064742;
   display: flex;
   flex-flow: row nowrap;
   padding: 0 1em;
@@ -614,13 +626,13 @@ cg-board square.current-premove {
   flex-flow: row nowrap;
   align-items: stretch;
   user-select: none;
-  background: hsl(37, 5%, 18%);
+  background:  #064742;
 }
 .lpv__controls .lpv__fbt {
   flex: 1 1 auto;
   font-size: 1.4em;
   padding: 0.4em 0.7em;
-  border-left: 1px solid hsl(0, 0%, 25%);
+  border-left: 1px solid #064742
 }
 .lpv__controls .lpv__fbt:first-child {
   border: none;
@@ -638,7 +650,7 @@ cg-board square.current-premove {
 body ::-webkit-scrollbar,
 body ::-webkit-scrollbar-corner {
   width: 0.5rem;
-  background: hsl(37, 5%, 18%);
+  background:  #064742;
 }
 
 body ::-webkit-scrollbar-thumb {
@@ -712,7 +724,7 @@ body ::-webkit-scrollbar-thumb:active {
   border-radius: 5px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
   overflow: hidden;
-  background: hsl(37, 5%, 18%);
+  background:  #064742;
   color: #aaa;
   box-sizing: border-box;
 }

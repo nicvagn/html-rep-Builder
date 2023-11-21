@@ -1,29 +1,116 @@
 <!DOCTYPE html>
+
+<!--******************************************************************************
+ * a typescript chess repertoire builder. including line and example game viewing
+ * made for shcc: Saskatchewan Horizon Chess Club
+ * Copyright (C) 2023 Nicolas Vaagen
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of  MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ ********************************************************************************-->
+
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link href="lichess-pgn-viewer.css" rel="stylesheet" />
-    <link href="lichess-pgn-viewer.demo.css" rel="stylesheet" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Lichess PGN Viewer</title>
-  </head>
-  <body>
-    <div class="viewers">
-      <div><div></div></div>
-      <div><div class="previous-class"></div></div>
-      <div><div></div></div>
-      <div><div></div></div>
-      <div><div></div></div>
-      <div><div></div></div>
-      <div><div></div></div>
-      <div><div></div></div>
-      <div><div></div></div>
-      <div><div></div></div>
+  <title>SHCC: Repertoire Viewer</title>
+  <link rel="icon" href="images/shcc-logo-notxt.png">
+
+  <!-- JQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+  <!-- PGN-Viewer-->
+  <link href="/css/lichess-pgn-viewer.css" rel="stylesheet" />
+
+  <!-- our CSS-->
+  <link rel="stylesheet" href="css/styles.css" />
+
+</head>
+
+<body>
+  <!-- Navbar Section -->
+  <nav class="navbar">
+    <div class="navbar__container">
+      <img id="logo" src="images/shcc-logo-notxt.png">
+      <ul class="navbar__menu">
+        <li class="navbar__item">
+          <button id="newRepTop" class="navbarBtn">New</button>
+        </li>
+        <li class="navbar__item">
+          <button id="editRepTop" class="navbarBtn">Edit</button>
+        </li>
+        <li class="navbar__item">
+          <button id="openRepTop" class="navbarBtn">Open</button>
+        </li>
+      </ul>
     </div>
-    <script src="./src/lichess-pgn-viewer.js" type="module"></script>
-    <script src="./out/lichess-pgn-view-nrv.js" type="module">
-    </script>
-  </body>
+  </nav>
+
+  <!-- main content -->
+  <div class="row">
+    <div class="column" id="linesColumn">
+
+      <h1>Lines:</h1>
+
+      <!-- place for the line list  -->
+      <div id="lineList"></div>
+
+    </div>
+    <div class="centerPane">
+
+      <h2 id="repName">Placeholder Name</h2>
+
+      <div id="chessgroundContainer" >
+        <!-- Main Chessboard -->
+        <div id="chessground" class="chessground">
+          <!-- board here -->
+        </div>
+      </div>
+
+    </div>
+    <div class="column" id="gamesColumn">
+
+      <h1>Instructive games:</h1>
+
+      <!-- place for open lines game list -->
+      <div id="gameList">
+      </div>
+
+      <h1>Local <br>Repertoires:</h1>
+
+      <div id="localReps"></div>
+
+      <a id="downloadLink" href="#" download="Repertoire.json">Download</a>
+
+    </div>
+  </div>
+
+  <div id="newRepButtons" class="editRep">
+
+    <button id="resetGames">reset games</button>
+    <button id="resetLines">reset lines</button>
+    <label for="fileInput" class="fileInput">Add PGN</label>
+    <button id="saveBrowser" class="wideBtn">save to browser permanent local storage</button>
+
+    <input id="fileInput" type="file"/>
+
+  </div>
+
+  <!-- pgn viewer, lichess -->
+  <script src="./src/lichess-pgn-viewer.js" type="module"></script>
+  <!-- our module -->
+  <script type="module" src="out/index.js"></script>
+</body>
 </html>
