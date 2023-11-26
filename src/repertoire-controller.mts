@@ -23,6 +23,8 @@ import { BoardState } from "./board-state.mjs";
 import { PGN, FEN } from "./chess-notation.mjs";
 import { SaveController } from "./save-controller.js";
 import { EditRepertoireController } from "./edit-repertoire-controller.mjs";
+import { RepertoireLine } from "./repertoire-line.js";
+import { ExampleGame } from "./example-game.js";
 
 /**
  * the main controller , handles repertoire creation, keeps track of open stuff and does the dishes
@@ -180,12 +182,26 @@ export class Controller
 
   /**
    * change the game on the main board
-   * FEN { FEN } fen to display on the board
+   * game game to display on the board
    */
-  public changeExampleGame(fen: FEN): void
+  public changeExampleGame(game: ExampleGame): void
   {
-    console.log("changeExampleGame() entered, with FEN " + fen);
+    console.log("changeExampleGame() entered, with game: " + game.name +
+    "with PGN: " + game.PGN.stringPgn);
     //just for testing if I can change the fen
-    this.boardState.switchFen(fen);
+    this.boardState.setPGN(game.PGN);
+  }
+
+  /**
+   * change the board to a new line
+   * @param line { RepertoireLine } line to switch to
+   */
+  public switchLine(line: RepertoireLine): void
+  {
+    console.log("switch line entered with line: " + line.name);
+
+    console.log("switch line entered with line named: " + line.name);
+
+    this.boardState.setPGN(line.pgn);
   }
 }

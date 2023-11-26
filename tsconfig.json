@@ -23,10 +23,15 @@
     "declarationDir": "./types", // configure the root directory for where declaration files are emitted.
 
     //target stuff, be careful changing this can cause headache
-    "target": "es6",  //we need this, or we can not import. It tries to use require
+    //"target": "es6",  //we need this, or we can not import. It tries to use require
     "lib": ["DOM", "ES2016"],	//DOM is needed to control the browser, ES2016 just seemed good nuf
 
+    //webpack =================================
+
+    "target": "es5",
+    // =======================================
     //module stuff, be careful
+    "module": "es6",
     "moduleResolution": "node",  //node style module resolution
     "moduleDetection": "force",  //makes everything a module
     "esModuleInterop": true,	//something to do with allowing commonjs modules to play nice with es6 modules
@@ -36,6 +41,6 @@
     "allowJs": true,
   },
   "include": ["src"],	//include our src dir
-  "exclude": []
+  "exclude": ["node_modules"]
 }
 

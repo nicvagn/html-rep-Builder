@@ -418,7 +418,7 @@ cg-board square.current-premove {
   display: flex;
   flex-flow: row wrap;
   overflow-y: auto;
-  background: hsl(37, 5%, 18%);
+  background: #143634;
   align-items: center;
   align-content: flex-start;
   will-change: scroll-position;
@@ -427,7 +427,7 @@ cg-board square.current-premove {
   min-width: 20ch;
 }
 .lpv__moves index {
-  color: #6d6c6b;
+  color: #FDD401;
 }
 .lpv__moves > index {
   flex: 0 0 15%;
@@ -502,7 +502,8 @@ cg-board square.current-premove {
 }
 .lpv__moves > comment {
   flex: 1 1 100%;
-  background: hsl(37, 5%, 15%);
+  color: #000;
+  background: #1e9c9c;
   border: 1px solid hsl(0, 0%, 25%);
   border-width: 1px 0;
   padding: 0.4em 1em;

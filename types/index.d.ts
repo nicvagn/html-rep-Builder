@@ -17,4 +17,6 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************************/
 import { Controller } from "./repertoire-controller.mjs";
+import "../css/styles.css";
+import "../css/lichess-pgn-viewer.css";
 export declare const controller: Controller;

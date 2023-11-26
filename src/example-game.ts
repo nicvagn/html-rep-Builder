@@ -67,8 +67,17 @@ export class ExampleGame
    * change the main board to display this game
    * @param game the ExampleGame to show
    */
-  public showGame(game:ExampleGame)
+  public showGame(game?:ExampleGame)
   {
-    controller.changeExampleGame(game.FEN);
+
+    //needed for calling from the dom buttons
+    if(game == undefined)
+    {
+      controller.changeExampleGame(this);
+    }
+    else
+    {
+      controller.changeExampleGame(game);
+    }
   }
 }

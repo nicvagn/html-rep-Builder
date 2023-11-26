@@ -43,7 +43,7 @@ export class SaveController
    */
   public static getRepertoireFromLocal(repKey: string): Repertoire
   {
-    let obj = SaveController.getFromLocal(repKey);
+    const obj = SaveController.getFromLocal(repKey);
 
     //check to make sure what we have is a rep
     if (obj instanceof Repertoire)
@@ -61,11 +61,11 @@ export class SaveController
    * @param {string} key the key of the item to be retrieve
    * @returns the retrieve item in json
    */
-  private static getFromLocal(key: string): Object
+  private static getFromLocal(key: string): object
   {
     //try to grab element tied to the key
 
-    let grab: string | null = localStorage.getItem(key);
+    const grab: string | null = localStorage.getItem(key);
 
     if (grab != null) {
       return JSON.parse(grab);
@@ -79,12 +79,12 @@ export class SaveController
    * @param key the key to put that object's json under in local. The key is used to retrieve the item
    * @param object a javascript object to be put into storage
    */
-  private static putLocal(key: string, object: Object)
+  private static putLocal(key: string, object: object)
   {
     console.log("putLocal() entered. Key: " + key + "object: " + object);
 
     //create a stringified version of the object
-    let strObject = JSON.stringify(object);
+    const strObject = JSON.stringify(object);
 
     console.log("strObject: " + strObject);
     //localStorage.setItem(key, strObject);

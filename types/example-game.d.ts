@@ -39,5 +39,5 @@ export declare class ExampleGame {
      * change the main board to display this game
      * @param game the ExampleGame to show
      */
-    showGame(game: ExampleGame): void;
+    showGame(game?: ExampleGame): void;
 }

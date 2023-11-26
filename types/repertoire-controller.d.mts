@@ -20,6 +20,8 @@ import { Repertoire } from "./repertoire.js";
 import { BoardState } from "./board-state.mjs";
 import { PGN, FEN } from "./chess-notation.mjs";
 import { EditRepertoireController } from "./edit-repertoire-controller.mjs";
+import { RepertoireLine } from "./repertoire-line.js";
+import { ExampleGame } from "./example-game.js";
 /**
  * the main controller , handles repertoire creation, keeps track of open stuff and does the dishes
  */
@@ -59,7 +61,12 @@ export declare class Controller {
     editRepertoire(): void;
     /**
      * change the game on the main board
-     * FEN { FEN } fen to display on the board
+     * game game to display on the board
      */
-    changeExampleGame(fen: FEN): void;
+    changeExampleGame(game: ExampleGame): void;
+    /**
+     * change the board to a new line
+     * @param line { RepertoireLine } line to switch to
+     */
+    switchLine(line: RepertoireLine): void;
 }

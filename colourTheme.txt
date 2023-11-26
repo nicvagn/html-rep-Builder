@@ -1,0 +1,5 @@
+background: #adbebd
+highlight: #FDD401
+low-light: #064742;
+board: #1e9c9c
+navbar: #1e9c9c;

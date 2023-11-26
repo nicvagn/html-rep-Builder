@@ -16,17 +16,13 @@
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************************/
-import { FEN } from "./chess-notation.mjs";
+import { PGN } from "./chess-notation.mjs";
 /**
  * a wrapper around Chessground and chess.js
  */
 export declare class BoardState {
     boardRoot: HTMLElement;
     private config;
-    private board;
-    private chess;
-    private backBtn;
-    private forwardBtn;
     private PgnViewer;
     /**
      * create a new chessground chess board
@@ -34,26 +30,17 @@ export declare class BoardState {
      */
     constructor(boardRoot: HTMLElement);
     /**
-     * change the board position to given fen
-     * @param fen the fen to change too
-     */
-    switchFen(fen: FEN): void;
-    /**
      * change the orientation of the chessboard
      * @param boardSide can be "black" or "white"
      */
     changeOrientation(boardSide: string): void;
+    xxx: {
+        viewOnly: boolean;
+        pgn: string;
+    };
     /**
-     * make a move
-     * @param move a chess move in Algebraic Notation
+     * change the pgn on the board
+     * @param pgn the pgn to switch to
      */
-    move(move: string): void;
-    /**
-     * undo last move
-     */
-    moveBack(): void;
-    /**
-     * move forward
-     */
-    moveForward(): void;
+    setPGN(pgn: PGN): void;
 }
