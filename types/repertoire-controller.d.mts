@@ -28,7 +28,7 @@ import { ExampleGame } from "./example-game.js";
 export declare class Controller {
     openRepName?: string;
     openRep?: Repertoire;
-    readonly boardState: BoardState;
+    readonly boardState?: BoardState;
     editRepController?: EditRepertoireController;
     boardSpot: HTMLElement | null;
     repNameElement: HTMLElement;
@@ -39,6 +39,10 @@ export declare class Controller {
      * construct a new rep with a name maybe
      */
     constructor();
+    /**
+     * called when dom is loaded
+     */
+    domLoaded(): void;
     /**
      * set the rep name by asking for user input
      */

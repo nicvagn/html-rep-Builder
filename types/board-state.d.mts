@@ -22,8 +22,10 @@ import { PGN } from "./chess-notation.mjs";
  */
 export declare class BoardState {
     boardRoot: HTMLElement;
-    private config;
-    private PgnViewer;
+    config: {
+        viewOnly: boolean;
+        pgn: string;
+    };
     /**
      * create a new chessground chess board
      * @param boardRoot the root element to  put the board in
@@ -34,7 +36,7 @@ export declare class BoardState {
      * @param boardSide can be "black" or "white"
      */
     changeOrientation(boardSide: string): void;
-    xxx: {
+    cfg: {
         viewOnly: boolean;
         pgn: string;
     };

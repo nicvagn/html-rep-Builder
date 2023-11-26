@@ -26,13 +26,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>SHCC: Repertoire Viewer</title>
-  <link rel="icon" href="../images/shcc-logo-notxt.png">
+  <link rel="icon" href="./images/shcc-logo-notxt.png">
 
   <!-- JQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-  <!-- PGN-Viewer-
-  <link href="/css/lichess-pgn-viewer.css" rel="stylesheet" />
+  <!-- PGN-Viewer --
+  <link rel="stylesheet"  href="/css/lichess-pgn-viewer.css" />
 
   <!-- our CSS--
   <link rel="stylesheet" href="css/styles.css" />
@@ -74,9 +74,7 @@
 
       <div id="chessgroundContainer" >
         <!-- Main Chessboard -->
-        <div id="chessground" class="chessground">
-          <!-- board here -->
-        </div>
+        <iframe id="chessground" class="chessground" width="800px" height="800px" src="https://lichess.org/study/embed/PYEVM2pA/Zkl0ptuJ#0" frameborder=0></iframe>
       </div>
 
     </div>
@@ -109,6 +107,6 @@
   </div>
 
   <!-- our module -->
-  <script type="text/javascript" src="dist/main.js"></script>
+  <script type="text/javascript" src="./main.js"></script>
 </body>
 </html>

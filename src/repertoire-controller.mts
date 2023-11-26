@@ -25,6 +25,7 @@ import { SaveController } from "./save-controller.js";
 import { EditRepertoireController } from "./edit-repertoire-controller.mjs";
 import { RepertoireLine } from "./repertoire-line.js";
 import { ExampleGame } from "./example-game.js";
+import { error } from "jquery";
 
 /**
  * the main controller , handles repertoire creation, keeps track of open stuff and does the dishes
@@ -34,7 +35,7 @@ export class Controller
   openRepName?: string; //name of the open rep
   openRep?: Repertoire; //open rep
 
-  public readonly boardState: BoardState; //the board state, for changing the visual board
+  public readonly boardState?: BoardState; //the board state, for changing the visual board
   editRepController?: EditRepertoireController; //class containing the functions to aid in editing the rep
 
   boardSpot = document.getElementById("chessground"); //the place to init the chessboard
@@ -59,9 +60,6 @@ export class Controller
    */
   constructor()
   {
-    //create a new board state
-    this.boardState = new BoardState(this.boardSpot!);
-
     //add event handlers to top btn's
     $( "#newRepTop" ).on("click", { controller: this }, function (event)
     {
@@ -89,6 +87,24 @@ export class Controller
         //show all the controls for editing
         event.data.controller.editRepertoire();
       });
+  }
+
+  /**
+   * called when dom is loaded
+   */
+  public domLoaded(): void
+  {
+    this.boardSpot = document.getElementById("chessground"); //the place to init the chessboard
+
+    if(this.boardSpot == null)
+    {
+      throw error("boardSpot is null,")
+    }
+    else{
+      //create a new board state
+      new BoardState(this.boardSpot);
+      console.log("Board spot: " + this.boardSpot)
+    }
   }
 
   /**
@@ -188,8 +204,15 @@ export class Controller
   {
     console.log("changeExampleGame() entered, with game: " + game.name +
     "with PGN: " + game.PGN.stringPgn);
-    //just for testing if I can change the fen
-    this.boardState.setPGN(game.PGN);
+
+    if(this.boardState != undefined)
+    {
+      this.boardState.setPGN(game.PGN);
+    }
+    else
+    {
+      throw error("this.boardState is undefined");
+    }
   }
 
   /**
@@ -202,6 +225,14 @@ export class Controller
 
     console.log("switch line entered with line named: " + line.name);
 
-    this.boardState.setPGN(line.pgn);
+    if(this.boardState != undefined)
+    {
+      this.boardState.setPGN(line.pgn);
+    }
+    else
+    {
+      throw error("this.boardState is undefined");
+    }
+
   }
 }

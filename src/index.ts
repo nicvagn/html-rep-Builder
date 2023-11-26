@@ -23,8 +23,8 @@ import { ExampleGame } from "./example-game.js";
 import { FEN, PGN } from "./chess-notation.mjs";
 
 //import our styles, css in ts. We cooking with fire now
-import "../css/styles.css";
 import "../css/lichess-pgn-viewer.css";
+import "../css/styles.css";
 
 
 export const controller:Controller = new Controller();
@@ -35,6 +35,10 @@ document.addEventListener("DOMContentLoaded",  () =>
 {
   //the main controller, needed to make button be able to call controller functions
   console.log("loaded");
+
+
+  //tell the controller dom is loaded
+  controller.domLoaded();
 
 
   controller.newRepertoire("the only");

@@ -99,24 +99,25 @@
 /* chessground css */
 
 /* chessground pane and container */
-
-#chessgroundContainer{
-  width: fit-content;
+.chessgroundContainer{
   margin: 0 auto;
-
-  align-self: center;
+  width: 800px;
+  align-items: center;
+  justify-self: center;
 }
+
+#chessground{
+  width: 800px;
+  height: 700px;
+  align-self: center;
+  justify-self: center;
+}
+
 
 /* board color */
-.centerPane cg-board {
+#chessground cg-board {
   background-color: #1e9c9c;
 }
-
-.chessground {
-  width: 700px;
-  height: 700px;
-}
-
 
 /* common css */
 
