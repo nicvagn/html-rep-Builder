@@ -102,15 +102,10 @@
 #chessgroundContainer{
   margin: 0 auto;
   width: 100%;
-  align-items: center;
   justify-self: center;
 }
 
-#chessground{
-  width: 1000px;
-  height: 800px;
-  align-self: center;
-  justify-self: center;
+#chessground {
   position: relative;
   left: 50%;
   transform: translate(-50%, 0);
@@ -118,14 +113,10 @@
   -moz-transform: translate(-50%, 0);
   -ms-transform: translate(-50%, 0);
   -o-transform: translate(-50%, 0);
+  height: 600px;
+  width: 800px;
+  margin: 0 auto;
 }
-
-
-/* board color */
-#chessground cg-board {
-  background-color: #1e9c9c;
-}
-
 /* common css */
 
 button:hover {

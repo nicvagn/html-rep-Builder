@@ -18,8 +18,6 @@
  *********************************************************************************/
 
 //import { event } from "jquery";
-import { PGN } from "./chess-notation.mjs";
-import { FEN } from "./chess-notation.mjs";
 import { controller } from "./index.js";
 
 /**
@@ -30,8 +28,7 @@ export class ExampleGame
 {
 
   public name: string; //game name
-  public PGN: PGN;  //example game pgn
-  public FEN: FEN;
+  studyUrl: string; //the lichess study url
 
   public gameBtn: JQuery<HTMLElement>;
 
@@ -40,12 +37,12 @@ export class ExampleGame
    * @param {string} name the name of the game
    * @param {PGN} pgn the pgn of the game
    */
-  constructor(name: string, pgn: PGN, fen:FEN)
+  constructor(name: string, studyUrl: string)
   {
     console.log("Example Game constructed.")
     this.name = name;
-    this.PGN = pgn;
-    this.FEN = fen;
+
+    this.studyUrl = studyUrl;
 
     //create the visual button for the gui
     this.gameBtn =
@@ -73,11 +70,11 @@ export class ExampleGame
     //needed for calling from the dom buttons
     if(game == undefined)
     {
-      controller.changeExampleGame(this);
+      controller.changeStudy(this);
     }
     else
     {
-      controller.changeExampleGame(game);
+      controller.changeStudy(game);
     }
   }
 }

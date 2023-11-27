@@ -16,10 +16,11 @@
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************************/
+/// <reference types="jquery" />
+/// <reference types="jquery" />
 import { Repertoire } from "./repertoire.js";
-import { BoardState } from "./board-state.mjs";
-import { PGN, FEN } from "./chess-notation.mjs";
 import { EditRepertoireController } from "./edit-repertoire-controller.mjs";
+import { RepertoireLine } from "./repertoire-line.js";
 import { ExampleGame } from "./example-game.js";
 /**
  * the main controller , handles repertoire creation, keeps track of open stuff and does the dishes
@@ -27,19 +28,15 @@ import { ExampleGame } from "./example-game.js";
 export declare class Controller {
     openRepName?: string;
     openRep?: Repertoire;
-    readonly boardState?: BoardState;
+    boardSpot?: JQuery<HTMLElement>;
+    iframeHeight: string;
+    iframeWith: string;
+    iframeStart: string;
+    iframeEnd: string;
     editRepController?: EditRepertoireController;
-    boardSpot: HTMLElement | null;
     nameLabel: HTMLElement;
-    text_PGN1: string;
-    obj_pgn1: PGN;
-    text_PGN2: string;
-    obj_pgn2: PGN;
-    test_FENS: [FEN, FEN];
-    game1: ExampleGame;
-    game2: ExampleGame;
     /**
-     * construct a new rep with a name maybe
+     * construct a new repertoire controller
      */
     constructor();
     /**
@@ -63,8 +60,8 @@ export declare class Controller {
      */
     editRepertoire(): void;
     /**
-     * change the game on the main board
-     * game game to display on the board
+     * change the study on the main board
+     *  to display on the board
      */
-    changeExampleGame(game: ExampleGame): void;
+    changeStudy(chessThing: RepertoireLine | ExampleGame): void;
 }

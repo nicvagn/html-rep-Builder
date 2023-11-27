@@ -190,16 +190,8 @@ export class Repertoire
 
     console.log("switch line entered with line named: " + line.name);
 
-    //change the display
+    //change the displays
     controller.setNameElement(line.name);
-
-    if (controller.boardState != undefined)
-    {
-      controller.boardState.setPGN(line.pgn);
-    }
-    else
-    {
-      throw Error("this.boardState is undefined");
-    }
+    controller.changeStudy(line);
   }
 }

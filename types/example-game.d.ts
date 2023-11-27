@@ -18,23 +18,20 @@
  *********************************************************************************/
 /// <reference types="jquery" />
 /// <reference types="jquery" />
-import { PGN } from "./chess-notation.mjs";
-import { FEN } from "./chess-notation.mjs";
 /**
  * a chess repertoire example game. It's primary use is in a rep builder GUI, so it needs to have a visual
  * component :. extends button
  */
 export declare class ExampleGame {
     name: string;
-    PGN: PGN;
-    FEN: FEN;
+    studyUrl: string;
     gameBtn: JQuery<HTMLElement>;
     /**
      * construct a new repertoire game
      * @param {string} name the name of the game
      * @param {PGN} pgn the pgn of the game
      */
-    constructor(name: string, pgn: PGN, fen: FEN);
+    constructor(name: string, studyUrl: string);
     /**
      * change the main board to display this game
      * @param game the ExampleGame to show

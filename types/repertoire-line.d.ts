@@ -19,14 +19,13 @@
 /// <reference types="jquery" />
 /// <reference types="jquery" />
 import { ExampleGame } from "./example-game.js";
-import { PGN } from "./chess-notation.mjs";
 /**
  * a chess repertoire line. It's primary use is in a rep builder GUI, so it needs to have a visual
  * component
  */
 export declare class RepertoireLine {
     name: string;
-    pgn: PGN;
+    studyUrl: string;
     exampleGames: ExampleGame[];
     lineBtn: JQuery<HTMLElement>;
     /**
@@ -35,7 +34,7 @@ export declare class RepertoireLine {
      * @param pgn the pgn of this line
      * @param exampleGames any example games of this line in action
      */
-    constructor(name: string, pgn: PGN, exampleGames?: ExampleGame[]);
+    constructor(name: string, studyUrl: string, exampleGames?: ExampleGame[]);
     /**
      * reset the gameList to empty
      */

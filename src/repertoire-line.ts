@@ -19,7 +19,6 @@
 
 //nrv stuff
 import { ExampleGame } from "./example-game.js";
-import { PGN } from "./chess-notation.mjs"
 import { controller } from "./index.js";
 
 
@@ -31,7 +30,7 @@ import { controller } from "./index.js";
 export class RepertoireLine
 {
   name: string;
-  pgn: PGN; //main pgn of the line
+  studyUrl: string;
 
   exampleGames: ExampleGame[] = new Array<ExampleGame>(); //example games for th current line
 
@@ -45,11 +44,11 @@ export class RepertoireLine
    * @param pgn the pgn of this line
    * @param exampleGames any example games of this line in action
    */
-  constructor(name: string, pgn:PGN, exampleGames?: ExampleGame[])
+  constructor(name: string, studyUrl: string, exampleGames?: ExampleGame[])
   {
-    console.log("repertoire line with name: " + name + " constructed.")
+    console.log("repertoire line with name: " + name + " + studyUrl: " + studyUrl + " constructed.")
     this.name = name;
-    this.pgn = pgn;
+    this.studyUrl = studyUrl;
 
     //create the visual button for the gui
     this.lineBtn = $("<button/>", {
@@ -106,9 +105,11 @@ export class RepertoireLine
     console.log("openLine() entered");
 
     //update name display
-    controller.setNameElement(this.name)
+    controller.setNameElement(this.name);
 
-    console.log("=======================================");
+    console.log("================ study opened =====================");
+
+    controller.changeStudy(this); //change the main board to this study
 
     //empty the doc game list
     $("#gameList").replaceWith("<div id='gameList'> </div>");
@@ -117,6 +118,7 @@ export class RepertoireLine
 
     this.exampleGames.forEach((game) =>
     {
+      console.log(game);
       console.log("game added to gameList: " + game.name);
       game.gameBtn.appendTo($( '#gameList' ));
 

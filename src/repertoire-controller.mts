@@ -19,13 +19,13 @@
 
 //nrv stuff
 import { Repertoire } from "./repertoire.js";
-import { BoardState } from "./board-state.mjs";
-import { PGN, FEN } from "./chess-notation.mjs";
 import { SaveController } from "./save-controller.js";
 import { EditRepertoireController } from "./edit-repertoire-controller.mjs";
 import { RepertoireLine } from "./repertoire-line.js";
 import { ExampleGame } from "./example-game.js";
 import { error } from "jquery";
+
+
 
 /**
  * the main controller , handles repertoire creation, keeps track of open stuff and does the dishes
@@ -34,41 +34,26 @@ export class Controller
 {
   openRepName?: string; //name of the open rep
   openRep?: Repertoire; //open rep
+  boardSpot?: JQuery<HTMLElement>;
 
-  public readonly boardState?: BoardState; //the board state, for changing the visual board
+  //iframe properties for imbedded lichess studies
+  iframeHeight: string = 'height="600px"';
+  iframeWith: string = 'width="800px"';
+
+  //for embedding the iframe
+  iframeStart: string = ('<iframe id="chessground" ' + this.iframeWith + ' ' + this.iframeHeight + " src=");
+  // url fragment goes here
+  iframeEnd: string = '?theme=blue2&bg=light frameborder=0></iframe>';
   editRepController?: EditRepertoireController; //class containing the functions to aid in editing the rep
 
-  boardSpot = document.getElementById("chessground"); //the place to init the chessboard
   nameLabel: HTMLElement = document.getElementById("nameLabel")!; //for the current rep name
 
-  //test data ==================================================================================
-  text_PGN1: string =
-    "1. e4 e5 {A surprising move. I did not expect this from my opponent.} 2. Nf3 Nc6 3. Bb5 a6 {Here I was thinking about taking on c6, but eventually decided to preserve my bishop.} 4. Ba4 ({Usually, I play} 4.Bxc6) 4…Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O {etc.}";
-  obj_pgn1: PGN = new PGN(this.text_PGN1);
-
-  text_PGN2: string =
-    "1. e4 c6 2. Nf3 d5 3. Nc3 { B10 Caro-Kann Defense: Two Knights Attack } d4?! { (0.28 → 0.96) Inaccuracy. Bg4 was best. } (3... Bg4 4. h3 Bxf3 5. Qxf3 e6 6. Be2 Bc5 7. O-O Nd7 8. exd5) 4. Ne2 c5 5. c3 Nc6?! { (0.94 → 1.76) Inaccuracy. dxc3 was best. } (5... dxc3 6. Nxc3 a6 7. d4 cxd4 8. Qxd4 Qxd4 9. Nxd4 e6 10. Be3) 6. cxd4 cxd4 7. Ng3?? { (1.49 → -0.27) Blunder. Qa4 was best. } (7. Qa4 a6 8. Nexd4 Bd7 9. d3 Nf6 10. Nxc6 Bxc6 11. Qb3 e5) 7... e5 8. Bb5 Bd6 9. Qa4?! { (0.17 → -0.81) Inaccuracy. O-O was best. } (9. O-O a6 10. Ba4 b5 11. Bc2 Nf6 12. d3 O-O 13. Bd2 Bd7 14. a3 a5 15. Bb3 a4) 9... Ne7 10. d3 O-O 11. O-O a6 12. Bxc6 Nxc6 13. Nf5 b5?! { (-1.30 → -0.41) Inaccuracy. Bxf5 was best. } (13... Bxf5) 14. Qb3 Be6 15. Qd1 Bc7?! { (-0.36 → 0.28) Inaccuracy. Be7 was best. } (15... Be7) 16. a3?! { (0.28 → -0.76) Inaccuracy. Ng5 was best. } (16. Ng5 Qf6) 16... b4?! { (-0.76 → 0.19) Inaccuracy. f6 was best. } (16... f6) 17. Qc2?! { (0.19 → -0.58) Inaccuracy. Ng5 was best. } (17. Ng5 Qd7) 17... Ne7 18. Nxe7+ Qxe7 19. axb4 Rfc8 20. Qd2 Rcb8 21. Qe1?! { (-0.59 → -1.27) Inaccuracy. Qc2 was best. } (21. Qc2 Rxb4) 21... Qxb4 22. Bd2 Qxb2 23. Ba5 Bd6 24. Qc1?! { (-1.71 → -2.39) Inaccuracy. Ng5 was best. } (24. Ng5 Ba2 25. f4 exf4 26. Rf2 Qxa1 27. Qxa1 Rb1+ 28. Rf1 Rxa1 29. Rxa1 h6 30. e5 Be7) 24... Qxc1 25. Rfxc1 h6? { (-1.79 → -0.12) Mistake. Rc8 was best. } (25... Rc8 26. Nd2 h5 27. Kf1 Rab8 28. Rxc8+ Rxc8 29. Ke2 f6 30. Kd1 h4 31. h3 Rb8 32. Rc1) 26. Rc6 Bf8 27. Nxe5 Rb5 28. Bc7? { (0.00 → -1.15) Mistake. Nf3 was best. } (28. Nf3 Bc5 29. Kf1 Bd7 30. Rc7 Be6 31. Rc6) 28... a5 29. Nf3 a4?! { (-1.41 → -0.42) Inaccuracy. Rb4 was best. } (29... Rb4 30. Be5 Bd7 31. Rcc1 Bg4 32. Rab1 Rxb1 33. Rxb1 a4 34. h3 Bxf3 35. gxf3 Rd8 36. Bc7) 30. Nxd4 Rb4?! { (-0.70 → 0.10) Inaccuracy. Bd7 was best. } (30... Bd7) 31. Nxe6 fxe6 32. h3 a3 33. Rc3?? { (-0.11 → -1.93) Blunder. Be5 was best. } (33. Be5 Rb3) 33... a2 34. Rcc1 Rb2? { (-1.90 → -0.72) Mistake. Rc8 was best. } (34... Rc8 35. Rxa2) 35. Be5 Rd2 36. Kf1 Ba3 37. Rd1 Rc2?! { (-1.34 → -0.67) Inaccuracy. Rxd1+ was best. } (37... Rxd1+ 38. Rxd1) 38. Ke1?? { (-0.67 → -3.30) Blunder. Re1 was best. } (38. Re1) 38... Bb2?? { (-3.30 → 0.00) Blunder. Rf8 was best. } (38... Rf8 39. f4 g5 40. Kf1 gxf4 41. d4 f3 42. g4 Rfc8 43. d5 exd5 44. exd5 Bc5 45. d6) 39. Bxb2 Rxb2 40. Rdc1?? { (0.00 → -4.40) Blunder. Rd2 was best. } (40. Rd2 Rb1+ 41. Rd1 Rb2) 40... Kh7 41. g4?! { (-4.40 → -6.06) Inaccuracy. g3 was best. } (41. g3 Rf8 42. f4 Rfb8 43. Kf1 Rb1 44. Kf2 Rxc1 45. Rxc1 Rb1 46. Rxb1 axb1=R 47. h4 g5) 41... Kg6?! { (-6.06 → -4.42) Inaccuracy. Rf8 was best. } (41... Rf8 42. Kf1 Rfxf2+ 43. Kg1 Rg2+ 44. Kh1 Rg3 45. Rd1 Rxh3+ 46. Kg1 Rg3+ 47. Kh1 Rxg4 48. Re1) 42. f4 Kf6 43. Kd1 Rab8 44. Rc2 Rb1+ 45. Rc1 Rxa1 46. Rxa1 Rb1+ 47. Kc2 Rxa1 48. Kb2 Rh1 49. Kxa2 Rxh3 50. d4 Re3 51. d5?! { (-7.27 → -40.75) Inaccuracy. e5+ was best. } (51. e5+ Kf7 52. g5 hxg5 53. fxg5 Rxe5 54. dxe5 Kg6 55. Kb2 Kxg5 56. Kc2 Kf5 57. Kd3 Kxe5) 51... Rxe4 52. d6 Rxf4 53. d7 Rd4 54. d8=Q+ Rxd8 55. g5+ Kxg5 56. Kb3 e5 57. Kb4 e4 58. Kb5 e3 59. Kb6 e2 60. Kc7 Rd1 61. Kc6 e1=Q 62. Kb7 Qc3 63. Kb6 Rb1+ 64. Ka7 Qa3# { Black wins by checkmate. } 0-1";
-  obj_pgn2: PGN = new PGN(this.text_PGN2);
-
-  test_FENS: [FEN, FEN] = [
-    new FEN(
-      "rnbq1rk1/ppp2ppp/3p1n2/4p3/1bP1P3/2N3P1/PP1PNPBP/R1BQK2R b KQ - 1 6 "
-    ),
-    new FEN(
-      "r2q1rk1/pp2ppbp/1n3np1/3P4/P2P1N2/1QN5/1P3PPP/R1B1K2R b KQ - 2 13"
-    ),
-  ];
-
-  game1 = new ExampleGame("game 1", this.obj_pgn1, this.test_FENS[0]);
-  game2 = new ExampleGame("game 2", this.obj_pgn2, this.test_FENS[1]);
-  // ============================= end ============================================================
-
-
   /**
-   * construct a new rep with a name maybe
+   * construct a new repertoire controller
    */
   constructor()
   {
+    this.boardSpot = $( "#chessground" ); //the place to init the chessboard
     this.newRepertoire("first");
     //add event handlers to top btn's
     $("#newRepTop").on("click", { controller: this }, function (event)
@@ -104,44 +89,9 @@ export class Controller
     }
     else
     {
-      //create a new board state
-      this.boardState = new BoardState(this.boardSpot);
       console.log("Board spot: " + this.boardSpot);
     }
-    ///----------------------- testing --------------
-    //lines
-    const line1: RepertoireLine = new RepertoireLine("Line 1", new PGN(`"[Event "Rated Rapid game"]
-      [Site "https://lichess.org/eOXqcPAS"]
-      [Date "2023.11.20"]
-      [White "Integralis"]
-      [Black "nrv773"]
-      [Result "0-1"]
-      [UTCDate "2023.11.20"]
-      [UTCTime "20:48:54"]
-      [Variant "Standard"]
-      [TimeControl "900+10"]
-      [ECO "B10"]
-      [Opening "Caro-Kann Defense: Two Knights Attack"]
-      [Termination "Normal"]
-      [Annotator "lichess.org"]
 
-      1. e4 c6 2. Nf3 d5 3. Nc3 { B10 Caro-Kann Defense: Two Knights Attack } d4?! { (0.28 → 0.96) Inaccuracy. Bg4 was best. } (3... Bg4 4. h3 Bxf3 5. Qxf3 e6 6. Be2 Bc5 7. O-O Nd7 8. exd5) 4. Ne2 c5 5. c3 Nc6?! { (0.94 → 1.76) Inaccuracy. dxc3 was best. } (5... dxc3 6. Nxc3 a6 7. d4 cxd4 8. Qxd4 Qxd4 9. Nxd4 e6 10. Be3) 6. cxd4 cxd4 7. Ng3?? { (1.49 → -0.27) Blunder. Qa4 was best. } (7. Qa4 a6 8. Nexd4 Bd7 9. d3 Nf6 10. Nxc6 Bxc6 11. Qb3 e5) 7... e5 8. Bb5 Bd6 9. Qa4?! { (0.17 → -0.81) Inaccuracy. O-O was best. } (9. O-O a6 10. Ba4 b5 11. Bc2 Nf6 12. d3 O-O 13. Bd2 Bd7 14. a3 a5 15. Bb3 a4) 9... Ne7 10. d3 O-O 11. O-O a6 12. Bxc6 Nxc6 13. Nf5 b5?! { (-1.30 → -0.41) Inaccuracy. Bxf5 was best. } (13... Bxf5) 14. Qb3 Be6 15. Qd1 Bc7?! { (-0.36 → 0.28) Inaccuracy. Be7 was best. } (15... Be7) 16. a3?! { (0.28 → -0.76) Inaccuracy. Ng5 was best. } (16. Ng5 Qf6) 16... b4?! { (-0.76 → 0.19) Inaccuracy. f6 was best. } (16... f6) 17. Qc2?! { (0.19 → -0.58) Inaccuracy. Ng5 was best. } (17. Ng5 Qd7) 17... Ne7 18. Nxe7+ Qxe7 19. axb4 Rfc8 20. Qd2 Rcb8 21. Qe1?! { (-0.59 → -1.27) Inaccuracy. Qc2 was best. } (21. Qc2 Rxb4) 21... Qxb4 22. Bd2 Qxb2 23. Ba5 Bd6 24. Qc1?! { (-1.71 → -2.39) Inaccuracy. Ng5 was best. } (24. Ng5 Ba2 25. f4 exf4 26. Rf2 Qxa1 27. Qxa1 Rb1+ 28. Rf1 Rxa1 29. Rxa1 h6 30. e5 Be7) 24... Qxc1 25. Rfxc1 h6? { (-1.79 → -0.12) Mistake. Rc8 was best. } (25... Rc8 26. Nd2 h5 27. Kf1 Rab8 28. Rxc8+ Rxc8 29. Ke2 f6 30. Kd1 h4 31. h3 Rb8 32. Rc1) 26. Rc6 Bf8 27. Nxe5 Rb5 28. Bc7? { (0.00 → -1.15) Mistake. Nf3 was best. } (28. Nf3 Bc5 29. Kf1 Bd7 30. Rc7 Be6 31. Rc6) 28... a5 29. Nf3 a4?! { (-1.41 → -0.42) Inaccuracy. Rb4 was best. } (29... Rb4 30. Be5 Bd7 31. Rcc1 Bg4 32. Rab1 Rxb1 33. Rxb1 a4 34. h3 Bxf3 35. gxf3 Rd8 36. Bc7) 30. Nxd4 Rb4?! { (-0.70 → 0.10) Inaccuracy. Bd7 was best. } (30... Bd7) 31. Nxe6 fxe6 32. h3 a3 33. Rc3?? { (-0.11 → -1.93) Blunder. Be5 was best. } (33. Be5 Rb3) 33... a2 34. Rcc1 Rb2? { (-1.90 → -0.72) Mistake. Rc8 was best. } (34... Rc8 35. Rxa2) 35. Be5 Rd2 36. Kf1 Ba3 37. Rd1 Rc2?! { (-1.34 → -0.67) Inaccuracy. Rxd1+ was best. } (37... Rxd1+ 38. Rxd1) 38. Ke1?? { (-0.67 → -3.30) Blunder. Re1 was best. } (38. Re1) 38... Bb2?? { (-3.30 → 0.00) Blunder. Rf8 was best. } (38... Rf8 39. f4 g5 40. Kf1 gxf4 41. d4 f3 42. g4 Rfc8 43. d5 exd5 44. exd5 Bc5 45. d6) 39. Bxb2 Rxb2 40. Rdc1?? { (0.00 → -4.40) Blunder. Rd2 was best. } (40. Rd2 Rb1+ 41. Rd1 Rb2) 40... Kh7 41. g4?! { (-4.40 → -6.06) Inaccuracy. g3 was best. } (41. g3 Rf8 42. f4 Rfb8 43. Kf1 Rb1 44. Kf2 Rxc1 45. Rxc1 Rb1 46. Rxb1 axb1=R 47. h4 g5) 41... Kg6?! { (-6.06 → -4.42) Inaccuracy. Rf8 was best. } (41... Rf8 42. Kf1 Rfxf2+ 43. Kg1 Rg2+ 44. Kh1 Rg3 45. Rd1 Rxh3+ 46. Kg1 Rg3+ 47. Kh1 Rxg4 48. Re1) 42. f4 Kf6 43. Kd1 Rab8 44. Rc2 Rb1+ 45. Rc1 Rxa1 46. Rxa1 Rb1+ 47. Kc2 Rxa1 48. Kb2 Rh1 49. Kxa2 Rxh3 50. d4 Re3 51. d5?! { (-7.27 → -40.75) Inaccuracy. e5+ was best. } (51. e5+ Kf7 52. g5 hxg5 53. fxg5 Rxe5 54. dxe5 Kg6 55. Kb2 Kxg5 56. Kc2 Kf5 57. Kd3 Kxe5) 51... Rxe4 52. d6 Rxf4 53. d7 Rd4 54. d8=Q+ Rxd8 55. g5+ Kxg5 56. Kb3 e5 57. Kb4 e4 58. Kb5 e3 59. Kb6 e2 60. Kc7 Rd1 61. Kc6 e1=Q 62. Kb7 Qc3 63. Kb6 Rb1+ 64. Ka7 Qa3# { Black wins by checkmate. } 0-1"`));
-    const line2: RepertoireLine = new RepertoireLine("Line 2", new PGN("1. e4"));
-
-    //add games to lines
-    line1.addGame(this.game1);
-    line1.addGame(this.game2);
-    line2.addGame(this.game2);
-
-    if (this.openRep != undefined)
-    {
-      //add lines to rep
-      this.openRep.addLine(line1);
-      this.openRep.addLine(line2);
-
-      this.openRep.updateLineDisplay();
-    }
-    //--------------------------- end ----------------------------------
   }
 
   /**
@@ -238,24 +188,25 @@ export class Controller
   }
 
   /**
-   * change the game on the main board
-   * game game to display on the board
+   * change the study on the main board
+   *  to display on the board
    */
-  public changeExampleGame(game: ExampleGame): void
+  public changeStudy(chessThing: RepertoireLine | ExampleGame): void
   {
-    console.log("changeExampleGame() entered, with game: " + game.name +
-    "with PGN: " + game.PGN.stringPgn);
+
+    console.log("changeStudy() entered, with study: " + chessThing.name +
+    "and study url: [" +  chessThing.studyUrl + "]" );
+
+
+    const imbeddingStr:string =  this.iframeStart + chessThing.studyUrl + this.iframeEnd;
+
+    console.log("impeded str: " + imbeddingStr + " was the impeding str");
 
     //set the name element
-    this.setNameElement(game.name);
+    this.setNameElement(chessThing.name);
 
-    if(this.boardState != undefined)
-    {
-      this.boardState.setPGN(game.PGN);
-    }
-    else
-    {
-      throw error("this.boardState is undefined");
-    }
+
+    $( "#chessgroundContainer" ).empty();
+    $( "#chessgroundContainer" ).append( $( imbeddingStr ) );
   }
 }
