@@ -20,6 +20,7 @@
 //nrv stuff
 import { ExampleGame } from "./example-game.js";
 import { PGN } from "./chess-notation.mjs"
+import { controller } from "./index.js";
 
 
 
@@ -100,9 +101,12 @@ export class RepertoireLine
   /**
    * display array gameList in html page
    */
-  public updateGameDisplay(): void
+  public openLine(): void
   {
-    console.log("updateGameDisplay() entered");
+    console.log("openLine() entered");
+
+    //update name display
+    controller.setNameElement(this.name)
 
     console.log("=======================================");
 

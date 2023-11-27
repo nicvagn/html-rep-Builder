@@ -105,8 +105,7 @@ export class Repertoire
       line.lineBtn.on("click", { line:line }, function (event)
       {
         //update this lines game display
-        event.data.line.updateGameDisplay();
-        //update the name display
+        event.data.line.openLine();
       });
     });
   }
@@ -178,7 +177,7 @@ export class Repertoire
     this.openLine = line;
     //set nme label
     controller.setNameElement(line.name);
-    line.updateGameDisplay();
+    line.openLine();
   }
 
 /**

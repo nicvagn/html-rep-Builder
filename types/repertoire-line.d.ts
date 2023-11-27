@@ -53,5 +53,5 @@ export declare class RepertoireLine {
     /**
      * display array gameList in html page
      */
-    updateGameDisplay(): void;
+    openLine(): void;
 }
