@@ -107,10 +107,17 @@
 }
 
 #chessground{
-  width: 800px;
-  height: 700px;
+  width: 1000px;
+  height: 800px;
   align-self: center;
   justify-self: center;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
+  -webkit-transform: translate(-50%, 0);
+  -moz-transform: translate(-50%, 0);
+  -ms-transform: translate(-50%, 0);
+  -o-transform: translate(-50%, 0);
 }
 
 

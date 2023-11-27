@@ -6,7 +6,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 
-const isProduction = 'development';
+const isProduction = false;
 
 
 const stylesHandler = 'style-loader';
@@ -15,6 +15,7 @@ const stylesHandler = 'style-loader';
 
 const config = {
     entry: './out/index.js',
+    devtool: 'inline-source-map',
     output: {
         path: path.resolve(__dirname, 'dist'),
     },
@@ -55,7 +56,7 @@ const config = {
         ],
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.jsx', '.js', '.css','.png', '...'],
+        extensions: ['.tsx', '.mts', '.ts', '.jsx', '.js', '.css','.png', '...'],
     },
 };
 

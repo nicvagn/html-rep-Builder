@@ -36,9 +36,6 @@
     "moduleDetection": "force",  //makes everything a module
     "esModuleInterop": true,	//something to do with allowing commonjs modules to play nice with es6 modules
     "skipLibCheck": true, //nothing bad ever happens in other peoples code
-
-    //alow js so we can use the pgn viewer from lichess bundle
-    "allowJs": true,
   },
   "include": ["src"],	//include our src dir
   "exclude": ["node_modules"]
