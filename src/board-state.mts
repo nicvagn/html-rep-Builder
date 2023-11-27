@@ -19,8 +19,6 @@
 
 /*global $ */ //for eslint
 //import { FEN } from "./chess-notation.mjs";
-import LichessPgnViewer from './pgnViewer/main.js';
-
 
 import { PGN } from "./chess-notation.mjs"
 
@@ -60,9 +58,8 @@ export class BoardState
 
     console.log("BoardState Constructed. this.PgnViewer = start(boardRoot, this.config);");
     this.boardRoot = boardRoot;
-    console.log("board root: "+ this.boardRoot);
+    console.log("board root: " + this.boardRoot);
 
-    LichessPgnViewer(boardRoot, this.config);
   }
 
   /**
@@ -100,5 +97,6 @@ export class BoardState
   {
     console.log("setPGN entered with pgn: " + pgn.stringPgn);
     //todo make this work.
+    $( "#chessground" ).html('<iframe id="chessground" class="chessground" width="800px" height="800px" src="https://lichess.org/study/embed/PYEVM2pA/IxM8A4cP#60" frameborder=0></iframe>');
   }
 }

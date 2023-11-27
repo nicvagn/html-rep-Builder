@@ -18,6 +18,7 @@
  *********************************************************************************/
 
 import { RepertoireLine } from "./repertoire-line.js";
+import { controller } from "./index.js";
 //import { SaveController } from "./save-controller.js";
 
 
@@ -31,6 +32,8 @@ export class Repertoire
   name?: string;
   lineList: RepertoireLine[] = new Array<RepertoireLine>();  // array of lines in this rep
   openLine?: RepertoireLine; //the currently open line, may not be defined
+
+  nameLabel: HTMLElement = document.getElementById("nameLabel")!; //for the current rep name
 
   /**
    * make a new Rep
@@ -67,9 +70,8 @@ export class Repertoire
     }
     while (name == undefined);
 
-    //set the repName label on the dom
-    $("#repName").html(name);
   }
+
 
   /**
    * add a line to this repertoire object
@@ -104,6 +106,7 @@ export class Repertoire
       {
         //update this lines game display
         event.data.line.updateGameDisplay();
+        //update the name display
       });
     });
   }
@@ -159,7 +162,8 @@ export class Repertoire
     if (this.openLine != undefined)
     {
       return this.openLine;
-    } else
+    }
+    else
     {
       throw Error("no open line.");
     }
@@ -172,6 +176,31 @@ export class Repertoire
   public setOpenLine(line: RepertoireLine): void
   {
     this.openLine = line;
+    //set nme label
+    controller.setNameElement(line.name);
     line.updateGameDisplay();
+  }
+
+/**
+ * change the board to a new line
+ * @param line { RepertoireLine } line to switch to
+ */
+  public switchLine(line: RepertoireLine): void
+  {
+    console.log("switch line entered with line: " + line.name);
+
+    console.log("switch line entered with line named: " + line.name);
+
+    //change the display
+    controller.setNameElement(line.name);
+
+    if (controller.boardState != undefined)
+    {
+      controller.boardState.setPGN(line.pgn);
+    }
+    else
+    {
+      throw Error("this.boardState is undefined");
+    }
   }
 }

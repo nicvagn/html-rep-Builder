@@ -19,4 +19,4 @@
 import { Controller } from "./repertoire-controller.mjs";
 import "../css/lichess-pgn-viewer.css";
 import "../css/styles.css";
-export declare const controller: Controller;
+export declare var controller: Controller;

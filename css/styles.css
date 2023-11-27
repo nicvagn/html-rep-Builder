@@ -99,9 +99,9 @@
 /* chessground css */
 
 /* chessground pane and container */
-.chessgroundContainer{
+#chessgroundContainer{
   margin: 0 auto;
-  width: 800px;
+  width: 100%;
   align-items: center;
   justify-self: center;
 }
@@ -142,7 +142,7 @@ ul{
 
 /* RepViewer css */
 
-#repName {
+#nameLabel {
   display: block;
   text-align: center;
   background-color: #FDD401;

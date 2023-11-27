@@ -24,6 +24,7 @@ export declare class Repertoire {
     name?: string;
     lineList: RepertoireLine[];
     openLine?: RepertoireLine;
+    nameLabel: HTMLElement;
     /**
      * make a new Rep
      * @param {string} _name name to give

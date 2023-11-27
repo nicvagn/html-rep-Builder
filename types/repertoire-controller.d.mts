@@ -31,20 +31,20 @@ export declare class Controller {
     readonly boardState?: BoardState;
     editRepController?: EditRepertoireController;
     boardSpot: HTMLElement | null;
-    repNameElement: HTMLElement;
-    text_PGN: string;
-    obj_pgn: PGN;
+    nameLabel: HTMLElement;
+    text_PGN1: string;
+    obj_pgn1: PGN;
+    text_PGN2: string;
+    obj_pgn2: PGN;
     test_FENS: [FEN, FEN];
+    game1: ExampleGame;
+    game2: ExampleGame;
     /**
      * construct a new rep with a name maybe
      */
     constructor();
     /**
-     * called when dom is loaded
-     */
-    domLoaded(): void;
-    /**
-     * set the rep name by asking for user input
+     * set the name element
      */
     setNameElement(name: string): void;
     /**
