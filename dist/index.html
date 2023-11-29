@@ -33,7 +33,6 @@
 
   <!-- webpack file -->
   <script type="text/javascript" src="./main.js"></script>
-
 <script defer src="main.js"></script></head>
 
 <body>
@@ -71,7 +70,7 @@
 
       <div id="chessgroundContainer" >
         <!-- Main Chessboard -->
-        <iframe id="chessground" style="max-width: 100%; max-height: 100%;" src="images/thinking.jpg" frameborder=0></iframe>
+        <img id="chessground" style="object-fit: contain;" src="images/thinking.jpg" frameborder=0></img>
       </div>
 
     </div>
@@ -96,10 +95,9 @@
 
     <button id="resetGames">reset games</button>
     <button id="resetLines">reset lines</button>
-    <label for="fileInput" class="fileInput">Add PGN</label>
+    <button id="studyInput" class="studyInput">add study</button>
     <button id="saveBrowser" class="wideBtn">save to browser permanent local storage</button>
 
-    <input id="fileInput" type="file"/>
 
   </div>
 </body>

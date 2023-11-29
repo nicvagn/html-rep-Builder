@@ -17,6 +17,8 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************************/
 
+import { controller } from ".";
+
 //import { event } from "jquery";
 
 /*
@@ -32,6 +34,7 @@ const editLineBtn = document.getElementById("editLine");
 const resetLinesBtn = document.getElementById("resetLines");
 const resetGamesBtn = document.getElementById("resetGames");
 const saveBrowserBtn = document.getElementById("saveBrowser");
+const studyInput = $( "#studyInput");
 
 let editRepertoireController: EditRepertoireController;
 
@@ -50,25 +53,21 @@ export class EditRepertoireController
     resetGamesBtn?.addEventListener("click", buttonLnr);
     saveBrowserBtn?.addEventListener("click", buttonLnr);
 
+    const windowFeatures = "width=320,height=320,popup";
+
     //set the file input...
-    $( "#fileInput" ).on("change", null , (event) =>
+    studyInput.on("click", null , (event) =>
     {
-      //the event target will be the input element
-      const addPGNBtn:HTMLInputElement = event.target as HTMLInputElement;
 
-      if(addPGNBtn.files == null)
-      {
-        throw Error("addPGNBtn.files is null.");
-      }
+      console.log("study input clicked" + event);
 
-      let file = addPGNBtn.files[0]; //get the first file
 
-      let name = file.name;
-
-      console.log(name);
+      //open openRepWindow
+      window.open("AddLine.html", "mozillaWindow", windowFeatures);
     });
 
     //make a local file scope variable, so the button listeners can access the controller class
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     editRepertoireController = this;
   }
 
@@ -80,8 +79,8 @@ export class EditRepertoireController
   {
     //edit line
     console.log("EditLine entered");
-    const windowFeatures = "width=500, height=400,popup";
-    window.open("AddPgn.html", "mozillaWindow", windowFeatures);
+    const windowFeatures = "popup";
+    window.open("https://lichess.org/study/PYEVM2pA/POney1Ru", "mozillaWindow", windowFeatures);
   }
 
   public resetLines():void

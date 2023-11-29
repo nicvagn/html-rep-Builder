@@ -27,6 +27,10 @@ const config = {
         new HtmlWebpackPlugin({
             template: 'index.html',
         }),
+        new HtmlWebpackPlugin({
+            template: 'studyInput.html',
+            filename: 'studyInput.html',
+        }),
 
         // Add your plugins here
         // Learn more about plugins from https://webpack.js.org/configuration/plugins/

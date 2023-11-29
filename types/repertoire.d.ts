@@ -16,15 +16,19 @@
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************************/
+/// <reference types="jquery" />
+/// <reference types="jquery" />
 import { RepertoireLine } from "./repertoire-line.js";
 /**
  * A chess repertoire
  */
 export declare class Repertoire {
-    name?: string;
+    name: string;
     lineList: RepertoireLine[];
     openLine?: RepertoireLine;
+    studyUrl: string;
     nameLabel: HTMLElement;
+    repertoireBtn: JQuery<HTMLElement>;
     /**
      * make a new Rep
      * @param {string} _name name to give
@@ -66,5 +70,5 @@ export declare class Repertoire {
      * change the board to a new line
      * @param line { RepertoireLine } line to switch to
      */
-    switchLine(line: RepertoireLine): void;
+    open(): void;
 }

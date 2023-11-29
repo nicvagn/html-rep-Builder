@@ -18,13 +18,14 @@
  *********************************************************************************/
 
 import { Controller } from "./repertoire-controller.mjs";
+import { ExampleGame } from "./example-game";
+import { RepertoireLine } from "./repertoire-line";
+import { Repertoire } from "./repertoire";
 
 //import our styles, css in ts. We cooking with fire now
 import "../css/lichess-pgn-viewer.css";
 import "../css/styles.css";
-import { ExampleGame } from "./example-game";
-import { RepertoireLine } from "./repertoire-line";
-import { Repertoire } from "./repertoire";
+
 
 // eslint-disable-next-line no-var
 export var controller:Controller;
@@ -34,37 +35,65 @@ let openRep:Repertoire;
 
 let game1: ExampleGame;
 let game2: ExampleGame;
+let notMade = true;
 
 //will be called when the page is loaded init stuff here
-document.addEventListener("DOMContentLoaded",  () =>
+window.onload = () =>
 {
   //the main controller, needed to make button be able to call controller functions
   console.log("loaded");
-  controller = new Controller();
-  openRep = controller.getOpenRep();
 
-  test();
-});
+  makeController();
+};
 
+
+function makeController()
+{
+
+  if(notMade)
+  {
+    notMade = false;
+    controller = new Controller();
+
+    test();
+  }
+}
 function test()
 {
-    ///----------------------- testing --------------
-    //lines
-    const line1: RepertoireLine = new RepertoireLine("Line 1", "https://lichess.org/study/embed/TAjrrpST/fLKrg6N9");
-    const line2: RepertoireLine = new RepertoireLine("Line 2", "https://lichess.org/study/embed/TAjrrpST/1WyhSAla");
+  ///----------------------- testing ---------------------------------
+  //lines
 
-    //add games to lines
-    line1.addGame(game1);
-    line1.addGame(game2);
-    line2.addGame(game2);
+  const line1: RepertoireLine = new RepertoireLine("Line 1", "https://lichess.org/study/embed/TAjrrpST/fLKrg6N9");
+  const line2: RepertoireLine = new RepertoireLine("Line 2", "https://lichess.org/study/embed/TAjrrpST/1WyhSAla");
+  const line3: RepertoireLine = new RepertoireLine("line 3", "https://lichess.org/study/embed/PYEVM2pA/POney1Ru")
 
-    if (openRep != undefined)
-    {
-      //add lines to rep
-      openRep.addLine(line1);
-      openRep.addLine(line2);
+  game1 = new ExampleGame("First Game", "https://lichess.org/study/embed/PYEVM2pA/YCdbBWum");
+  game2 = new ExampleGame("second game", "https://lichess.org/study/embed/PYEVM2pA/POney1Ru")
 
-      openRep.updateLineDisplay();
-    }
-    //--------------------------- end ----------------------------------
-  }
+  //add games to lines
+  line1.addGame(game1);
+  line1.addGame(game2);
+  line2.addGame(game2);
+
+  console.log("Open rep = " + openRep);
+
+
+ /**
+  * populate the local repertoires
+  * (we are just testing ui rn)
+  */
+
+  const capo = controller.newRepertoireSystem("Capo can not");
+  capo.addLine(line2);
+  capo.addLine(line1);
+
+  const nope = controller.newRepertoireSystem("something, anything");
+  nope.addLine(line1);
+  nope.addLine(line2);
+  nope.addLine(line3);
+
+  controller.resetLists();
+
+
+  //--------------------------- end ----------------------------------
+}

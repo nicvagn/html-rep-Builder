@@ -24,6 +24,7 @@ import { EditRepertoireController } from "./edit-repertoire-controller.mjs";
 import { RepertoireLine } from "./repertoire-line.js";
 import { ExampleGame } from "./example-game.js";
 import { error } from "jquery";
+import { controller } from "./index.js";
 
 
 
@@ -34,7 +35,10 @@ export class Controller
 {
   openRepName?: string; //name of the open rep
   openRep?: Repertoire; //open rep
+  repList: Repertoire[] = new Array<Repertoire>();  //list of reps
+
   boardSpot?: JQuery<HTMLElement>;
+  localReps: JQuery<HTMLElement> = $( "#localReps" );
 
   //iframe properties for imbedded lichess studies
   iframeHeight: string = 'height="600px"';
@@ -54,14 +58,13 @@ export class Controller
   constructor()
   {
     this.boardSpot = $( "#chessground" ); //the place to init the chessboard
-    this.newRepertoire("first");
     //add event handlers to top btn's
     $("#newRepTop").on("click", { controller: this }, function (event)
     {
       console.log(event);
 
       //make new rep
-      event.data.controller.newRepertoire();
+      event.data.controller.newRepertoireUser();
       //show the edit stuff
       event.data.controller.editRepertoire();
     });
@@ -91,7 +94,18 @@ export class Controller
     {
       console.log("Board spot: " + this.boardSpot);
     }
+  }
 
+  /**
+   * add a repertoire to this controller
+   * this means add it to the local rep list
+   */
+  private addRepertoire(rep: Repertoire): void
+  {
+    //add repertoire button to the local rep's list
+    this.localReps.append(rep.repertoireBtn);
+    //add rep to our rep list
+    this.repList.push(rep);
   }
 
   /**
@@ -101,6 +115,11 @@ export class Controller
   {
     console.log("set name element entered with name: " + name)
     //set the name element
+    if(this.nameLabel == null)
+    {
+      //make sure the nameLabel is defined
+      this.nameLabel = document.getElementById("nameLabel")!; //for the current rep name
+    }
     this.nameLabel.innerText = name;
   }
 
@@ -119,20 +138,45 @@ export class Controller
   }
 
   /**
+   * open a repertoire
+   */
+  public openRepertoire(rep: Repertoire): void
+  {
+    controller.openRep = rep;
+    console.log("```````````````` open Repertoire entered ````````````````````````````");
+    //change the default study to the rep. starting one
+    controller.changeStudy(rep);
+
+    // clear the line and instructive games displays
+    this.resetLists();
+
+    rep.open();
+  }
+
+  /**
+   * reset the line ang game lists
+   */
+  public resetLists(): void
+  {
+    $( "#lineList" ).replaceWith("<div id='lineList'> </div>");
+    $( "#gameList" ).replaceWith("<div id='gameList'> </div>");
+  }
+
+  /**
    * make a new repertoire, promoting the user for it's name if not provided.
    * and displaying all the controls for making one. And set it as the open rep
    * and return it
    * @returns a new rep
    */
-  public newRepertoire(name?:string): Repertoire
+  public newRepertoireUser(name?:string, save?: boolean): Repertoire
   {
 
     //empty the line display on the dom
-    $("#lineList").replaceWith("<div id='lineList'> </div>");
+    this.resetLists();
 
     console.log("newRepertoire entered with name: " + name)
     //if there is an open rep
-    if (this.openRep != null && this.openRep != undefined)
+    if (save && this.openRep != undefined)
     {
       if (confirm("Do you want to save the open repertoire to browser storage?"))
       {
@@ -161,10 +205,30 @@ export class Controller
       this.openRep = new Repertoire();
     }
 
+    //add the rep to our list of reps
+    this.addRepertoire(this.openRep);
+
     //show the editing stuff
     this.editRepertoire();
     return this.openRep;
   }
+
+  /**
+   * make a new repertoire, with no user input and do not set it as the open rep
+   * or clear the lines
+   * @returns a new rep
+   */
+  public newRepertoireSystem(name:string): Repertoire
+  {
+
+    console.log("newRepertoireSystem entered with name: " + name);
+    const newRep = new Repertoire(name);
+
+    this.addRepertoire(newRep)
+
+    return newRep;
+  }
+
 
   /**
    * create an edit controller, and display all the controls for editing a rep
@@ -191,7 +255,7 @@ export class Controller
    * change the study on the main board
    *  to display on the board
    */
-  public changeStudy(chessThing: RepertoireLine | ExampleGame): void
+  public changeStudy(chessThing: RepertoireLine | ExampleGame | Repertoire): void
   {
 
     console.log("changeStudy() entered, with study: " + chessThing.name +

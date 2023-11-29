@@ -57,6 +57,22 @@
   padding-right: 60px;
 }
 
+.navbar__item{
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  text-decoration: none;
+  padding: 0 1rem;
+  height: 100%;
+  outline: none;
+  border: none;
+  height: 60px;
+  font-size: xx-large;
+  margin: 0 auto;
+}
+
+
 /*for the buttons*/
 .navbarBtn {
   color: #fff;
@@ -117,7 +133,44 @@
   width: 800px;
   margin: 0 auto;
 }
+
 /* common css */
+
+
+.repBtn {
+  display: block;
+  text-decoration: none;
+  padding: 10px 20px;
+  min-width: 200px;
+  height: 100%;
+  min-height: 50px;
+  width: 100%;
+  border: none;
+  outline-color: #000;
+  outline-width: 1px;
+  outline-style: dashed;
+  background: #FDD401;
+  color: black;
+}
+.repBtn:hover {
+  background: #DD1810;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+button {
+  display: block;
+  text-decoration: none;
+  padding: 10px 20px;
+  min-height: 50px;
+  min-width: 80px;
+  border: none;
+  outline-color: #000;
+  outline-width: 1px;
+  outline-style: dashed;
+  background: #DD1810;
+  color: black;
+}
 
 button:hover {
   background: #FDD401;
@@ -222,11 +275,11 @@ ul{
   width: 100%;
 }
 
-#fileInput {
+#studyInput {
   display: none;
 }
 
-.fileInput {
+.studyInput {
   display: block;
   text-align: center;
   text-decoration: none;
@@ -242,7 +295,7 @@ ul{
   cursor: pointer;
 }
 
-.fileInput:hover {
+.studyInput:hover {
   background: #FDD401;
   color: #000;
   transition: all 0.3s ease;
@@ -294,7 +347,7 @@ ul{
   border: 1px solid;
 }
 
-/* add game popup */
+/* add line or game popup */
 #pop {
   background: #adbebd;
   position: relative;
@@ -303,3 +356,23 @@ ul{
   background:  #1e9c9c;
 }
 
+input {
+  text-align: left;
+  font-size: small;
+  height: 50px;
+  min-width: 350px;
+  margin: 0 15px;
+}
+
+#studyTextField{
+  height: 40px;
+}
+
+#inputSpan {
+  background-color: #1e9c9c;
+  display: inline-flex;
+  height: 75px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}

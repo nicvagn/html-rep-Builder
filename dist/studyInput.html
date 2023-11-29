@@ -33,72 +33,32 @@
 
   <!-- webpack file -->
   <script type="text/javascript" src="./main.js"></script>
-</head>
+<script defer src="main.js"></script></head>
 
-<body>
+<body id="pop">
   <!-- Navbar Section -->
   <nav class="navbar">
     <div class="navbar__container">
-      <img id="logo" src="images/shcc-logo-notxt.png">
-      <ul class="navbar__menu">
-        <li class="navbar__item">
-          <button id="newRepTop" class="navbarBtn">New</button>
-        </li>
-        <li class="navbar__item">
-          <button id="editRepTop" class="navbarBtn">Edit</button>
-        </li>
-        <li class="navbar__item">
-          <button id="openRepTop" class="navbarBtn">Open</button>
-        </li>
-      </ul>
+      <img id="logo" src="./images/shcc-logo-notxt.png">
+      <h2 class="navbar__item">Add Line or Game</h2>
     </div>
   </nav>
 
-  <!-- main content -->
-  <div class="row">
-    <div class="column" id="linesColumn">
-
-      <h1>Lines:</h1>
-
-      <!-- place for the line list  -->
-      <div id="lineList"></div>
-
-    </div>
-    <div class="centerPane">
-
-      <h2 id="nameLabel">Placeholder Name</h2>
-
-      <div id="chessgroundContainer" >
-        <!-- Main Chessboard -->
-        <img id="chessground" style="object-fit: contain;" src="images/thinking.jpg" frameborder=0></img>
-      </div>
-
-    </div>
-    <div class="column" id="gamesColumn">
-
-      <h1>Instructive games:</h1>
-
-      <!-- place for open lines game list -->
-      <div id="gameList">
-      </div>
-
-      <h1>Local <br>Repertoires:</h1>
-
-      <div id="localReps"></div>
-
-      <a id="downloadLink" href="#" download="Repertoire.json">Download</a>
-
+  <div style="display: flex; justify-content: center;">
+    <div>
+      <br>
+      <h3>The current chapter URL is what is needed. It can be found here: </h3>
+      <br>
+      <img src="./images/url_location.png">
+      <br>
+      <span id="inputSpan">
+        <label for="studyTextField">Lichess study chapter url:  </label>
+        <input type="text" id="studyTextField" name="studyTextField">
+        <button id="addURL" style="width: 35px;">Add</button>
+      </span>
     </div>
   </div>
 
-  <div id="newRepButtons" class="editRep">
 
-    <button id="resetGames">reset games</button>
-    <button id="resetLines">reset lines</button>
-    <button id="studyInput" class="studyInput">add study</button>
-    <button id="saveBrowser" class="wideBtn">save to browser permanent local storage</button>
-
-
-  </div>
 </body>
 </html>

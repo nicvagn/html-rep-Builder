@@ -28,7 +28,9 @@ import { ExampleGame } from "./example-game.js";
 export declare class Controller {
     openRepName?: string;
     openRep?: Repertoire;
+    repList: Repertoire[];
     boardSpot?: JQuery<HTMLElement>;
+    localReps: JQuery<HTMLElement>;
     iframeHeight: string;
     iframeWith: string;
     iframeStart: string;
@@ -40,6 +42,11 @@ export declare class Controller {
      */
     constructor();
     /**
+     * add a repertoire to this controller
+     * this means add it to the local rep list
+     */
+    private addRepertoire;
+    /**
      * set the name element
      */
     setNameElement(name: string): void;
@@ -49,12 +56,26 @@ export declare class Controller {
      */
     getOpenRep(): Repertoire;
     /**
+     * open a repertoire
+     */
+    openRepertoire(rep: Repertoire): void;
+    /**
+     * reset the line ang game lists
+     */
+    resetLists(): void;
+    /**
      * make a new repertoire, promoting the user for it's name if not provided.
      * and displaying all the controls for making one. And set it as the open rep
      * and return it
      * @returns a new rep
      */
-    newRepertoire(name?: string): Repertoire;
+    newRepertoireUser(name?: string, save?: boolean): Repertoire;
+    /**
+     * make a new repertoire, with no user input and do not set it as the open rep
+     * or clear the lines
+     * @returns a new rep
+     */
+    newRepertoireSystem(name: string): Repertoire;
     /**
      * create an edit controller, and display all the controls for editing a rep
      */
@@ -63,5 +84,5 @@ export declare class Controller {
      * change the study on the main board
      *  to display on the board
      */
-    changeStudy(chessThing: RepertoireLine | ExampleGame): void;
+    changeStudy(chessThing: RepertoireLine | ExampleGame | Repertoire): void;
 }

@@ -107,7 +107,7 @@ export class RepertoireLine
     //update name display
     controller.setNameElement(this.name);
 
-    console.log("================ study opened =====================");
+    console.log("================ line opened =====================");
 
     controller.changeStudy(this); //change the main board to this study
 
@@ -115,6 +115,7 @@ export class RepertoireLine
     $("#gameList").replaceWith("<div id='gameList'> </div>");
 
     console.log("example Games List length: " + this.exampleGames.length);
+    console.log("example game list: " + this.exampleGames)
 
     this.exampleGames.forEach((game) =>
     {

@@ -29,11 +29,14 @@ import { controller } from "./index.js";
 export class Repertoire
 {
 
-  name?: string;
+  name!: string;
   lineList: RepertoireLine[] = new Array<RepertoireLine>();  // array of lines in this rep
   openLine?: RepertoireLine; //the currently open line, may not be defined
+  studyUrl: string = "https://lichess.org/study/embed/PYEVM2pA/t9FbFpR1";
 
   nameLabel: HTMLElement = document.getElementById("nameLabel")!; //for the current rep name
+  //line button for display on the DOM
+  public repertoireBtn: JQuery<HTMLElement>;
 
   /**
    * make a new Rep
@@ -56,6 +59,20 @@ export class Repertoire
     {
       this.lineList = _lineList!;
     }
+
+    //create the visual button for the gui
+    this.repertoireBtn = $("<button/>", {
+      text: this.name,
+      id: this.name,
+      rep: this
+    });
+    this.repertoireBtn.addClass("repBtn");
+
+    //add lister
+    this.repertoireBtn.on("click", { controller: controller, rep: this }, function (event)
+        {
+          event.data.controller.openRepertoire(event.data.rep);
+        });
   }
 
   /**
@@ -79,8 +96,9 @@ export class Repertoire
    */
   public addLine(repLine: RepertoireLine): void
   {
+    console.log("Add line entered with: " + RepertoireLine.name)
+    console.log(repLine.name + "added to Line list");
     this.lineList.push(repLine);
-
     this.updateLineDisplay();
   }
 
@@ -175,23 +193,42 @@ export class Repertoire
   public setOpenLine(line: RepertoireLine): void
   {
     this.openLine = line;
-    //set nme label
+    //set name label
     controller.setNameElement(line.name);
     line.openLine();
   }
 
-/**
- * change the board to a new line
- * @param line { RepertoireLine } line to switch to
- */
-  public switchLine(line: RepertoireLine): void
+  /**
+   * change the board to a new line
+   * @param line { RepertoireLine } line to switch to
+   */
+  public open(): void
   {
-    console.log("switch line entered with line: " + line.name);
-
-    console.log("switch line entered with line named: " + line.name);
+    console.log("open entered on rep: " + this.name);
 
     //change the displays
-    controller.setNameElement(line.name);
-    controller.changeStudy(line);
-  }
+    controller.setNameElement(this.name);
+    controller.changeStudy(this);
+
+   //empty the doc game list
+   $("#gameList").replaceWith("<div id='gameList'> </div>");
+
+   //empty the doc line list
+   $("#lineList").replaceWith("<div id='lineList'> <div>")
+   console.log("line List length: " + this.lineList.length);
+   console.log("example game list: " + this.lineList)
+
+   this.lineList.forEach((line) =>
+   {
+     console.log(line);
+     console.log("line added to lineList: " + line.name);
+     line.lineBtn.appendTo($( '#lineList' ));
+
+     line.lineBtn.on("click", { line:line }, function (event)
+       {
+         console.log("line btn clicked with name: " + line.name);
+         event.data.line.openLine();
+       });
+   });
+ }
 }
