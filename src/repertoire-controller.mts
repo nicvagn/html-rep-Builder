@@ -73,8 +73,6 @@ export class Controller
   iframeEnd: string = '?theme=blue2&bg=light frameborder=0></iframe>';
   editRepController?: EditRepertoireController; //class containing the functions to aid in editing the rep
 
-  nameLabel: HTMLElement = document.getElementById("nameLabel")!; //for the current rep name
-
   /**
    * construct a new repertoire controller
    */
@@ -132,12 +130,17 @@ export class Controller
   {
     console.log("set name element entered with name: " + name)
     //set the name element
-    if(this.nameLabel == null)
+    const nameEl = $("#nameLabel")[0];
+    if( nameEl )
     {
-      //make sure the nameLabel is defined
-      this.nameLabel = document.getElementById("nameLabel")!; //for the current rep name
+      nameEl.innerText = name;
     }
-    this.nameLabel.innerText = name;
+    else
+    {
+      error("nameElement can not be found.")
+    }
+
+    console.log("nameLabel innerText " + nameEl);
   }
 
   /**
@@ -263,6 +266,10 @@ export class Controller
         //open the new rep
         this.openRepertoire(newRep);
         console.log("created a new rep with name: " + newRep.name);
+      }
+      else
+      {
+        throw error(" if(name != null && url != null) did not pass")
       }
     });
   }

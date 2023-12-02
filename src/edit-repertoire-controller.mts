@@ -72,8 +72,6 @@ const addStudyEmbed =
 const chessBoardEmbed =
 `<div id="centerPane" class="centerPane">
 
-  <h2 id="nameLabel">Placeholder Name</h2>
-
   <div id="chessgroundContainer" >
     <!-- Main Chessboard -->
     <img id="chessground" style="object-fit: contain;" src="images/thinking.jpg" frameborder=0></img>
@@ -86,6 +84,13 @@ const LinesToAddGameTo =
   <h1>hello</h1>
   <h2 style='margin: 15px auto'> Line options: </h2>
 </div>`
+
+const repsToAddLineTo =
+`<div id="centerPane" class="centerPane>
+
+<h1>hello</h1>
+<h2 style='margin: 15px auto'> Line options: </h2>
+</div> `
 
 /**
  * helper for creating new reps
@@ -109,44 +114,6 @@ export class EditRepertoireController
     editRepertoireController = this;
   }
 
-  public getFromPop(study: ExampleGame | RepertoireLine | null): void
-  {
-    if(study == null)  //if we did not get anything from the user, do nothing
-    {
-      console.log("No ExampleGame | RepertoireLine was provided, null was.")
-    }
-    else
-    {
-      const openRep = controller.openRep;
-      if (openRep) //if open rep is a thing
-      {
-        if(study instanceof RepertoireLine) //if it is a line, add it to the rep
-        {
-          console.log("popup line added. Name: " + study.name)
-          openRep.addLine(study);
-        }
-
-        //otherwise it must be a game or an error
-        const openLine = openRep.getOpenLine();
-        if (openLine) //check if open line is valid
-        {
-          if (study instanceof ExampleGame)
-          {
-            console.log("input game added. Name: " + study.name);
-            openLine.addGame(study);
-          }
-        }
-        else
-        {
-          throw error("thing is not an instance of ExampleGame || RepertoireLine");
-        }
-      }
-      else
-      {
-        throw error("Open rep is null | undefined | false");
-      }
-    }
-  }
 
   /**
    *  edit a line, you can add games to a line, change the name, etc. Shows a popup
@@ -225,8 +192,18 @@ export function chessBoardView()
   $( ".chessBoardView" ).css("visibility", "visible");
   //reset the center pane
   $( "#centerPane" ).html(chessBoardEmbed);
-}
 
+
+  const openRepName = controller.openRep?.name;
+  if(openRepName) //if open rep name is a value != false
+  {
+    controller.setNameElement(openRepName);
+  }
+}
+/**
+ * show the lines you can add an example game to
+ * @param game example game to add on click
+ */
 function showLinesToAddGameTo(game: ExampleGame): void
 {
   const openRep = controller.openRep;
@@ -256,9 +233,40 @@ function showLinesToAddGameTo(game: ExampleGame): void
         "hight": "45px"
       });
 
-    $( "#centerPanexxx" ).append(btn);
+    $( "#centerPane" ).append(btn);
   }
 }
+
+/**
+ * display a list of repButtons that you can add aline to
+ * @param line the line to add to the chosen rep
+ */
+function showRepsToAddLineTo(line: RepertoireLine): void
+{
+
+  $( "#centerPane" ).html(repsToAddLineTo);
+  for(let x = 0; x < controller.repList.length; x++)
+  {
+    //create a button with each of the rep names
+    const btn = $("<button/>",
+    {
+      text: controller.repList[x].name,
+      //add a lister to add the line to that rep
+      click: controller.repList[x].addLine(line),
+    });
+
+    $(btn).css(
+      {
+        "margin": "0 auto",
+        "min-width": "450px",
+        "width": "fit-content",
+        "hight": "45px"
+      });
+
+    $( "#centerPane" ).append(btn);
+  }
+}
+
 
 function setAddStudyListeners(): void
 {
@@ -274,7 +282,7 @@ function setAddStudyListeners(): void
   //add lister to the addURL button
   addUrlBtn.on("click", () =>
   {
-    console.log("addURL pressed.")
+    console.log("addURL pressed with a lineURL.")
     //hide instructions
     $( "#URLInstructions" ).css("display", "none");
 
@@ -291,23 +299,45 @@ function setAddStudyListeners(): void
     console.log("Study URL: " + studyURL);
 
     const isLine = document.getElementById("lineToggle") as HTMLInputElement;
-    console.log("isLine toggle val: " + isLine);
+    console.log("isLine toggle val: " + isLine.value);
+
 
     if(typeof studyURL === "string" && studyURL != null) // if url is typeof string
     {
-      console.log("the given url: " + studyURL)
+      console.log("the given url: " + studyURL);
+      if(isLine.hasAttribute("checked")) //if is line is checked. Is a line
+      {
+        console.log("addURL clicked with a line url");
+        $( "#URLInstructions" ).css("display", "none"); //hide instructions
 
-      //ask user what to call this game
-      let gameName;
-      do{
-        gameName = prompt("What do you want to call this game?");
-      }while(gameName == null) //do not let the gameName be null
+        let lineName: string | null;
+        do{
+          lineName = prompt("What do you want to call this line?");
+        } while(lineName == null) //do not let the lineName be null
+        //construct line
+        const line = new RepertoireLine(lineName, studyURL);
 
-      const game = new ExampleGame(gameName, studyURL);
+        showRepsToAddLineTo(line);
 
-      //what line should we add this to?
-      showLinesToAddGameTo(game);
-      //now, we wait for the uses to click a line
+
+      }
+      else  // must be a game
+      {
+        console.log("addURL pressed with a gameURL");
+        $( "#URLInstructions" ).css("display", "none");
+
+        let gameName: string | null;
+        //ask user what to call this game
+        do{
+          gameName = prompt("What do you want to call this game?");
+        } while(gameName == null) //do not let the gameName be null
+
+        const game = new ExampleGame(gameName, studyURL);
+
+        //what line should we add this to?
+        showLinesToAddGameTo(game);
+        //now, we wait for the uses to click a line
+      }
     }
   });
 

@@ -34,7 +34,7 @@ export class Repertoire
   openLine?: RepertoireLine; //the currently open line, may not be defined
   studyUrl: string;
 
-  nameLabel: HTMLElement = document.getElementById("nameLabel")!; //for the current rep name
+  nameLabel: HTMLElement = document.getElementById("#nameLabel")!; //for the current rep name
   //line button for display on the DOM
   public repertoireBtn!: JQuery<HTMLElement>;
 

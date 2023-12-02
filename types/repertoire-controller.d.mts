@@ -36,7 +36,6 @@ export declare class Controller {
     iframeStart: string;
     iframeEnd: string;
     editRepController?: EditRepertoireController;
-    nameLabel: HTMLElement;
     /**
      * construct a new repertoire controller
      */
