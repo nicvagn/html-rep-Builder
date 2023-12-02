@@ -55,7 +55,7 @@ function makeController()
     notMade = false;
     controller = new Controller();
 
-    test();
+    //test();
   }
 }
 function test()
@@ -83,11 +83,11 @@ function test()
   * (we are just testing ui rn)
   */
 
-  const capo = controller.newRepertoireSystem("Capo can not");
+  const capo = controller.newRepertoireSystem("Capo can not", "https://lichess.org/study/embed/PYEVM2pA/YCdbBWum");
   capo.addLine(line2);
   capo.addLine(line1);
 
-  const nope = controller.newRepertoireSystem("something, anything");
+  const nope = controller.newRepertoireSystem("something, anything", "https://lichess.org/study/embed/PYEVM2pA/POney1Ru");
   nope.addLine(line1);
   nope.addLine(line2);
   nope.addLine(line3);

@@ -42,13 +42,10 @@
       <img id="logo" src="images/shcc-logo-notxt.png">
       <ul class="navbar__menu">
         <li class="navbar__item">
+          <button id="editRepTop" class="navbarBtn openRepNeeded">Edit</button>
+        </li>
+        <li class="navbar__item">
           <button id="newRepTop" class="navbarBtn">New</button>
-        </li>
-        <li class="navbar__item">
-          <button id="editRepTop" class="navbarBtn">Edit</button>
-        </li>
-        <li class="navbar__item">
-          <button id="openRepTop" class="navbarBtn">Open</button>
         </li>
       </ul>
     </div>
@@ -56,7 +53,7 @@
 
   <!-- main content -->
   <div class="row">
-    <div class="column" id="linesColumn">
+    <div class="column chessBoardView openRepNeeded" id="linesColumn">
 
       <h1>Lines:</h1>
 
@@ -64,7 +61,7 @@
       <div id="lineList"></div>
 
     </div>
-    <div class="centerPane">
+    <div id="centerPane" class="centerPane">
 
       <h2 id="nameLabel">Placeholder Name</h2>
 
@@ -74,30 +71,32 @@
       </div>
 
     </div>
-    <div class="column" id="gamesColumn">
+    <div class="column chessBoardView" id="gamesColumn">
 
-      <h1>Instructive games:</h1>
+      <div class="openRepNeeded">
+        <h1>Instructive games:</h1>
 
-      <!-- place for open lines game list -->
-      <div id="gameList">
+        <!-- place for open lines game list -->
+        <div id="gameList">
+        </div>
       </div>
 
-      <h1>Local <br>Repertoires:</h1>
+      <div>
+        <h1>Local <br>Repertoires:</h1>
 
-      <div id="localReps"></div>
+        <div id="localReps"></div>
 
-      <a id="downloadLink" href="#" download="Repertoire.json">Download</a>
-
+        <a id="downloadLink" href="#" download="Repertoire.json">Download</a>
+      </div>
     </div>
   </div>
 
-  <div id="newRepButtons" class="editRep">
+  <div id="newRepButtons" class="editRep chessBoardView openRepNeeded">
 
     <button id="resetGames">reset games</button>
     <button id="resetLines">reset lines</button>
-    <button id="studyInput" class="studyInput">add study</button>
+    <button id="addStudy" class="studyInput">add study</button>
     <button id="saveBrowser" class="wideBtn">save to browser permanent local storage</button>
-
 
   </div>
 </body>

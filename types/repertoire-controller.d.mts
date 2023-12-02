@@ -68,21 +68,72 @@ export declare class Controller {
      * and displaying all the controls for making one. And set it as the open rep
      * and return it
      * @returns a new rep
+     *
+    public newRepertoireUser(name?:string, save?: boolean): Repertoire
+    {
+  
+      //empty the line display on the dom
+      this.resetLists();
+  
+      console.log("newRepertoire entered with name: " + name)
+      //if there is an open rep
+      if (save && this.openRep != undefined)
+      {
+        if (confirm("Do you want to save the open repertoire to browser storage?"))
+        {
+          //save the rep with the key being it's name
+          if(this.openRep.name != undefined)
+          {
+            SaveController.saveRepToLocal(this.openRep.name, this.openRep);
+            console.log("Rep saved");
+          }
+          else
+          {
+            throw new Error("newRepertoire: this.openRep.name undefined");
+          }
+        }
+      }
+  
+      if(name != undefined)
+      {
+        this.openRep = new Repertoire(name);
+        this.openRepName = name;
+        this.setNameElement(this.openRepName);
+      }
+      else
+      {
+        //make a new rep. will ask for a name
+        this.openRep = new Repertoire();
+      }
+  
+      //add the rep to our list of reps
+      this.addRepertoire(this.openRep);
+  
+      //show the editing stuff
+      this.editRepertoire();
+      return this.openRep;
+    }*/
+    /**
+     * set up the new repertoire controls and center pane
      */
-    newRepertoireUser(name?: string, save?: boolean): Repertoire;
+    showNewRepPane(): void;
     /**
      * make a new repertoire, with no user input and do not set it as the open rep
      * or clear the lines
      * @returns a new rep
      */
-    newRepertoireSystem(name: string): Repertoire;
+    newRepertoireSystem(name: string, studyURL: string): Repertoire;
     /**
      * create an edit controller, and display all the controls for editing a rep
      */
     editRepertoire(): void;
     /**
-     * change the study on the main board
-     *  to display on the board
+     * change the study on the main board to a provided chess thing's study
      */
     changeStudy(chessThing: RepertoireLine | ExampleGame | Repertoire): void;
+    /**
+     * add an Example Game
+     * @param the example game
+     */
+    addExampleGame(game: ExampleGame): void;
 }

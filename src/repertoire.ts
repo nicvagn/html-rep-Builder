@@ -1,6 +1,6 @@
 /*********************************************************************************
  * a typescript chess repertoire builder. including line and example game viewing
- *  made for shcc: Saskatchewan Horizon Chess Club
+ * made for shcc: Saskatchewan Horizon Chess Club
  * Copyright (C) 2023 Nicolas Vaagen
  *
  * This program is free software: you can redistribute it and/or modify it
@@ -29,43 +29,47 @@ import { controller } from "./index.js";
 export class Repertoire
 {
 
-  name!: string;
+  name: string | null = null; //the name = null is used to make sure name is set
   lineList: RepertoireLine[] = new Array<RepertoireLine>();  // array of lines in this rep
   openLine?: RepertoireLine; //the currently open line, may not be defined
-  studyUrl: string = "https://lichess.org/study/embed/PYEVM2pA/t9FbFpR1";
+  studyUrl: string;
 
   nameLabel: HTMLElement = document.getElementById("nameLabel")!; //for the current rep name
   //line button for display on the DOM
-  public repertoireBtn: JQuery<HTMLElement>;
+  public repertoireBtn!: JQuery<HTMLElement>;
 
   /**
    * make a new Rep
-   * @param {string} _name name to give
+   * @param {string} name name to give
+   * @param studyURL the lichess url of the primary study chapter of this
    * @param lineList list of lines in this rep
    */
-  constructor(_name?: string, _lineList?: RepertoireLine[])
+  constructor(name: string, studyURL: string, lineList?: RepertoireLine[])
   {
-    console.log("rep with name:" + _name + ", Line List: " + _lineList + "made");
+    console.log("rep with name:" + name + ", Line List: " + lineList +" studyURL: " + studyURL + "made");
 
-    if (_name != undefined)
-    {
-      this.name = _name;
-    }
-    else
-    {
-      this.setName();
-    }
-    if (_lineList != undefined)
-    {
-      this.lineList = _lineList!;
-    }
+    this.studyUrl = studyURL;
+    this.name = name;
+    this.createRepBtn();
 
+    if (lineList != undefined)
+    {
+      this.lineList = lineList;
+    }
+  }
+
+  /**
+   * create the rep button and add it to the DOM
+   * with a lister attached the rep must have a name
+   */
+  private createRepBtn()
+  {
     //create the visual button for the gui
     this.repertoireBtn = $("<button/>", {
-      text: this.name,
-      id: this.name,
-      rep: this
-    });
+        text: this.name,
+        id: this.name,
+        rep: this
+        });
     this.repertoireBtn.addClass("repBtn");
 
     //add lister
@@ -73,20 +77,6 @@ export class Repertoire
         {
           event.data.controller.openRepertoire(event.data.rep);
         });
-  }
-
-  /**
-   * set the name field if none was provided
-   */
-  public setName(): void
-  {
-    let name;
-    do  //don't let the name be undefined
-    {
-      name = prompt("What would you like to call the new repertoire?")!;
-    }
-    while (name == undefined);
-
   }
 
 
@@ -152,23 +142,6 @@ export class Repertoire
     console.log("save Rep Pressed");
   }
 
-  /*  relic of trying to make event handlers work
-  public getLineByName(name: String): RepertoireLine
-  {
-    console.log("Name we are looking for " + name);
-    for (let i = 0; i < this.lineList.length; i++)
-    {
-      if (this.lineList[i].name == name)
-      {
-        console.log("this.lineList[i].name" + this.lineList[i].name);
-        return this.lineList[i];
-      }
-    }
-    throw new Error("The line list does not contain a line with the name: " + name);
-  }
-  */
-
-
 
   /**
    * get the open line, throws error if no open line
@@ -207,7 +180,7 @@ export class Repertoire
     console.log("open entered on rep: " + this.name);
 
     //change the displays
-    controller.setNameElement(this.name);
+    controller.setNameElement(this.name!);
     controller.changeStudy(this);
 
    //empty the doc game list

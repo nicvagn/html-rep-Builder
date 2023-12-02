@@ -16,24 +16,4 @@
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************************/
-import { ExampleGame } from "./example-game.js";
-import { RepertoireLine } from "./repertoire-line.js";
-/**
- * helper for creating new reps
- */
-export declare class EditRepertoireController {
-    constructor();
-    getFromPop(study: ExampleGame | RepertoireLine | null): void;
-    /**
-     *  edit a line, you can add games to a line, change the name, etc. Shows a popup
-     * to accomplish this
-     */
-    editLine(): void;
-    resetLines(): void;
-    resetGames(): void;
-    saveToBrowser(): void;
-}
-/**
- * reset back to chessboard view
- */
-export declare function chessBoardView(): void;
+export declare function preparePopUp(): void;

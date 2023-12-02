@@ -33,30 +33,33 @@
 
   <!-- webpack file -->
   <script type="text/javascript" src="./main.js"></script>
+
 <script defer src="main.js"></script></head>
 
-<body id="pop">
-  <!-- Navbar Section -->
-  <nav class="navbar">
-    <div class="navbar__container">
-      <img id="logo" src="./images/shcc-logo-notxt.png">
-      <h2 class="navbar__item">Add Line or Game</h2>
-    </div>
-  </nav>
+<body class="studyIframe">
 
-  <div style="display: flex; justify-content: center;">
-    <div>
-      <br>
-      <h3>The current chapter URL is what is needed. It can be found here: </h3>
+  <div id="URLIntructions">
+      <h3 style="margin: 3px 30px;">The current chapter URL is what is needed. It can be found under at
+        lichess.org/studies/... here: </h3>
       <br>
       <img src="./images/url_location.png">
-      <br>
-      <span id="inputSpan">
-        <label for="studyTextField">Lichess study chapter url:  </label>
-        <input type="text" id="studyTextField" name="studyTextField">
-        <button id="addURL" style="width: 35px;">Add</button>
-      </span>
-    </div>
+  </div>
+
+  <div>
+    <span class="inputSpan">
+
+      <h1>Line:</h1>
+      <!-- game/line switch -->
+      <label class="switch">
+        <input type="checkbox" id="lineToggle">
+        <span class="slider"></span>
+      </label>
+
+      <label for="studyTextField">Lichess study chapter url: </label>
+      <input type="text" id="studyTextField" name="studyTextField">
+      <button id="addURL" style="width: 35px;">Add</button>
+      <button id="done" style="width: 35px;"></button>
+    </span>
   </div>
 
 

@@ -1,6 +1,6 @@
 /*********************************************************************************
  * a typescript chess repertoire builder. including line and example game viewing
- *  made for shcc: Saskatchewan Horizon Chess Club
+ * made for shcc: Saskatchewan Horizon Chess Club
  * Copyright (C) 2023 Nicolas Vaagen
  *
  * This program is free software: you can redistribute it and/or modify it
@@ -23,7 +23,7 @@ import { RepertoireLine } from "./repertoire-line.js";
  * A chess repertoire
  */
 export declare class Repertoire {
-    name: string;
+    name: string | null;
     lineList: RepertoireLine[];
     openLine?: RepertoireLine;
     studyUrl: string;
@@ -31,14 +31,16 @@ export declare class Repertoire {
     repertoireBtn: JQuery<HTMLElement>;
     /**
      * make a new Rep
-     * @param {string} _name name to give
+     * @param {string} name name to give
+     * @param studyURL the lichess url of the primary study chapter of this
      * @param lineList list of lines in this rep
      */
-    constructor(_name?: string, _lineList?: RepertoireLine[]);
+    constructor(name: string, studyURL: string, lineList?: RepertoireLine[]);
     /**
-     * set the name field if none was provided
+     * create the rep button and add it to the DOM
+     * with a lister attached the rep must have a name
      */
-    setName(): void;
+    private createRepBtn;
     /**
      * add a line to this repertoire object
      * @param repLine - a RepertoireLine

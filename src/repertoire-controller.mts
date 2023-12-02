@@ -19,12 +19,35 @@
 
 //nrv stuff
 import { Repertoire } from "./repertoire.js";
-import { SaveController } from "./save-controller.js";
-import { EditRepertoireController } from "./edit-repertoire-controller.mjs";
+//import { SaveController } from "./save-controller.js";
+import { EditRepertoireController, chessBoardView } from "./edit-repertoire-controller.mjs";
 import { RepertoireLine } from "./repertoire-line.js";
 import { ExampleGame } from "./example-game.js";
 import { error } from "jquery";
+
 import { controller } from "./index.js";
+
+const newRepertoirePane =
+`
+<div id="newRepControls">
+  <div id="URLInstructions" style="margin: 15px auto;" >
+    <h3 style="margin: 3px auto;">The studies current chapter URL is what is needed. It can be found under at
+      lichess.org/studies/... here: </h3>
+    <br>
+    <img style="margin: 15px auto;" src="./images/url_location.png">
+  </div>
+
+  <h2>Repertoire Creation</h2>
+  <br>
+  <label style="text-align: left" for="repertoireName"> Repertoire  Name: </label>
+  <input type="text" id="repertoireName" name="repertoireName">
+  <br>
+  <label style="text-align: left" for="repertoireURL">Main chapter URL: </label>
+  <input type="text"  id="repertoireURL" name="repertoireURL">
+  <br>
+  <button id="newRepControlSubmit"> submit </button>
+</div>
+`
 
 
 
@@ -57,25 +80,19 @@ export class Controller
    */
   constructor()
   {
+    //construct an edit controller
+    this.editRepController = new EditRepertoireController();
+
     this.boardSpot = $( "#chessground" ); //the place to init the chessboard
     //add event handlers to top btn's
     $("#newRepTop").on("click", { controller: this }, function (event)
     {
-      console.log(event);
+      console.log("newRepTop clicked");
 
       //make new rep
-      event.data.controller.newRepertoireUser();
+      event.data.controller.showNewRepPane();
       //show the edit stuff
       event.data.controller.editRepertoire();
-    });
-
-    $("#openRepTop").on("click", { controller: this }, function (event)
-    {
-      console.log("top btn open " + event);
-
-      const windowFeatures = "width=320,height=320,popup";
-      //open openRepWindow
-      window.open("AddLine.html", "mozillaWindow", windowFeatures);
     });
 
     $("#editRepTop").on("click", { controller: this }, function (event)
@@ -143,6 +160,9 @@ export class Controller
   public openRepertoire(rep: Repertoire): void
   {
     controller.openRep = rep;
+
+    $( ".openRepNeeded" ).css("visibility", "visible"); // make controls that need an open rep visible
+
     console.log("```````````````` open Repertoire entered ````````````````````````````");
     //change the default study to the rep. starting one
     controller.changeStudy(rep);
@@ -167,7 +187,7 @@ export class Controller
    * and displaying all the controls for making one. And set it as the open rep
    * and return it
    * @returns a new rep
-   */
+   *
   public newRepertoireUser(name?:string, save?: boolean): Repertoire
   {
 
@@ -211,18 +231,53 @@ export class Controller
     //show the editing stuff
     this.editRepertoire();
     return this.openRep;
+  }*/
+
+  /**
+   * set up the new repertoire controls and center pane
+   */
+  public showNewRepPane(): void
+  {
+    $( "#centerPane" ).html(newRepertoirePane);
+    $( "#newRepControlSubmit" ).on("click", () => {
+      const studyURLInput:HTMLInputElement | null = document.getElementById( "repertoireURL" ) as HTMLInputElement;
+      const studyNameInput:HTMLInputElement | null = document.getElementById( "repertoireName" ) as HTMLInputElement;
+
+      //get the value of the input felids
+      const name = studyNameInput.value;
+      const url = studyURLInput.value;
+
+      if(name == null)
+      {
+        alert("Name can not be null.");
+      }
+      if(url == null)
+      {
+        alert("url can not be null.");
+      }
+
+      chessBoardView();
+      if(name != null && url != null)
+      {
+        const newRep = this.newRepertoireSystem(name, url);
+        //open the new rep
+        this.openRepertoire(newRep);
+        console.log("created a new rep with name: " + newRep.name);
+      }
+    });
   }
+
 
   /**
    * make a new repertoire, with no user input and do not set it as the open rep
    * or clear the lines
    * @returns a new rep
    */
-  public newRepertoireSystem(name:string): Repertoire
+  public newRepertoireSystem(name:string, studyURL: string): Repertoire
   {
 
     console.log("newRepertoireSystem entered with name: " + name);
-    const newRep = new Repertoire(name);
+    const newRep = new Repertoire(name, studyURL);
 
     this.addRepertoire(newRep)
 
@@ -235,11 +290,6 @@ export class Controller
    */
   public editRepertoire(): void
   {
-    if(this.editRepController == undefined || this.editRepController == null)
-    {
-      this.editRepController = new EditRepertoireController();
-    }
-
     //get all the edit repertoire buttons
     const newRepItems: Array<HTMLElement> = Array.from(
       document.getElementsByClassName("editRep") as HTMLCollectionOf<HTMLElement>
@@ -252,8 +302,7 @@ export class Controller
   }
 
   /**
-   * change the study on the main board
-   *  to display on the board
+   * change the study on the main board to a provided chess thing's study
    */
   public changeStudy(chessThing: RepertoireLine | ExampleGame | Repertoire): void
   {
@@ -267,10 +316,41 @@ export class Controller
     console.log("impeded str: " + imbeddingStr + " was the impeding str");
 
     //set the name element
-    this.setNameElement(chessThing.name);
-
+    if(chessThing.name == null)
+    {
+      throw error("chessThing.name is null.")
+    }
+    else
+    {
+      this.setNameElement(chessThing.name);
+    }
 
     $( "#chessgroundContainer" ).empty();
     $( "#chessgroundContainer" ).append( $( imbeddingStr ) );
+  }
+
+  /**
+   * add an Example Game
+   * @param the example game
+   */
+  public addExampleGame(game: ExampleGame): void
+  {
+    if(controller.openRep != undefined)
+    {
+
+      const tempLine = controller.openRep?.getOpenLine();
+      if(tempLine != undefined && tempLine != null)
+      {
+        tempLine.addGame(game); //I hope this works from a popup
+      }
+      else
+      {
+        throw error("No open line.")
+      }
+    }
+    else
+    {
+      throw error("No open rep found.")
+    }
   }
 }

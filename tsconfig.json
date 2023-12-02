@@ -37,7 +37,7 @@
     "esModuleInterop": true,	//something to do with allowing commonjs modules to play nice with es6 modules
     "skipLibCheck": true, //nothing bad ever happens in other peoples code
   },
-  "include": ["src"],	//include our src dir
+  "include": ["src", "src/save-controller.ts"],	//include our src dir
   "exclude": ["node_modules"]
 }
 
