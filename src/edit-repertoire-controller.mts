@@ -22,14 +22,13 @@ import { ExampleGame } from "./example-game.js";
 import { controller } from "./index.js";
 import { RepertoireLine } from "./repertoire-line.js";
 
-//import { event } from "jquery";
-
 //get the various NewRepertoire buttons
 const editLineBtn = document.getElementById("editLine");
 const resetLinesBtn = document.getElementById("resetLines");
 const resetGamesBtn = document.getElementById("resetGames");
 const saveBrowserBtn = document.getElementById("saveBrowser");
-const addStudy = document.getElementById("addStudy");
+const addStudyBtn = document.getElementById("addStudy");
+const createStudyBtn = document.getElementById("createStudy");
 
 let editRepertoireController: EditRepertoireController; //so the listeners can access
 
@@ -38,59 +37,6 @@ let editRepertoireController: EditRepertoireController; //so the listeners can a
 //for popup windows
 // const windowFeatures = "width=900,height=700,popup";
 
-/**
- * html for dom manipulation
- */
-const addStudyEmbed =
-`<div id="addStudyEmbed">
-
-  <div id="URLIntructions" style="margin: 15px auto;" >
-      <h3 style="margin: 3px auto;">The current chapter URL is what is needed. It can be found under at
-        lichess.org/studies/... here: </h3>
-      <br>
-      <img style="margin: 15px auto;" src="./images/url_location.png">
-  </div>
-
-  <div>
-    <span class="inputSpan">
-
-      <h1>Line:</h1>
-      <!-- game/line switch -->
-      <label class="switch">
-        <input type="checkbox" id="lineToggle">
-        <span class="slider"></span>
-      </label>
-
-      <label for="studyTextField">Lichess study chapter url: </label>
-      <input type="text" id="studyTextField" name="studyTextField">
-      <button id="addURL" style="width: 35px;">Add</button>
-      <button id="done" style="width: 35px;"></button>
-    </span>
-  </div>
-</div>`
-
-const chessBoardEmbed =
-`<div id="centerPane" class="centerPane">
-
-  <div id="chessgroundContainer" >
-    <!-- Main Chessboard -->
-    <img id="chessground" style="object-fit: contain;" src="images/thinking.jpg" frameborder=0></img>
-  </div>
-</div>`
-
-const LinesToAddGameTo =
-`<div id="centerPane" class="centerPane>
-
-  <h1>hello</h1>
-  <h2 style='margin: 15px auto'> Line options: </h2>
-</div>`
-
-const repsToAddLineTo =
-`<div id="centerPane" class="centerPane>
-
-<h1>hello</h1>
-<h2 style='margin: 15px auto'> Line options: </h2>
-</div> `
 
 /**
  * helper for creating new reps
@@ -98,16 +44,69 @@ const repsToAddLineTo =
 export class EditRepertoireController
 {
 
+  /**
+   * html for dom manipulation
+   */
+  readonly addStudyEmbed =
+  `<div id="centerPane" class="centerPane">
+    <div id="addStudyEmbed">
+
+      <div id="URLInstructions" style="margin: 15px auto;" >
+          <h3 style="margin: 3px auto;">The current chapter URL is what is needed. It can be found under at
+            lichess.org/studies/... here: </h3>
+          <br>
+          <img style="margin: 15px auto;" src="./images/url_location.png">
+      </div>
+
+      <div>
+        <span class="inputSpan">
+
+          <h1>Line:</h1>
+          <!-- game/line switch -->
+          <label class="switch">
+            <input type="checkbox" id="lineToggle">
+            <span class="slider"></span>
+          </label>
+
+          <label for="studyTextField">Lichess study chapter url: </label>
+          <input type="text" id="studyTextField" name="studyTextField">
+          <button id="addURL" style="width: 35px;">Add</button>
+          <button id="done" style="width: 35px;"></button>
+        </span>
+      </div>
+    </div>
+  </div>`
+
+  readonly chessBoardEmbed =
+  `<div id="centerPane" class="centerPane">
+
+    <div id="chessgroundContainer" >
+      <!-- Main Chessboard -->
+      <img id="chessground" style="object-fit: contain;" src="images/thinking.jpg" frameborder=0></img>
+    </div>
+  </div>`
+
+  readonly LinesToAddGameEmbed =
+  `<div id="centerPane" class="centerPane">
+    <h2 style='margin: 15px 0; text-align: center;'>  Line options: </h2>
+  </div>`
+
+  readonly repsToAddLineToEmbed =
+  `<div id="centerPane" class="centerPane">
+    <h2 style='margin: 15px 0; text-align: center;'> Repertoire options: </h2>
+  </div> `
+
   constructor()
   {
     console.log("EditRepertoireController constructed");
     //add listeners
     editLineBtn?.addEventListener("click", buttonLnr);
+    createStudyBtn
     resetLinesBtn?.addEventListener("click", buttonLnr);
     resetGamesBtn?.addEventListener("click", buttonLnr);
     saveBrowserBtn?.addEventListener("click", buttonLnr);
-    addStudy?.addEventListener("click", buttonLnr)
-
+    addStudyBtn?.addEventListener("click", buttonLnr)
+    createStudyBtn?.addEventListener("click", buttonLnr);
 
     //make a local file scope variable, so the button listeners can access the controller class
     // eslint-disable-next-line @typescript-eslint/no-this-alias
@@ -125,6 +124,13 @@ export class EditRepertoireController
     console.log("EditLine entered");
     const windowFeatures = "popup";
     window.open("https://lichess.org/study/PYEVM2pA/POney1Ru", "mozillaWindow", windowFeatures);
+  }
+
+  public createStudy():void
+  {
+    //open the lichess study page
+    window.open("https://lichess.org/study");
+    //the rest has to be handled by the user
   }
 
   public resetLines():void
@@ -173,10 +179,15 @@ function buttonLnr(event: Event):void
     //save to browser
     editRepertoireController.saveToBrowser();
   }
-  else if(event.target == addStudy)
+  else if(event.target == addStudyBtn)
   {
     console.log("study input clicked");
     showAddStudy();
+  }
+  else if(event.target == createStudyBtn)
+  {
+    console.log("createStudyBtn clicked");
+    editRepertoireController.createStudy();
   }
   else
   {
@@ -191,8 +202,7 @@ export function chessBoardView()
 {
   $( ".chessBoardView" ).css("visibility", "visible");
   //reset the center pane
-  $( "#centerPane" ).html(chessBoardEmbed);
-
+  $( "#centerPane" ).replaceWith(editRepertoireController.chessBoardEmbed);
 
   const openRepName = controller.openRep?.name;
   if(openRepName) //if open rep name is a value != false
@@ -200,12 +210,26 @@ export function chessBoardView()
     controller.setNameElement(openRepName);
   }
 }
+
+  /**
+   * make all the edit repertoire controls hidden
+   */
+function hideEditRepertoire(): void
+{
+  //hide the edit rep controls
+  $( ".editRep" ).css("visibility", "hidden");
+}
+
+
 /**
  * show the lines you can add an example game to
  * @param game example game to add on click
  */
 function showLinesToAddGameTo(game: ExampleGame): void
 {
+  console.log("showLinesToAddGameTo entered with a game named: " + game.name);
+  //hide the edit rep controls
+  hideEditRepertoire();
   const openRep = controller.openRep;
   if(openRep == null)
   {
@@ -213,27 +237,47 @@ function showLinesToAddGameTo(game: ExampleGame): void
   }
 
   //set up the center pane
-  $( "#centerPane" ).html(LinesToAddGameTo);
+  $( "#centerPane" ).replaceWith(editRepertoireController.LinesToAddGameEmbed)
 
-  for(let x = 0; x < openRep.lineList.length; x++)
+  //if there are no lines
+  if(openRep.lineList == null || openRep.lineList.length == 0)
   {
-    //create a button with each of the line names
-    const btn = $("<button/>",
+    alert("you have to have a line to add a game to.");
+  }
+  else
+  {
+    for(let x = 0; x < openRep.lineList.length; x++)
     {
-      text: openRep.lineList[x].name,
-      //add a lister to add the game to that line
-      click: openRep.lineList[x].addGame(game),
-    });
-
-    $(btn).css(
+      //create a button with each of the line names
+      const btn = $("<button/>",
       {
-        "margin": "0 auto",
-        "min-width": "450px",
-        "width": "fit-content",
-        "hight": "45px"
+        text: openRep.lineList[x].name,
       });
 
-    $( "#centerPane" ).append(btn);
+      //attach event handler to the game. Event handler adds game to line
+      btn.on( "click", {  line: openRep.lineList[x] },( event ) =>
+      {
+        const line = event.data.line;
+        //when the button is pressed, ad the game to the chosen line
+        console.log("line chosen to add game to Line: " + line.name)
+        line.addGame(game);
+
+        //return to the chessboard view with that game opened
+        chessBoardView();
+
+        game.showGame(); //display the game on the main board
+      });
+
+      $(btn).css(
+        {
+          "margin": "0 auto",
+          "min-width": "450px",
+          "width": "fit-content",
+          "hight": "45px"
+        });
+
+      $( "#centerPane" ).append(btn);
+    }
   }
 }
 
@@ -243,8 +287,11 @@ function showLinesToAddGameTo(game: ExampleGame): void
  */
 function showRepsToAddLineTo(line: RepertoireLine): void
 {
+  //hide the edit rep controls
+  hideEditRepertoire();
 
-  $( "#centerPane" ).html(repsToAddLineTo);
+  $( "#centerPane" ).html(editRepertoireController.repsToAddLineToEmbed);
+  console.log( $( "#centerPane" ).css );
   for(let x = 0; x < controller.repList.length; x++)
   {
     //create a button with each of the rep names
@@ -282,7 +329,6 @@ function setAddStudyListeners(): void
   //add lister to the addURL button
   addUrlBtn.on("click", () =>
   {
-    console.log("addURL pressed with a lineURL.")
     //hide instructions
     $( "#URLInstructions" ).css("display", "none");
 
@@ -318,8 +364,6 @@ function setAddStudyListeners(): void
         const line = new RepertoireLine(lineName, studyURL);
 
         showRepsToAddLineTo(line);
-
-
       }
       else  // must be a game
       {
@@ -351,20 +395,20 @@ function setAddStudyListeners(): void
 /**
  * prepare the pop up
  */
-function showAddStudy()
+function showAddStudy(): void
 {
   console.log("show add study entered");
 
+  //hide the edit rep controls
+  hideEditRepertoire();
+
   //replace center html with the study input controls
-  $( "#centerPane" ).html(addStudyEmbed);
+  $( "#centerPane" ).replaceWith(editRepertoireController.addStudyEmbed);
 
   //hide chessboard view
   $( ".chessboardView" ).css("visibility", "hidden");
 
   //add listeners to new content
   setAddStudyListeners();
-
-  const url = $( "#studyTextField" ).val();
-  console.log("URL given " + url);
 }
 

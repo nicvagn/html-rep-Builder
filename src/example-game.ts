@@ -19,6 +19,7 @@
 
 //import { event } from "jquery";
 import { controller } from "./index.js";
+import { RepertoireLine } from "./repertoire-line.js";
 
 /**
  * a chess repertoire example game. It's primary use is in a rep builder GUI, so it needs to have a visual
@@ -66,7 +67,6 @@ export class ExampleGame
    */
   public showGame(game?:ExampleGame)
   {
-
     //needed for calling from the dom buttons
     if(game == undefined)
     {
@@ -77,4 +77,5 @@ export class ExampleGame
       controller.changeStudy(game);
     }
   }
+
 }

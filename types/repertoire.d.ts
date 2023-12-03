@@ -69,8 +69,7 @@ export declare class Repertoire {
      */
     setOpenLine(line: RepertoireLine): void;
     /**
-     * change the board to a new line
-     * @param line { RepertoireLine } line to switch to
+     * open this repertoire
      */
     open(): void;
 }

@@ -35,7 +35,7 @@ export declare class Controller {
     iframeWith: string;
     iframeStart: string;
     iframeEnd: string;
-    editRepController?: EditRepertoireController;
+    editRepController: EditRepertoireController;
     /**
      * construct a new repertoire controller
      */
@@ -123,16 +123,11 @@ export declare class Controller {
      */
     newRepertoireSystem(name: string, studyURL: string): Repertoire;
     /**
-     * create an edit controller, and display all the controls for editing a rep
+     * display all the controls for editing a rep
      */
     editRepertoire(): void;
     /**
      * change the study on the main board to a provided chess thing's study
      */
     changeStudy(chessThing: RepertoireLine | ExampleGame | Repertoire): void;
-    /**
-     * add an Example Game
-     * @param the example game
-     */
-    addExampleGame(game: ExampleGame): void;
 }

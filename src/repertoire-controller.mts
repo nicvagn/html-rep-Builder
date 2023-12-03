@@ -71,7 +71,7 @@ export class Controller
   iframeStart: string = ('<iframe id="chessground" ' + this.iframeWith + ' ' + this.iframeHeight + " src=");
   // url fragment goes here
   iframeEnd: string = '?theme=blue2&bg=light frameborder=0></iframe>';
-  editRepController?: EditRepertoireController; //class containing the functions to aid in editing the rep
+  editRepController: EditRepertoireController; //class containing the functions to aid in editing the rep
 
   /**
    * construct a new repertoire controller
@@ -89,8 +89,6 @@ export class Controller
 
       //make new rep
       event.data.controller.showNewRepPane();
-      //show the edit stuff
-      event.data.controller.editRepertoire();
     });
 
     $("#editRepTop").on("click", { controller: this }, function (event)
@@ -140,7 +138,7 @@ export class Controller
       error("nameElement can not be found.")
     }
 
-    console.log("nameLabel innerText " + nameEl);
+    console.log("nameLabel innerText " + nameEl.innerText);
   }
 
   /**
@@ -286,14 +284,15 @@ export class Controller
     console.log("newRepertoireSystem entered with name: " + name);
     const newRep = new Repertoire(name, studyURL);
 
-    this.addRepertoire(newRep)
+    this.addRepertoire(newRep);
+
 
     return newRep;
   }
 
 
   /**
-   * create an edit controller, and display all the controls for editing a rep
+   * display all the controls for editing a rep
    */
   public editRepertoire(): void
   {
@@ -334,30 +333,5 @@ export class Controller
 
     $( "#chessgroundContainer" ).empty();
     $( "#chessgroundContainer" ).append( $( imbeddingStr ) );
-  }
-
-  /**
-   * add an Example Game
-   * @param the example game
-   */
-  public addExampleGame(game: ExampleGame): void
-  {
-    if(controller.openRep != undefined)
-    {
-
-      const tempLine = controller.openRep?.getOpenLine();
-      if(tempLine != undefined && tempLine != null)
-      {
-        tempLine.addGame(game); //I hope this works from a popup
-      }
-      else
-      {
-        throw error("No open line.")
-      }
-    }
-    else
-    {
-      throw error("No open rep found.")
-    }
   }
 }

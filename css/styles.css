@@ -353,7 +353,7 @@ ul {
 /* OpenRep css */
 
 .openRepNeeded {
-  visibility: hidden; /* no rep open at start */
+  visibility: visible; /* no rep open at start */
 }
 
 /* the list of repertoires on open rep. pageS */

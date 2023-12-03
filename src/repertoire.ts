@@ -52,9 +52,18 @@ export class Repertoire
     this.name = name;
     this.createRepBtn();
 
+    //add the main line to the line list
+    const mainLine = new RepertoireLine("Main Line", studyURL)
+    this.addLine(mainLine);
+
+    this.lineList.push()
     if (lineList != undefined)
     {
-      this.lineList = lineList;
+      for(let x = 0; x < lineList.length; x++)
+      {
+        //add the given line list to our line list
+        this.lineList.push( lineList[x] );
+      }
     }
   }
 
@@ -86,6 +95,8 @@ export class Repertoire
    */
   public addLine(repLine: RepertoireLine): void
   {
+    //make sure this rep is opened
+    this.open();
     console.log("Add line entered with: " + RepertoireLine.name)
     console.log(repLine.name + "added to Line list");
     this.lineList.push(repLine);
@@ -113,7 +124,7 @@ export class Repertoire
       line.lineBtn.on("click", { line:line }, function (event)
       {
         //update this lines game display
-        event.data.line.openLine();
+        event.data.line.open();
       });
     });
   }
@@ -168,12 +179,11 @@ export class Repertoire
     this.openLine = line;
     //set name label
     controller.setNameElement(line.name);
-    line.openLine();
+    line.open();
   }
 
   /**
-   * change the board to a new line
-   * @param line { RepertoireLine } line to switch to
+   * open this repertoire
    */
   public open(): void
   {
@@ -183,13 +193,10 @@ export class Repertoire
     controller.setNameElement(this.name!);
     controller.changeStudy(this);
 
-   //empty the doc game list
-   $("#gameList").replaceWith("<div id='gameList'> </div>");
+    controller.resetLists(); //reset the line and game list
 
-   //empty the doc line list
-   $("#lineList").replaceWith("<div id='lineList'> <div>")
-   console.log("line List length: " + this.lineList.length);
-   console.log("example game list: " + this.lineList)
+    console.log("line List length: " + this.lineList.length);
+    console.log("example game list: " + this.lineList)
 
    this.lineList.forEach((line) =>
    {
@@ -200,7 +207,7 @@ export class Repertoire
      line.lineBtn.on("click", { line:line }, function (event)
        {
          console.log("line btn clicked with name: " + line.name);
-         event.data.line.openLine();
+         event.data.line.open();
        });
    });
  }

@@ -50,7 +50,11 @@ export declare class RepertoireLine {
      */
     getGames(): ExampleGame[];
     /**
-     * display array gameList in html page
+     * open this line
      */
-    openLine(): void;
+    open(): void;
+    /**
+     * refresh array gameList in html page
+     */
+    refreshGameDisplay(): void;
 }

@@ -20,12 +20,20 @@
  * helper for creating new reps
  */
 export declare class EditRepertoireController {
+    /**
+     * html for dom manipulation
+     */
+    readonly addStudyEmbed = "<div id=\"centerPane\" class=\"centerPane\">\n    <div id=\"addStudyEmbed\">\n\n      <div id=\"URLInstructions\" style=\"margin: 15px auto;\" >\n          <h3 style=\"margin: 3px auto;\">The current chapter URL is what is needed. It can be found under at\n            lichess.org/studies/... here: </h3>\n          <br>\n          <img style=\"margin: 15px auto;\" src=\"./images/url_location.png\">\n      </div>\n\n      <div>\n        <span class=\"inputSpan\">\n\n          <h1>Line:</h1>\n          <!-- game/line switch -->\n          <label class=\"switch\">\n            <input type=\"checkbox\" id=\"lineToggle\">\n            <span class=\"slider\"></span>\n          </label>\n\n          <label for=\"studyTextField\">Lichess study chapter url: </label>\n          <input type=\"text\" id=\"studyTextField\" name=\"studyTextField\">\n          <button id=\"addURL\" style=\"width: 35px;\">Add</button>\n          <button id=\"done\" style=\"width: 35px;\"></button>\n        </span>\n      </div>\n    </div>\n  </div>";
+    readonly chessBoardEmbed = "<div id=\"centerPane\" class=\"centerPane\">\n\n    <div id=\"chessgroundContainer\" >\n      <!-- Main Chessboard -->\n      <img id=\"chessground\" style=\"object-fit: contain;\" src=\"images/thinking.jpg\" frameborder=0></img>\n    </div>\n  </div>";
+    readonly LinesToAddGameEmbed = "<div id=\"centerPane\" class=\"centerPane\">\n    <h2 style='margin: 15px 0; text-align: center;'>  Line options: </h2>\n  </div>";
+    readonly repsToAddLineToEmbed = "<div id=\"centerPane\" class=\"centerPane\">\n    <h2 style='margin: 15px 0; text-align: center;'> Repertoire options: </h2>\n  </div> ";
     constructor();
     /**
      *  edit a line, you can add games to a line, change the name, etc. Shows a popup
      * to accomplish this
      */
     editLine(): void;
+    createStudy(): void;
     resetLines(): void;
     resetGames(): void;
     saveToBrowser(): void;

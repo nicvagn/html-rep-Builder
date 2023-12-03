@@ -20,7 +20,6 @@
 import { Controller } from "./repertoire-controller.mjs";
 import { ExampleGame } from "./example-game";
 import { RepertoireLine } from "./repertoire-line";
-import { Repertoire } from "./repertoire";
 
 //import our styles, css in ts. We cooking with fire now
 import "../css/lichess-pgn-viewer.css";
@@ -29,9 +28,10 @@ import "../css/styles.css";
 
 // eslint-disable-next-line no-var
 export var controller:Controller;
-
+/*
 // test data
 let openRep:Repertoire;
+*/
 
 let game1: ExampleGame;
 let game2: ExampleGame;
@@ -55,9 +55,11 @@ function makeController()
     notMade = false;
     controller = new Controller();
 
-    //test();
+    test();
   }
 }
+
+
 function test()
 {
   ///----------------------- testing ---------------------------------
@@ -75,13 +77,7 @@ function test()
   line1.addGame(game2);
   line2.addGame(game2);
 
-  console.log("Open rep = " + openRep);
 
-
- /**
-  * populate the local repertoires
-  * (we are just testing ui rn)
-  */
 
   const capo = controller.newRepertoireSystem("Capo can not", "https://lichess.org/study/embed/PYEVM2pA/YCdbBWum");
   capo.addLine(line2);

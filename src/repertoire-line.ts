@@ -86,6 +86,8 @@ export class RepertoireLine
   {
     //add the game to our list
     this.exampleGames.push(game);
+
+    console.log("this =" + this.name + "this.exampleGames = " + this.exampleGames);
   }
 
   /**
@@ -98,18 +100,26 @@ export class RepertoireLine
   }
 
   /**
-   * display array gameList in html page
+   * open this line
    */
-  public openLine(): void
+  public open(): void
   {
-    console.log("openLine() entered");
+   //update name display
+   controller.setNameElement(this.name);
 
-    //update name display
-    controller.setNameElement(this.name);
+   console.log("================ line opened =====================");
 
-    console.log("================ line opened =====================");
+   controller.changeStudy(this); //change the main board to this study
 
-    controller.changeStudy(this); //change the main board to this study
+   this.refreshGameDisplay(); //refresh the game display to be current
+  }
+
+  /**
+   * refresh array gameList in html page
+   */
+  public refreshGameDisplay(): void
+  {
+    console.log("refreshGameDisplay() entered");
 
     //empty the doc game list
     $("#gameList").replaceWith("<div id='gameList'> </div>");
