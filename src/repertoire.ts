@@ -55,7 +55,6 @@ export class Repertoire
     //add the main line to the line list and set it as the open line
     const mainLine = new RepertoireLine("Main Line", studyURL);
     this.addLine(mainLine);
-    this.setOpenLine(mainLine);
 
     if (lineList != undefined)
     {
@@ -95,8 +94,6 @@ export class Repertoire
    */
   public addLine(repLine: RepertoireLine): void
   {
-    //make sure this rep is opened
-    this.open();
     console.log("Add line entered with: " + RepertoireLine.name)
     console.log(repLine.name + "added to Line list");
     this.lineList.push(repLine);
