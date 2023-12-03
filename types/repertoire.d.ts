@@ -25,7 +25,7 @@ import { RepertoireLine } from "./repertoire-line.js";
 export declare class Repertoire {
     name: string | null;
     lineList: RepertoireLine[];
-    openLine?: RepertoireLine;
+    openLine: RepertoireLine;
     studyUrl: string;
     nameLabel: HTMLElement;
     repertoireBtn: JQuery<HTMLElement>;

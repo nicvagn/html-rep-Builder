@@ -19,7 +19,7 @@
 
 //import { event } from "jquery";
 import { controller } from "./index.js";
-import { RepertoireLine } from "./repertoire-line.js";
+//import { RepertoireLine } from "./repertoire-line.js";
 
 /**
  * a chess repertoire example game. It's primary use is in a rep builder GUI, so it needs to have a visual

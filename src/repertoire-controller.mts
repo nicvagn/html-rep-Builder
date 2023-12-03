@@ -19,7 +19,6 @@
 
 //nrv stuff
 import { Repertoire } from "./repertoire.js";
-//import { SaveController } from "./save-controller.js";
 import { EditRepertoireController, chessBoardView } from "./edit-repertoire-controller.mjs";
 import { RepertoireLine } from "./repertoire-line.js";
 import { ExampleGame } from "./example-game.js";
@@ -80,6 +79,17 @@ export class Controller
   {
     //construct an edit controller
     this.editRepController = new EditRepertoireController();
+
+    //get any saved reps from storage and add them to local reps
+
+    const stringifiedReps = localStorage.getItem("repertoires");
+
+    //if there are saved reps, get them
+    if(stringifiedReps != null)
+    {
+      this.repList = JSON.parse(stringifiedReps);
+      console.log("Reps gotten from local storage " + this.repList)
+    }
 
     this.boardSpot = $( "#chessground" ); //the place to init the chessboard
     //add event handlers to top btn's
@@ -142,7 +152,7 @@ export class Controller
   }
 
   /**
-   * get currently open repertoire
+   * get currently open repertoire, throws error if no open rep
    * @returns the open rep
    */
   public getOpenRep(): Repertoire
@@ -151,6 +161,7 @@ export class Controller
     {
       return this.openRep;
     } else {
+      window.alert("No open repertoire to get.")
       throw Error("no open repertoire.");
     }
   }
@@ -169,70 +180,19 @@ export class Controller
     controller.changeStudy(rep);
 
     // clear the line and instructive games displays
-    this.resetLists();
-
     rep.open();
   }
 
   /**
-   * reset the line ang game lists
+   * reset the line ang game lists to the ones in the open repertoire
    */
-  public resetLists(): void
+  public updateLists(): void
   {
-    $( "#lineList" ).replaceWith("<div id='lineList'> </div>");
-    $( "#gameList" ).replaceWith("<div id='gameList'> </div>");
+    //refresh the game display
+    this.openRep?.getOpenLine().refreshGameDisplay();
+
+    this.openRep?.updateLineDisplay();
   }
-
-  /**
-   * make a new repertoire, promoting the user for it's name if not provided.
-   * and displaying all the controls for making one. And set it as the open rep
-   * and return it
-   * @returns a new rep
-   *
-  public newRepertoireUser(name?:string, save?: boolean): Repertoire
-  {
-
-    //empty the line display on the dom
-    this.resetLists();
-
-    console.log("newRepertoire entered with name: " + name)
-    //if there is an open rep
-    if (save && this.openRep != undefined)
-    {
-      if (confirm("Do you want to save the open repertoire to browser storage?"))
-      {
-        //save the rep with the key being it's name
-        if(this.openRep.name != undefined)
-        {
-          SaveController.saveRepToLocal(this.openRep.name, this.openRep);
-          console.log("Rep saved");
-        }
-        else
-        {
-          throw new Error("newRepertoire: this.openRep.name undefined");
-        }
-      }
-    }
-
-    if(name != undefined)
-    {
-      this.openRep = new Repertoire(name);
-      this.openRepName = name;
-      this.setNameElement(this.openRepName);
-    }
-    else
-    {
-      //make a new rep. will ask for a name
-      this.openRep = new Repertoire();
-    }
-
-    //add the rep to our list of reps
-    this.addRepertoire(this.openRep);
-
-    //show the editing stuff
-    this.editRepertoire();
-    return this.openRep;
-  }*/
 
   /**
    * set up the new repertoire controls and center pane
@@ -334,4 +294,55 @@ export class Controller
     $( "#chessgroundContainer" ).empty();
     $( "#chessgroundContainer" ).append( $( imbeddingStr ) );
   }
+
+  /**
+   * make a new repertoire, promoting the user for it's name if not provided.
+   * and displaying all the controls for making one. And set it as the open rep
+   * and return it
+   * @returns a new rep
+   *
+  public newRepertoireUser(name?:string, save?: boolean): Repertoire
+  {
+
+    //empty the line display on the dom
+    this.resetLists();
+
+    console.log("newRepertoire entered with name: " + name)
+    //if there is an open rep
+    if (save && this.openRep != undefined)
+    {
+      if (confirm("Do you want to save the open repertoire to browser storage?"))
+      {
+        //save the rep with the key being it's name
+        if(this.openRep.name != undefined)
+        {
+          SaveController.saveRepToLocal(this.openRep.name, this.openRep);
+          console.log("Rep saved");
+        }
+        else
+        {
+          throw new Error("newRepertoire: this.openRep.name undefined");
+        }
+      }
+    }
+
+    if(name != undefined)
+    {
+      this.openRep = new Repertoire(name);
+      this.openRepName = name;
+      this.setNameElement(this.openRepName);
+    }
+    else
+    {
+      //make a new rep. will ask for a name
+      this.openRep = new Repertoire();
+    }
+
+    //add the rep to our list of reps
+    this.addRepertoire(this.openRep);
+
+    //show the editing stuff
+    this.editRepertoire();
+    return this.openRep;
+  }*/
 }

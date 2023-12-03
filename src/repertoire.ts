@@ -31,7 +31,7 @@ export class Repertoire
 
   name: string | null = null; //the name = null is used to make sure name is set
   lineList: RepertoireLine[] = new Array<RepertoireLine>();  // array of lines in this rep
-  openLine?: RepertoireLine; //the currently open line, may not be defined
+  openLine!: RepertoireLine; //the currently open line
   studyUrl: string;
 
   nameLabel: HTMLElement = document.getElementById("#nameLabel")!; //for the current rep name
@@ -52,11 +52,11 @@ export class Repertoire
     this.name = name;
     this.createRepBtn();
 
-    //add the main line to the line list
-    const mainLine = new RepertoireLine("Main Line", studyURL)
+    //add the main line to the line list and set it as the open line
+    const mainLine = new RepertoireLine("Main Line", studyURL);
     this.addLine(mainLine);
+    this.setOpenLine(mainLine);
 
-    this.lineList.push()
     if (lineList != undefined)
     {
       for(let x = 0; x < lineList.length; x++)
@@ -193,7 +193,7 @@ export class Repertoire
     controller.setNameElement(this.name!);
     controller.changeStudy(this);
 
-    controller.resetLists(); //reset the line and game list
+    controller.updateLists(); //reset the line and game list
 
     console.log("line List length: " + this.lineList.length);
     console.log("example game list: " + this.lineList)

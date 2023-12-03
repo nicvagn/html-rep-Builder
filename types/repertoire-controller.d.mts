@@ -50,7 +50,7 @@ export declare class Controller {
      */
     setNameElement(name: string): void;
     /**
-     * get currently open repertoire
+     * get currently open repertoire, throws error if no open rep
      * @returns the open rep
      */
     getOpenRep(): Repertoire;
@@ -59,59 +59,9 @@ export declare class Controller {
      */
     openRepertoire(rep: Repertoire): void;
     /**
-     * reset the line ang game lists
+     * reset the line ang game lists to the ones in the open repertoire
      */
-    resetLists(): void;
-    /**
-     * make a new repertoire, promoting the user for it's name if not provided.
-     * and displaying all the controls for making one. And set it as the open rep
-     * and return it
-     * @returns a new rep
-     *
-    public newRepertoireUser(name?:string, save?: boolean): Repertoire
-    {
-  
-      //empty the line display on the dom
-      this.resetLists();
-  
-      console.log("newRepertoire entered with name: " + name)
-      //if there is an open rep
-      if (save && this.openRep != undefined)
-      {
-        if (confirm("Do you want to save the open repertoire to browser storage?"))
-        {
-          //save the rep with the key being it's name
-          if(this.openRep.name != undefined)
-          {
-            SaveController.saveRepToLocal(this.openRep.name, this.openRep);
-            console.log("Rep saved");
-          }
-          else
-          {
-            throw new Error("newRepertoire: this.openRep.name undefined");
-          }
-        }
-      }
-  
-      if(name != undefined)
-      {
-        this.openRep = new Repertoire(name);
-        this.openRepName = name;
-        this.setNameElement(this.openRepName);
-      }
-      else
-      {
-        //make a new rep. will ask for a name
-        this.openRep = new Repertoire();
-      }
-  
-      //add the rep to our list of reps
-      this.addRepertoire(this.openRep);
-  
-      //show the editing stuff
-      this.editRepertoire();
-      return this.openRep;
-    }*/
+    updateLists(): void;
     /**
      * set up the new repertoire controls and center pane
      */

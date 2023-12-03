@@ -29,10 +29,10 @@ export declare class EditRepertoireController {
     readonly repsToAddLineToEmbed = "<div id=\"centerPane\" class=\"centerPane\">\n    <h2 style='margin: 15px 0; text-align: center;'> Repertoire options: </h2>\n  </div> ";
     constructor();
     /**
-     *  edit a line, you can add games to a line, change the name, etc. Shows a popup
-     * to accomplish this
+     * get an JSON.stringify() of the info to save
+     * @returns the json stringified ready for storage locally
      */
-    editLine(): void;
+    private getSaveData;
     createStudy(): void;
     resetLines(): void;
     resetGames(): void;

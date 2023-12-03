@@ -23,7 +23,6 @@ import { controller } from "./index.js";
 import { RepertoireLine } from "./repertoire-line.js";
 
 //get the various NewRepertoire buttons
-const editLineBtn = document.getElementById("editLine");
 const resetLinesBtn = document.getElementById("resetLines");
 const resetGamesBtn = document.getElementById("resetGames");
 const saveBrowserBtn = document.getElementById("saveBrowser");
@@ -100,8 +99,6 @@ export class EditRepertoireController
   {
     console.log("EditRepertoireController constructed");
     //add listeners
-    editLineBtn?.addEventListener("click", buttonLnr);
-    createStudyBtn
     resetLinesBtn?.addEventListener("click", buttonLnr);
     resetGamesBtn?.addEventListener("click", buttonLnr);
     saveBrowserBtn?.addEventListener("click", buttonLnr);
@@ -113,17 +110,14 @@ export class EditRepertoireController
     editRepertoireController = this;
   }
 
-
   /**
-   *  edit a line, you can add games to a line, change the name, etc. Shows a popup
-   * to accomplish this
+   * get an JSON.stringify() of the info to save
+   * @returns the json stringified ready for storage locally
    */
-  public editLine():void
+  private getSaveData(): string
   {
-    //edit line
-    console.log("EditLine entered");
-    const windowFeatures = "popup";
-    window.open("https://lichess.org/study/PYEVM2pA/POney1Ru", "mozillaWindow", windowFeatures);
+    //todo this
+    return "";
   }
 
   public createStudy():void
@@ -145,6 +139,8 @@ export class EditRepertoireController
 
   public saveToBrowser():void
   {
+    console.log("save to browser entered.");
+    //localStorage.setItem("repertoires", this.getSaveData())
     //save to browser
   }
 }
@@ -155,13 +151,7 @@ export class EditRepertoireController
  */
 function buttonLnr(event: Event):void
 {
-  if(event.target == editLineBtn)
-  {
-    console.log("Edit Line btn was the target");
-
-    editRepertoireController.editLine();
-  }
-  else if(event.target == resetLinesBtn)
+  if(event.target == resetLinesBtn)
   {
     console.log("reset Lines btn");
     //reset lines
@@ -216,6 +206,8 @@ export function chessBoardView()
    */
 function hideEditRepertoire(): void
 {
+  console.log("edit rep controls should be hidden");
+  console.log(".editRep class stuff " + $( ".editRep" ));
   //hide the edit rep controls
   $( ".editRep" ).css("visibility", "hidden");
 }
@@ -259,13 +251,14 @@ function showLinesToAddGameTo(game: ExampleGame): void
       {
         const line = event.data.line;
         //when the button is pressed, ad the game to the chosen line
-        console.log("line chosen to add game to Line: " + line.name)
+        console.log("line chosen to add game to: " + line.name)
         line.addGame(game);
 
         //return to the chessboard view with that game opened
         chessBoardView();
 
         game.showGame(); //display the game on the main board
+        controller.updateLists();
       });
 
       $(btn).css(
@@ -282,7 +275,7 @@ function showLinesToAddGameTo(game: ExampleGame): void
 }
 
 /**
- * display a list of repButtons that you can add aline to
+ * display a list of repertoires repButtons that you can add line to
  * @param line the line to add to the chosen rep
  */
 function showRepsToAddLineTo(line: RepertoireLine): void
@@ -300,6 +293,22 @@ function showRepsToAddLineTo(line: RepertoireLine): void
       text: controller.repList[x].name,
       //add a lister to add the line to that rep
       click: controller.repList[x].addLine(line),
+    });
+
+    //attach event handler to the game. Event handler adds game to line
+    btn.on( "click", {  rep:controller.repList[x] },( event ) =>
+    {
+      const rep = event.data.rep;
+      //when the button is pressed, ad the line to the chosen rep
+      console.log("rep chosen to add line to: " + rep.name);
+      rep.addLine(line);
+
+      //return to the chessboard view with that game opened
+      chessBoardView();
+
+      controller.changeStudy(line); //display the game on the main board
+
+      controller.updateLists();
     });
 
     $(btn).css(
@@ -347,11 +356,13 @@ function setAddStudyListeners(): void
     const isLine = document.getElementById("lineToggle") as HTMLInputElement;
     console.log("isLine toggle val: " + isLine.value);
 
+    console.log(" isLine.value == 'on' " + isLine.value == "on");
+
 
     if(typeof studyURL === "string" && studyURL != null) // if url is typeof string
     {
       console.log("the given url: " + studyURL);
-      if(isLine.hasAttribute("checked")) //if is line is checked. Is a line
+      if(isLine.value == "on") //if is line is checked. Is a line
       {
         console.log("addURL clicked with a line url");
         $( "#URLInstructions" ).css("display", "none"); //hide instructions

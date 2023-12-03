@@ -60,7 +60,7 @@ function makeController()
 }
 
 
-function test()
+export function test()
 {
   ///----------------------- testing ---------------------------------
   //lines
@@ -88,7 +88,7 @@ function test()
   nope.addLine(line2);
   nope.addLine(line3);
 
-  controller.resetLists();
+
 
 
   //--------------------------- end ----------------------------------

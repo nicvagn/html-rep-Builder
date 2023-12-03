@@ -20,3 +20,4 @@ import { Controller } from "./repertoire-controller.mjs";
 import "../css/lichess-pgn-viewer.css";
 import "../css/styles.css";
 export declare var controller: Controller;
+export declare function test(): void;
