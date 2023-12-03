@@ -292,7 +292,6 @@ function showRepsToAddLineTo(line: RepertoireLine): void
     {
       text: controller.repList[x].name,
       //add a lister to add the line to that rep
-      click: controller.repList[x].addLine(line),
     });
 
     //attach event handler to the game. Event handler adds game to line
