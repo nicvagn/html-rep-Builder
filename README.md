@@ -6,4 +6,6 @@ run build.sh then the needed files will be in dist
 
 the dist dir is what you need.
 
+GPL V3 licensed
+
 
