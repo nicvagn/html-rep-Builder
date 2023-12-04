@@ -390,7 +390,8 @@ function setAddStudyListeners(): void
 
         //what line should we add this to?
         showLinesToAddGameTo(game);
-        //now, we wait for the uses to click a line
+        //now, we wait for the uses to click a line then update the lists
+        controller.updateLists();
       }
     }
   });
