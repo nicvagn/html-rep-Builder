@@ -24,14 +24,14 @@
  */
 export declare class ExampleGame {
     name: string;
-    studyUrl: string;
+    studyURL: string;
     gameBtn: JQuery<HTMLElement>;
     /**
      * construct a new repertoire game
      * @param {string} name the name of the game
      * @param {PGN} pgn the pgn of the game
      */
-    constructor(name: string, studyUrl: string);
+    constructor(name: string, studyURL: string);
     /**
      * change the main board to display this game
      * @param game the ExampleGame to show

@@ -24,7 +24,7 @@ import { RepertoireLine } from "./repertoire-line.js";
 import { ExampleGame } from "./example-game.js";
 import { error } from "jquery";
 
-import { controller } from "./index.js";
+import { controller, getEmbeddingStr } from "./index.js";
 
 const newRepertoirePane =
 `
@@ -62,14 +62,6 @@ export class Controller
   boardSpot?: JQuery<HTMLElement>;
   localReps: JQuery<HTMLElement> = $( "#localReps" );
 
-  //iframe properties for imbedded lichess studies
-  iframeHeight: string = 'height="600px"';
-  iframeWith: string = 'width="800px"';
-
-  //for embedding the iframe
-  iframeStart: string = ('<iframe id="chessground" ' + this.iframeWith + ' ' + this.iframeHeight + " src=");
-  // url fragment goes here
-  iframeEnd: string = '?theme=blue2&bg=light frameborder=0></iframe>';
   editRepController: EditRepertoireController; //class containing the functions to aid in editing the rep
 
   /**
@@ -274,10 +266,11 @@ export class Controller
   {
 
     console.log("changeStudy() entered, with study: " + chessThing.name +
-    "and study url: [" +  chessThing.studyUrl + "]" );
+    "and study url: [" +  chessThing.studyURL + "]" );
 
 
-    const imbeddingStr:string =  this.iframeStart + chessThing.studyUrl + this.iframeEnd;
+
+    const imbeddingStr = getEmbeddingStr(chessThing.studyURL)
 
     console.log("impeded str: " + imbeddingStr + " was the impeding str");
 

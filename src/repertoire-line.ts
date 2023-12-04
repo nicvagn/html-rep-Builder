@@ -30,7 +30,7 @@ import { controller } from "./index.js";
 export class RepertoireLine
 {
   name: string;
-  studyUrl: string;
+  studyURL: string;
 
   exampleGames: ExampleGame[] = new Array<ExampleGame>(); //example games for th current line
 
@@ -44,11 +44,11 @@ export class RepertoireLine
    * @param pgn the pgn of this line
    * @param exampleGames any example games of this line in action
    */
-  constructor(name: string, studyUrl: string, exampleGames?: ExampleGame[])
+  constructor(name: string, studyURL: string, exampleGames?: ExampleGame[])
   {
-    console.log("repertoire line with name: " + name + " + studyUrl: " + studyUrl + " constructed.")
+    console.log("repertoire line with name: " + name + " + studyURL: " + studyURL + " constructed.")
     this.name = name;
-    this.studyUrl = studyUrl;
+    this.studyURL = studyURL;
 
     //create the visual button for the gui
     this.lineBtn = $("<button/>", {

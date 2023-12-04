@@ -32,7 +32,7 @@ export class Repertoire
   name: string | null = null; //the name = null is used to make sure name is set
   lineList: RepertoireLine[] = new Array<RepertoireLine>();  // array of lines in this rep
   openLine!: RepertoireLine; //the currently open line
-  studyUrl: string;
+  studyURL: string;
   mainLine: RepertoireLine;
 
   nameLabel: HTMLElement = document.getElementById("#nameLabel")!; //for the current rep name
@@ -49,7 +49,7 @@ export class Repertoire
   {
     console.log("rep with name:" + name + ", Line List: " + lineList +" studyURL: " + studyURL + "made");
 
-    this.studyUrl = studyURL;
+    this.studyURL = studyURL;
     this.name = name;
     this.createRepBtn();
 

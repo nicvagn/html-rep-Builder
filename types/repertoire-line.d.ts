@@ -25,7 +25,7 @@ import { ExampleGame } from "./example-game.js";
  */
 export declare class RepertoireLine {
     name: string;
-    studyUrl: string;
+    studyURL: string;
     exampleGames: ExampleGame[];
     lineBtn: JQuery<HTMLElement>;
     /**
@@ -34,7 +34,7 @@ export declare class RepertoireLine {
      * @param pgn the pgn of this line
      * @param exampleGames any example games of this line in action
      */
-    constructor(name: string, studyUrl: string, exampleGames?: ExampleGame[]);
+    constructor(name: string, studyURL: string, exampleGames?: ExampleGame[]);
     /**
      * reset the gameList to empty
      */

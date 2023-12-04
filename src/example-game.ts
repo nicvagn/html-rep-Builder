@@ -29,7 +29,7 @@ export class ExampleGame
 {
 
   public name: string; //game name
-  studyUrl: string; //the lichess study url
+  studyURL: string; //the lichess study url
 
   public gameBtn: JQuery<HTMLElement>;
 
@@ -38,12 +38,12 @@ export class ExampleGame
    * @param {string} name the name of the game
    * @param {PGN} pgn the pgn of the game
    */
-  constructor(name: string, studyUrl: string)
+  constructor(name: string, studyURL: string)
   {
     console.log("Example Game constructed.")
     this.name = name;
 
-    this.studyUrl = studyUrl;
+    this.studyURL = studyURL;
 
     //create the visual button for the gui
     this.gameBtn =

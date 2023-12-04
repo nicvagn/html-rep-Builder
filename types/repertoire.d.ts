@@ -26,7 +26,7 @@ export declare class Repertoire {
     name: string | null;
     lineList: RepertoireLine[];
     openLine: RepertoireLine;
-    studyUrl: string;
+    studyURL: string;
     mainLine: RepertoireLine;
     nameLabel: HTMLElement;
     repertoireBtn: JQuery<HTMLElement>;

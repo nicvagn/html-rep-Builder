@@ -31,10 +31,6 @@ export declare class Controller {
     repList: Repertoire[];
     boardSpot?: JQuery<HTMLElement>;
     localReps: JQuery<HTMLElement>;
-    iframeHeight: string;
-    iframeWith: string;
-    iframeStart: string;
-    iframeEnd: string;
     editRepController: EditRepertoireController;
     /**
      * construct a new repertoire controller

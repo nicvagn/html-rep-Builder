@@ -33,6 +33,15 @@ export var controller:Controller;
 let openRep:Repertoire;
 */
 
+//iframe properties for imbedded lichess studies
+const iframeHeight: string = 'height="600px"';
+const iframeWith: string = 'width="800px"';
+
+//for embedding the iframe
+const iframeStart: string = ('<iframe id="chessground" ' + iframeWith + ' ' + iframeHeight + " src=");
+// url fragment goes here
+const iframeEnd: string = '?theme=blue2&bg=light frameborder=0></iframe>';
+
 let game1: ExampleGame;
 let game2: ExampleGame;
 let notMade = true;
@@ -59,18 +68,39 @@ function makeController()
   }
 }
 
+/**
+ * transform base lichessURL's into something we can embed
+ * @param URLInput the raw input url
+ * @returns embeddable URL string
+ */
+export function getEmbeddingStr(URLInput:string): string
+{
+    const liUrl = "https://lichess.org/study/embed/"
+
+    console.log("getEmbeddingStr: URL input: " + URLInput);
+
+    const embeddableURL = liUrl + URLInput.substring(26);
+
+    console.log("embeddable str: " + embeddableURL);
+
+    const embeddable:string =  iframeStart + embeddableURL + iframeEnd;
+    console.log("embeddable str: " + embeddable)
+    return embeddable;
+}
+
+
 
 export function test()
 {
   ///----------------------- testing ---------------------------------
   //lines
 
-  const line1: RepertoireLine = new RepertoireLine("Line 1", "https://lichess.org/study/embed/TAjrrpST/fLKrg6N9");
-  const line2: RepertoireLine = new RepertoireLine("Line 2", "https://lichess.org/study/embed/TAjrrpST/1WyhSAla");
-  const line3: RepertoireLine = new RepertoireLine("line 3", "https://lichess.org/study/embed/PYEVM2pA/POney1Ru")
+  const line1: RepertoireLine = new RepertoireLine("Line 1", "https://lichess.org/study/TAjrrpST/fLKrg6N9");
+  const line2: RepertoireLine = new RepertoireLine("Line 2", "https://lichess.org/study/TAjrrpST/1WyhSAla");
+  const line3: RepertoireLine = new RepertoireLine("line 3", "https://lichess.org/study/PYEVM2pA/POney1Ru")
 
-  game1 = new ExampleGame("First Game", "https://lichess.org/study/embed/PYEVM2pA/YCdbBWum");
-  game2 = new ExampleGame("second game", "https://lichess.org/study/embed/PYEVM2pA/POney1Ru")
+  game1 = new ExampleGame("First Game", "https://lichess.org/study/PYEVM2pA/YCdbBWum");
+  game2 = new ExampleGame("second game", "https://lichess.org/study/PYEVM2pA/POney1Ru")
 
   //add games to lines
   line1.addGame(game1);
@@ -79,11 +109,11 @@ export function test()
 
 
 
-  const capo = controller.newRepertoireSystem("Capo can not", "https://lichess.org/study/embed/PYEVM2pA/YCdbBWum");
+  const capo = controller.newRepertoireSystem("Capo can not", "https://lichess.org/study/PYEVM2pA/YCdbBWum");
   capo.addLine(line2);
   capo.addLine(line1);
 
-  const nope = controller.newRepertoireSystem("something, anything", "https://lichess.org/study/embed/PYEVM2pA/POney1Ru");
+  const nope = controller.newRepertoireSystem("something, anything", "https://lichess.org/study/PYEVM2pA/POney1Ru");
   nope.addLine(line1);
   nope.addLine(line2);
   nope.addLine(line3);

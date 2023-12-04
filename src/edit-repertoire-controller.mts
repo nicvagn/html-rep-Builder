@@ -212,7 +212,6 @@ function hideEditRepertoire(): void
   $( ".editRep" ).css("visibility", "hidden");
 }
 
-
 /**
  * show the lines you can add an example game to
  * @param game example game to add on click
@@ -348,14 +347,11 @@ function setAddStudyListeners(): void
       throw error("studyURLInput is null");
     }
 
-    //get the value from the studyURLInput
+    //get the embedding URL for given input
     const studyURL = studyURLInput.value;
-    console.log("Study URL: " + studyURL);
 
     const isLine = document.getElementById("lineToggle") as HTMLInputElement;
-    console.log("isLine toggle val: " + isLine.value);
-
-    console.log(" isLine.value == 'on': " + isLine.value == "on");
+    console.log("is the line toggle checked? (if it exists, true): " + isLine.checked);
 
 
     if(typeof studyURL === "string" && studyURL != null) // if url is typeof string
