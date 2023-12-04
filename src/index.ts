@@ -89,7 +89,15 @@ export function test()
   nope.addLine(line3);
 
 
-
+  showSplashScreen();
 
   //--------------------------- end ----------------------------------
+}
+
+function showSplashScreen()
+{
+  $( "#chessgroundContainer" ).replaceWith(`<div id="chessgroundContainer" >
+                           <!-- Main Chessboard -->
+                           <img id="chessground" style="object-fit: contain;" src="images/thinking.jpg" frameborder=0></img>
+                         </div>`);
 }

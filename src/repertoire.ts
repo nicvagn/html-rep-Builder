@@ -33,6 +33,7 @@ export class Repertoire
   lineList: RepertoireLine[] = new Array<RepertoireLine>();  // array of lines in this rep
   openLine!: RepertoireLine; //the currently open line
   studyUrl: string;
+  mainLine: RepertoireLine;
 
   nameLabel: HTMLElement = document.getElementById("#nameLabel")!; //for the current rep name
   //line button for display on the DOM
@@ -53,8 +54,8 @@ export class Repertoire
     this.createRepBtn();
 
     //add the main line to the line list and set it as the open line
-    const mainLine = new RepertoireLine("Main Line", studyURL);
-    this.addLine(mainLine);
+    this.mainLine = new RepertoireLine("Main Line", studyURL);
+    this.addLine(this.mainLine);
 
     if (lineList != undefined)
     {
@@ -163,7 +164,8 @@ export class Repertoire
     }
     else
     {
-      throw Error("no open line.");
+      //return the main line
+      return this.mainLine;
     }
   }
 
@@ -193,7 +195,7 @@ export class Repertoire
     controller.updateLists(); //reset the line and game list
 
     console.log("line List length: " + this.lineList.length);
-    console.log("example game list: " + this.lineList)
+    console.log("main line example game list: " + this.mainLine.exampleGames)
 
    this.lineList.forEach((line) =>
    {
@@ -207,5 +209,8 @@ export class Repertoire
          event.data.line.open();
        });
    });
+
+   //open the main lines example games
+   this.mainLine.refreshGameDisplay();
  }
 }

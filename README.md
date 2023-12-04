@@ -1,13 +1,9 @@
-you can run: 
+A repertoire builder. Made for the Saskatchewan horizon chess club by nrv.
 
-```
-npm run build
-```
+Leans heavily on lichess studies.
 
-or
+run build.sh then the needed files will be in dist
 
-```
-yarn build
-```
+the dist dir is what you need.
 
-to bundle your application, the dist dir is what you need.
+

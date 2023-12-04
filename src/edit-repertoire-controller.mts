@@ -188,7 +188,7 @@ function buttonLnr(event: Event):void
 /**
  * reset back to chessboard view
  */
-export function chessBoardView()
+export function chessBoardView(): void
 {
   $( ".chessBoardView" ).css("visibility", "visible");
   //reset the center pane
@@ -355,13 +355,13 @@ function setAddStudyListeners(): void
     const isLine = document.getElementById("lineToggle") as HTMLInputElement;
     console.log("isLine toggle val: " + isLine.value);
 
-    console.log(" isLine.value == 'on' " + isLine.value == "on");
+    console.log(" isLine.value == 'on': " + isLine.value == "on");
 
 
     if(typeof studyURL === "string" && studyURL != null) // if url is typeof string
     {
       console.log("the given url: " + studyURL);
-      if(isLine.value == "on") //if is line is checked. Is a line
+      if(isLine.checked) //if is line is checked. Is a line
       {
         console.log("addURL clicked with a line url");
         $( "#URLInstructions" ).css("display", "none"); //hide instructions
