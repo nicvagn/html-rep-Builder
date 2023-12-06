@@ -18,31 +18,10 @@
  *********************************************************************************/
 import { Repertoire } from "./repertoire.js";
 /**
- * a helper class full of static methods to aid in saving to local storage
+ * retrieve from local storage
+ * @param {string} key the key of the item to be retrieve
+ * @returns the retrieve item in json
  */
-export declare class SaveController {
-    /**
-     * Save a Repertoire to Local Storage
-     * @param { string } key the key to put this under in local storage
-     * @param { Repertoire } rep the repertoire to save to local storage
-     */
-    static saveRepToLocal(key: string, rep: Repertoire): void;
-    /**
-     * get a repertoire from local storage
-     * @param {string} repKey the name of the rep
-     * @returns {Repertoire} the repertoire you opened as json
-     */
-    static getRepertoireFromLocal(repKey: string): Repertoire;
-    /**
-     * retrieve from local storage
-     * @param {string} key the key of the item to be retrieve
-     * @returns the retrieve item in json
-     */
-    private static getFromLocal;
-    /**
-     * put a object in local storage. We will turn it into JSON and store it
-     * @param key the key to put that object's json under in local. The key is used to retrieve the item
-     * @param object a javascript object to be put into storage
-     */
-    private static putLocal;
-}
+export declare function getFromLocal(key: string): void;
+export declare function saveRep(rep: Repertoire): void;
+export declare function save(): void;

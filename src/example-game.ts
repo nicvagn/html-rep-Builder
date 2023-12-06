@@ -21,6 +21,13 @@
 import { controller } from "./index.js";
 //import { RepertoireLine } from "./repertoire-line.js";
 
+// A representation of the example game for JSON
+interface gameJSON
+{
+  name: string;
+  studyURL: string;
+}
+
 /**
  * a chess repertoire example game. It's primary use is in a rep builder GUI, so it needs to have a visual
  * component :. extends button
@@ -78,4 +85,23 @@ export class ExampleGame
     }
   }
 
+  /**
+   * take a json example game, and make a real one
+   * @param json the json representation of the example game
+   * @returns the made ExampleGame
+   */
+  public static fromJSON(json: gameJSON): ExampleGame
+  {
+    return new ExampleGame(json.name, json.studyURL);
+  }
+
+  /**
+   * game json example game for saving
+   */
+  public toJSON(): gameJSON
+  {
+    return Object.assign({}, this, {
+      gameBtn: null
+    });
+  }
 }

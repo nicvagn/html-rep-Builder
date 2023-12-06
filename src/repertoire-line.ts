@@ -21,7 +21,12 @@
 import { ExampleGame } from "./example-game.js";
 import { controller } from "./index.js";
 
-
+interface lineJSON
+{
+  name: string;
+  studyURL: string;
+  exampleGames: ExampleGame[];
+}
 
 /**
  * a chess repertoire line. It's primary use is in a rep builder GUI, so it needs to have a visual
@@ -36,7 +41,7 @@ export class RepertoireLine
 
 
   //line sutton for display on the DOM
-  public lineBtn: JQuery<HTMLElement>;
+  public lineBtn!: JQuery<HTMLElement>;
 
   /**
    * construct a new repertoire line
@@ -50,19 +55,53 @@ export class RepertoireLine
     this.name = name;
     this.studyURL = studyURL;
 
-    //create the visual button for the gui
-    this.lineBtn = $("<button/>", {
-      text: name,
-      id: name,
-      line:this
-    });
-    this.lineBtn.addClass("repLine");
+    this.createLineButton();
 
     if (exampleGames != undefined) {
       //if there is a value for exampleGames
       this.exampleGames = exampleGames;
     }
   }
+
+  private createLineButton(): void
+  {
+    //create the visual button for the gui
+    this.lineBtn = $("<button/>", {
+      text: this.name,
+      id: this.name,
+      line:this
+    });
+    this.lineBtn.addClass("repLine");
+  }
+
+  /**
+   * convert this line to JSON
+   */
+  public toJSON(): lineJSON
+  {
+    // toJSON is automatically used by JSON.stringify
+    const lineJSON = Object.assign({}, this, {
+      lineBtn: null,  //do not worry about saving the line btn, it can be built again
+    });
+
+    return lineJSON;
+  }
+
+  /**
+   * convert a line line from JSON to object
+   */
+  static fromJSON(json: lineJSON )
+  {
+    if(json.exampleGames != undefined)
+    {
+      return new RepertoireLine(json.name, json.studyURL, json.exampleGames);
+    }
+    else
+    {
+      return new RepertoireLine(json.name, json.studyURL)
+    }
+  }
+
 
   /**
    * reset the gameList to empty

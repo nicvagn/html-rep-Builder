@@ -19,14 +19,19 @@
 /// <reference types="jquery" />
 /// <reference types="jquery" />
 import { RepertoireLine } from "./repertoire-line.js";
+interface repJSON {
+    name: string;
+    studyURL: string;
+    lineList: RepertoireLine[];
+}
 /**
  * A chess repertoire
  */
 export declare class Repertoire {
-    name: string | null;
+    name: string;
+    studyURL: string;
     lineList: RepertoireLine[];
     openLine: RepertoireLine;
-    studyURL: string;
     mainLine: RepertoireLine;
     nameLabel: HTMLElement;
     repertoireBtn: JQuery<HTMLElement>;
@@ -37,6 +42,17 @@ export declare class Repertoire {
      * @param lineList list of lines in this rep
      */
     constructor(name: string, studyURL: string, lineList?: RepertoireLine[]);
+    /**
+     * prepare repertoire for saving as json
+     * @returns JSON of this object for saving
+     */
+    toJSON(): repJSON;
+    /**
+     * take a json rep, and create a new rep Object
+     * @param json of the repertoire
+     * @returns the new created rep with all the old reps data
+     */
+    static fromJSON(json: repJSON): Repertoire;
     /**
      * create the rep button and add it to the DOM
      * with a lister attached the rep must have a name
@@ -74,3 +90,4 @@ export declare class Repertoire {
      */
     open(): void;
 }
+export {};

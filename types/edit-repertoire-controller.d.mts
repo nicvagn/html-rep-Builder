@@ -28,15 +28,9 @@ export declare class EditRepertoireController {
     readonly LinesToAddGameEmbed = "<div id=\"centerPane\" class=\"centerPane\">\n    <h2 style='margin: 15px 0; text-align: center;'>  Line options: </h2>\n  </div>";
     readonly repsToAddLineToEmbed = "<div id=\"centerPane\" class=\"centerPane\">\n    <h2 style='margin: 15px 0; text-align: center;'> Repertoire options: </h2>\n  </div> ";
     constructor();
-    /**
-     * get an JSON.stringify() of the info to save
-     * @returns the json stringified ready for storage locally
-     */
-    private getSaveData;
     createStudy(): void;
     resetLines(): void;
     resetGames(): void;
-    saveToBrowser(): void;
 }
 /**
  * reset back to chessboard view

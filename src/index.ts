@@ -109,11 +109,11 @@ export function test()
 
 
 
-  const capo = controller.newRepertoireSystem("Capo can not", "https://lichess.org/study/PYEVM2pA/YCdbBWum");
+  const capo = controller.newRepertoire("Capo can not", "https://lichess.org/study/PYEVM2pA/YCdbBWum");
   capo.addLine(line2);
   capo.addLine(line1);
 
-  const nope = controller.newRepertoireSystem("something, anything", "https://lichess.org/study/PYEVM2pA/POney1Ru");
+  const nope = controller.newRepertoire("something, anything", "https://lichess.org/study/PYEVM2pA/POney1Ru");
   nope.addLine(line1);
   nope.addLine(line2);
   nope.addLine(line3);

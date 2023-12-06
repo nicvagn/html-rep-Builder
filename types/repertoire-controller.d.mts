@@ -67,7 +67,7 @@ export declare class Controller {
      * or clear the lines
      * @returns a new rep
      */
-    newRepertoireSystem(name: string, studyURL: string): Repertoire;
+    newRepertoire(name: string, studyURL: string): Repertoire;
     /**
      * display all the controls for editing a rep
      */
@@ -76,4 +76,9 @@ export declare class Controller {
      * change the study on the main board to a provided chess thing's study
      */
     changeStudy(chessThing: RepertoireLine | ExampleGame | Repertoire): void;
+    /**
+     * get an JSON.stringify() of the info to save
+     * @returns the json stringified ready for storage locally
+     */
+    private getSaveData;
 }

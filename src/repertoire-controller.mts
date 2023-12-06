@@ -20,6 +20,7 @@
 //nrv stuff
 import { Repertoire } from "./repertoire.js";
 import { EditRepertoireController, chessBoardView } from "./edit-repertoire-controller.mjs";
+import { getFromLocal, save} from "./save-controller.js";
 import { RepertoireLine } from "./repertoire-line.js";
 import { ExampleGame } from "./example-game.js";
 import { error } from "jquery";
@@ -63,18 +64,17 @@ export class Controller
   localReps: JQuery<HTMLElement> = $( "#localReps" );
 
   editRepController: EditRepertoireController; //class containing the functions to aid in editing the rep
-
   /**
    * construct a new repertoire controller
    */
   constructor()
   {
-    //construct an edit controller
+    //construct controllers
     this.editRepController = new EditRepertoireController();
 
     //get any saved reps from storage and add them to local reps
 
-    const stringifiedReps = localStorage.getItem("repertoires");
+    const stringifiedReps = getFromLocal("repertoires");
 
     //if there are saved reps, get them
     if(stringifiedReps != null)
@@ -87,18 +87,20 @@ export class Controller
     //add event handlers to top btn's
     $("#newRepTop").on("click", { controller: this }, function (event)
     {
-      console.log("newRepTop clicked");
-
       //make new rep
       event.data.controller.showNewRepPane();
     });
 
     $("#editRepTop").on("click", { controller: this }, function (event)
     {
-      console.log("top btn edit " + event);
-
       //show all the controls for editing
       event.data.controller.editRepertoire();
+    });
+
+    $( "#saveBrowser" ).on("click", () =>
+    {
+      console.log("save to browser initialized.");
+      save();
     });
 
     if (this.boardSpot == null)
@@ -212,7 +214,7 @@ export class Controller
       chessBoardView();
       if(name != null && url != null)
       {
-        const newRep = this.newRepertoireSystem(name, url);
+        const newRep = this.newRepertoire(name, url);
         //open the new rep
         this.openRepertoire(newRep);
         console.log("created a new rep with name: " + newRep.name);
@@ -230,10 +232,10 @@ export class Controller
    * or clear the lines
    * @returns a new rep
    */
-  public newRepertoireSystem(name:string, studyURL: string): Repertoire
+  public newRepertoire(name:string, studyURL: string): Repertoire
   {
 
-    console.log("newRepertoireSystem entered with name: " + name);
+    console.log("newRepertoire entered with name: " + name);
     const newRep = new Repertoire(name, studyURL);
 
     this.addRepertoire(newRep);
@@ -289,53 +291,13 @@ export class Controller
   }
 
   /**
-   * make a new repertoire, promoting the user for it's name if not provided.
-   * and displaying all the controls for making one. And set it as the open rep
-   * and return it
-   * @returns a new rep
-   *
-  public newRepertoireUser(name?:string, save?: boolean): Repertoire
-  {
-
-    //empty the line display on the dom
-    this.resetLists();
-
-    console.log("newRepertoire entered with name: " + name)
-    //if there is an open rep
-    if (save && this.openRep != undefined)
+   * get an JSON.stringify() of the info to save
+   * @returns the json stringified ready for storage locally
+   */
+    private getSaveData(): string
     {
-      if (confirm("Do you want to save the open repertoire to browser storage?"))
-      {
-        //save the rep with the key being it's name
-        if(this.openRep.name != undefined)
-        {
-          SaveController.saveRepToLocal(this.openRep.name, this.openRep);
-          console.log("Rep saved");
-        }
-        else
-        {
-          throw new Error("newRepertoire: this.openRep.name undefined");
-        }
-      }
+      //todo this
+      return "";
     }
 
-    if(name != undefined)
-    {
-      this.openRep = new Repertoire(name);
-      this.openRepName = name;
-      this.setNameElement(this.openRepName);
-    }
-    else
-    {
-      //make a new rep. will ask for a name
-      this.openRep = new Repertoire();
-    }
-
-    //add the rep to our list of reps
-    this.addRepertoire(this.openRep);
-
-    //show the editing stuff
-    this.editRepertoire();
-    return this.openRep;
-  }*/
 }

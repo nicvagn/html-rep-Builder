@@ -25,7 +25,6 @@ import { RepertoireLine } from "./repertoire-line.js";
 //get the various NewRepertoire buttons
 const resetLinesBtn = document.getElementById("resetLines");
 const resetGamesBtn = document.getElementById("resetGames");
-const saveBrowserBtn = document.getElementById("saveBrowser");
 const addStudyBtn = document.getElementById("addStudy");
 const createStudyBtn = document.getElementById("createStudy");
 
@@ -101,7 +100,6 @@ export class EditRepertoireController
     //add listeners
     resetLinesBtn?.addEventListener("click", buttonLnr);
     resetGamesBtn?.addEventListener("click", buttonLnr);
-    saveBrowserBtn?.addEventListener("click", buttonLnr);
     addStudyBtn?.addEventListener("click", buttonLnr)
     createStudyBtn?.addEventListener("click", buttonLnr);
 
@@ -110,15 +108,7 @@ export class EditRepertoireController
     editRepertoireController = this;
   }
 
-  /**
-   * get an JSON.stringify() of the info to save
-   * @returns the json stringified ready for storage locally
-   */
-  private getSaveData(): string
-  {
-    //todo this
-    return "";
-  }
+
 
   public createStudy():void
   {
@@ -135,13 +125,6 @@ export class EditRepertoireController
   public resetGames():void
   {
     //reset games
-  }
-
-  public saveToBrowser():void
-  {
-    console.log("save to browser entered.");
-    //localStorage.setItem("repertoires", this.getSaveData())
-    //save to browser
   }
 }
 
@@ -162,12 +145,6 @@ function buttonLnr(event: Event):void
     console.log("reset games btn");
     //reset games
     editRepertoireController.resetGames();
-  }
-  else if(event.target == saveBrowserBtn)
-  {
-    console.log("save browser btn");
-    //save to browser
-    editRepertoireController.saveToBrowser();
   }
   else if(event.target == addStudyBtn)
   {

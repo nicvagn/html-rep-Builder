@@ -19,9 +19,15 @@
 
 import { RepertoireLine } from "./repertoire-line.js";
 import { controller } from "./index.js";
-//import { SaveController } from "./save-controller.js";
+import { saveRep } from "./save-controller.js";
 
-
+//a representation of a rep that can be stored as json
+interface repJSON
+{
+  name: string;
+  studyURL: string;
+  lineList: RepertoireLine[];
+}
 
 /**
  * A chess repertoire
@@ -29,10 +35,10 @@ import { controller } from "./index.js";
 export class Repertoire
 {
 
-  name: string | null = null; //the name = null is used to make sure name is set
+  name: string;
+  studyURL: string;
   lineList: RepertoireLine[] = new Array<RepertoireLine>();  // array of lines in this rep
   openLine!: RepertoireLine; //the currently open line
-  studyURL: string;
   mainLine: RepertoireLine;
 
   nameLabel: HTMLElement = document.getElementById("#nameLabel")!; //for the current rep name
@@ -65,6 +71,28 @@ export class Repertoire
         this.lineList.push( lineList[x] );
       }
     }
+  }
+
+  /**
+   * prepare repertoire for saving as json
+   * @returns JSON of this object for saving
+   */
+  public toJSON(): repJSON
+  {
+    return Object.assign({}, this, {
+      nameLabel: null,
+      repertoireBtn: null
+    });
+  }
+
+  /**
+   * take a json rep, and create a new rep Object
+   * @param json of the repertoire
+   * @returns the new created rep with all the old reps data
+   */
+  public static fromJSON(json: repJSON): Repertoire
+  {
+    return new Repertoire(json.name, json.studyURL, json.lineList);
   }
 
   /**
@@ -147,8 +175,8 @@ export class Repertoire
    */
   public saveRep(): void
   {
-    //SaveController.getRepertoireFromLocal(this.name);
     console.log("save Rep Pressed");
+    saveRep(this);
   }
 
 

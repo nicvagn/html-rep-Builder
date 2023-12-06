@@ -18,6 +18,10 @@
  *********************************************************************************/
 /// <reference types="jquery" />
 /// <reference types="jquery" />
+interface gameJSON {
+    name: string;
+    studyURL: string;
+}
 /**
  * a chess repertoire example game. It's primary use is in a rep builder GUI, so it needs to have a visual
  * component :. extends button
@@ -37,4 +41,15 @@ export declare class ExampleGame {
      * @param game the ExampleGame to show
      */
     showGame(game?: ExampleGame): void;
+    /**
+     * take a json example game, and make a real one
+     * @param json the json representation of the example game
+     * @returns the made ExampleGame
+     */
+    static fromJSON(json: gameJSON): ExampleGame;
+    /**
+     * game json example game for saving
+     */
+    toJSON(): gameJSON;
 }
+export {};

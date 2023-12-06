@@ -17,108 +17,100 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************************/
 
-
+import { error } from "jquery";
+//import { controller } from "./index.js";
 import { Repertoire } from "./repertoire.js";
 
-/**
- * a helper class full of static methods to aid in saving to local storage
- */
-export class SaveController
+
+
+
+function putLocal(key: string, object: unknown): void
 {
+  console.log("putLocal() entered. Key: " + key + " object: " + object);
 
-  /**
-   * Save a Repertoire to Local Storage
-   * @param { string } key the key to put this under in local storage
-   * @param { Repertoire } rep the repertoire to save to local storage
-   */
-  public static saveRepToLocal(key: string, rep: Repertoire): void
-  {
-    this.putLocal(key, rep);
-  }
+  //create a stringified version of the object
+  const strObject = JSON.stringify(object);
 
-  /**
-   * get a repertoire from local storage
-   * @param {string} repKey the name of the rep
-   * @returns {Repertoire} the repertoire you opened as json
-   */
-  public static getRepertoireFromLocal(repKey: string): Repertoire
-  {
-    const obj = SaveController.getFromLocal(repKey);
-
-    //check to make sure what we have is a rep
-    if (obj instanceof Repertoire)
-    {
-      return obj;
-    }
-    else
-    {
-      throw Error("Returned obj not a repertoire");
-    }
-  }
-
-  /**
-   * retrieve from local storage
-   * @param {string} key the key of the item to be retrieve
-   * @returns the retrieve item in json
-   */
-  private static getFromLocal(key: string): object
-  {
-    //try to grab element tied to the key
-
-    const grab: string | null = localStorage.getItem(key);
-
-    if (grab != null) {
-      return JSON.parse(grab);
-    } else {
-      throw Error("Retried obj null");
-    }
-  }
-
-  /**
-   * put a object in local storage. We will turn it into JSON and store it
-   * @param key the key to put that object's json under in local. The key is used to retrieve the item
-   * @param object a javascript object to be put into storage
-   */
-  private static putLocal(key: string, object: object)
-  {
-    console.log("putLocal() entered. Key: " + key + "object: " + object);
-
-    //create a stringified version of the object
-    const strObject = JSON.stringify(object);
-
-    console.log("strObject: " + strObject);
-    //localStorage.setItem(key, strObject);
-  }
-
-  /** We will maybe work with local storage later
-   * For generating a text file URL containing given text
-   * @param {string} txt the text to use when creating the file URL
-   * @returns created URL
-   *
-  private  generateTextFileUrl(txt: string) {
-
-      let fileData = new Blob([txt], {type: 'text/plain'});
-      // If a file has been previously generated, revoke the existing URL
-      if (textFileUrl !== null) {
-          window.URL.revokeObjectURL(textFile);
-      }
-      textFileUrl = window.URL.createObjectURL(fileData);
-      // Returns a reference to the global variable holding the URL
-      return textFileUrl;
-  }
-
-
-  /**
-   * create the download link for rep
-   * Generate the file download URL and assign it to the link
-   *
-  private showDownload(){
-
-    let downloadLink = document.getElementById('downloadLink');
-    downloadLink!.style.visibility = "visible";
-    window.addEventListener("load", function(){
-      downloadLink.HR = generateTextFileUrl(openRep);
-    });
-  }
-  */
+  console.log("strObject: " + strObject);
+  localStorage.setItem(key, strObject);
 }
+
+
+/**
+ * retrieve from local storage
+ * @param {string} key the key of the item to be retrieve
+ * @returns the retrieve item in json
+ */
+export function getFromLocal(key: string): void
+{
+  //try to grab element tied to the key
+  const grab = localStorage.getItem(key);
+
+  if (grab != null) {
+    return JSON.parse(grab);
+  } else {
+    throw Error("Retried obj null. Do we have the right key? key used: " + key);
+  }
+}
+
+export function saveRep(rep: Repertoire): void
+{
+  let key;
+  if(rep == null)
+  {
+    throw error("given repertoire was null or undefined.");
+  }
+  else
+  {
+    key = rep.name;
+    if(key == null)
+    {
+      throw error("rep.name is null. We can not save a rep with no name");
+    }
+  }
+  const flatRep =
+  {
+    "name": rep.name,
+    "lines": rep.lineList
+  }
+
+  putLocal(key, flatRep)
+}
+export function save(): void
+{
+  console.log("save does nothing");
+}
+
+/*
+
+type RepMap = {
+  [id: string]: string;
+}
+
+function flattenRep(rep: Repertoire)
+{
+  //todo this
+  return {
+  "name": rep.name,
+  "main-line": rep.mainLine
+  ""
+}
+*
+export function save(): void
+{
+  const repList = controller.repList;
+  for(let x = 0; x < repList.length; x++)
+  {
+    saveRep(repList[x])
+  }
+
+  const repMap: RepMap = {};
+  for( let x = 0; x < repList.length; x++)
+  {
+    repMap[repList[x].name] = flattenRep(repList[x]);
+  }
+  //save the repertoires list
+  putLocal("repertoires", )
+}
+
+*/

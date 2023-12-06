@@ -19,6 +19,11 @@
 /// <reference types="jquery" />
 /// <reference types="jquery" />
 import { ExampleGame } from "./example-game.js";
+interface lineJSON {
+    name: string;
+    studyURL: string;
+    exampleGames: ExampleGame[];
+}
 /**
  * a chess repertoire line. It's primary use is in a rep builder GUI, so it needs to have a visual
  * component
@@ -35,6 +40,15 @@ export declare class RepertoireLine {
      * @param exampleGames any example games of this line in action
      */
     constructor(name: string, studyURL: string, exampleGames?: ExampleGame[]);
+    private createLineButton;
+    /**
+     * convert this line to JSON
+     */
+    toJSON(): lineJSON;
+    /**
+     * convert a line line from JSON to object
+     */
+    static fromJSON(json: lineJSON): RepertoireLine;
     /**
      * reset the gameList to empty
      */
@@ -58,3 +72,4 @@ export declare class RepertoireLine {
      */
     refreshGameDisplay(): void;
 }
+export {};
