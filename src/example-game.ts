@@ -19,14 +19,9 @@
 
 //import { event } from "jquery";
 import { controller } from "./index.js";
+import { gameJSON } from "./save-controller.js"
 //import { RepertoireLine } from "./repertoire-line.js";
 
-// A representation of the example game for JSON
-interface gameJSON
-{
-  name: string;
-  studyURL: string;
-}
 
 /**
  * a chess repertoire example game. It's primary use is in a rep builder GUI, so it needs to have a visual

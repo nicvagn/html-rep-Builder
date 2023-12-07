@@ -17,9 +17,16 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************************/
 import { Controller } from "./repertoire-controller.mjs";
+/**
+ * constants used for setting and getting from local
+ */
+export declare const GAMEs = "Example-Games";
+export declare const LINEs = "Repertoire-Lines";
+export declare const REPs = "Repertoires";
 import "../css/lichess-pgn-viewer.css";
 import "../css/styles.css";
 export declare var controller: Controller;
+export declare const mainKey = "repBuilderSave";
 /**
  * transform base lichessURL's into something we can embed
  * @param URLInput the raw input url

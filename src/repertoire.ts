@@ -99,7 +99,7 @@ export class Repertoire
    * create the rep button and add it to the DOM
    * with a lister attached the rep must have a name
    */
-  private createRepBtn()
+  private createRepBtn(): void
   {
     //create the visual button for the gui
     this.repertoireBtn = $("<button/>", {
@@ -216,11 +216,13 @@ export class Repertoire
   {
     console.log("open entered on rep: " + this.name);
 
+    //set this an open rep
+    controller.openRep = this;
     //change the displays
     controller.setNameElement(this.name!);
     controller.changeStudy(this);
 
-    controller.updateLists(); //reset the line and game list
+    controller.updateOpenRepLists(); //reset the line and game list
 
     console.log("line List length: " + this.lineList.length);
     console.log("main line example game list: " + this.mainLine.exampleGames)
@@ -240,5 +242,14 @@ export class Repertoire
 
    //open the main lines example games
    this.mainLine.refreshGameDisplay();
+ }
+
+ /**
+  * get the rep button for this repertoire
+  * @returns the RepButton element
+  */
+ public getRepButton(): JQuery<HTMLElement>
+ {
+  return this.repertoireBtn;
  }
 }

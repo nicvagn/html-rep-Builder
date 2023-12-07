@@ -17,11 +17,39 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************************/
 import { Repertoire } from "./repertoire.js";
+import { Controller } from "./repertoire-controller.mjs";
+import { ExampleGame } from "./example-game.js";
+export interface gameJSON {
+    name: string;
+    studyURL: string;
+}
+export interface lineJSON {
+    name: string;
+    studyURL: string;
+}
 /**
  * retrieve from local storage
  * @param {string} key the key of the item to be retrieve
- * @returns the retrieve item in json
+ * @returns the retrieve item as JSON, or null on error
  */
-export declare function getFromLocal(key: string): void;
+export declare function getFromLocal(key: string): gameJSON | null;
 export declare function saveRep(rep: Repertoire): void;
+/**
+ * save a chess game. The key will be it's name
+ */
+export declare function saveGame(game: ExampleGame): void;
+/**
+ * load all the pertinent details from local storage to load an ExampleGame
+ * returns null if nothing is found or data is not complete
+ * @param key the key the game is stored under
+ */
+export declare function loadGame(key: string): ExampleGame | null;
+/**
+ * save everything so the state of the controller can be reconstructed from the save
+ */
 export declare function save(): void;
+/**
+ * load save into a controller
+ * @param controller the controller to load the save into
+ */
+export declare function load(controller: Controller): void;

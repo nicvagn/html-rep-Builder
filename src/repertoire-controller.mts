@@ -20,7 +20,6 @@
 //nrv stuff
 import { Repertoire } from "./repertoire.js";
 import { EditRepertoireController, chessBoardView } from "./edit-repertoire-controller.mjs";
-import { getFromLocal, save} from "./save-controller.js";
 import { RepertoireLine } from "./repertoire-line.js";
 import { ExampleGame } from "./example-game.js";
 import { error } from "jquery";
@@ -67,21 +66,16 @@ export class Controller
   /**
    * construct a new repertoire controller
    */
-  constructor()
+  constructor(repList?: Repertoire[])
   {
+    //allow for creation of a controller with existing reps
+    if(repList)
+    {
+      this.repList = repList;
+    }
+
     //construct controllers
     this.editRepController = new EditRepertoireController();
-
-    //get any saved reps from storage and add them to local reps
-
-    const stringifiedReps = getFromLocal("repertoires");
-
-    //if there are saved reps, get them
-    if(stringifiedReps != null)
-    {
-      this.repList = JSON.parse(stringifiedReps);
-      console.log("Reps gotten from local storage " + this.repList)
-    }
 
     this.boardSpot = $( "#chessground" ); //the place to init the chessboard
     //add event handlers to top btn's
@@ -100,7 +94,7 @@ export class Controller
     $( "#saveBrowser" ).on("click", () =>
     {
       console.log("save to browser initialized.");
-      save();
+      //save(); //save to local storage
     });
 
     if (this.boardSpot == null)
@@ -180,12 +174,25 @@ export class Controller
   /**
    * reset the line ang game lists to the ones in the open repertoire
    */
-  public updateLists(): void
+  public updateOpenRepLists(): void
   {
     //refresh the game display
     this.openRep?.getOpenLine().refreshGameDisplay();
 
     this.openRep?.updateLineDisplay();
+  }
+
+  /**
+   * update list of repertoires we can access
+   */
+  public updateRepList(): void
+  {
+    for(let x = 0; x < this.repList.length; x++)
+    {
+      const rep = this.repList[x];
+      this.localReps.append(rep.repertoireBtn);
+    }
+
   }
 
   /**
@@ -240,7 +247,6 @@ export class Controller
 
     this.addRepertoire(newRep);
 
-
     return newRep;
   }
 
@@ -289,15 +295,4 @@ export class Controller
     $( "#chessgroundContainer" ).empty();
     $( "#chessgroundContainer" ).append( $( imbeddingStr ) );
   }
-
-  /**
-   * get an JSON.stringify() of the info to save
-   * @returns the json stringified ready for storage locally
-   */
-    private getSaveData(): string
-    {
-      //todo this
-      return "";
-    }
-
 }

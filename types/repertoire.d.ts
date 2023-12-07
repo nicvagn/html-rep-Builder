@@ -89,5 +89,10 @@ export declare class Repertoire {
      * open this repertoire
      */
     open(): void;
+    /**
+     * get the rep button for this repertoire
+     * @returns the RepButton element
+     */
+    getRepButton(): JQuery<HTMLElement>;
 }
 export {};

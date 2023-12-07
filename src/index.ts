@@ -18,8 +18,18 @@
  *********************************************************************************/
 
 import { Controller } from "./repertoire-controller.mjs";
+import { loadGame, saveGame } from "./save-controller";
 import { ExampleGame } from "./example-game";
 import { RepertoireLine } from "./repertoire-line";
+
+
+/**
+ * constants used for setting and getting from local
+ */
+
+export const GAMEs = "Example-Games"; // for the saved games
+export const LINEs = "Repertoire-Lines"; // for lines
+export const REPs = "Repertoires";
 
 //import our styles, css in ts. We cooking with fire now
 import "../css/lichess-pgn-viewer.css";
@@ -28,10 +38,9 @@ import "../css/styles.css";
 
 // eslint-disable-next-line no-var
 export var controller:Controller;
-/*
-// test data
-let openRep:Repertoire;
-*/
+
+//the main key for save data
+export const mainKey = "repBuilderSave";
 
 //iframe properties for imbedded lichess studies
 const iframeHeight: string = 'height="600px"';
@@ -39,12 +48,11 @@ const iframeWith: string = 'width="800px"';
 
 //for embedding the iframe
 const iframeStart: string = ('<iframe id="chessground" ' + iframeWith + ' ' + iframeHeight + " src=");
-// url fragment goes here
+// url fragment goes here //
 const iframeEnd: string = '?theme=blue2&bg=light frameborder=0></iframe>';
 
 let game1: ExampleGame;
 let game2: ExampleGame;
-let notMade = true;
 
 //will be called when the page is loaded init stuff here
 window.onload = () =>
@@ -52,21 +60,42 @@ window.onload = () =>
   //the main controller, needed to make button be able to call controller functions
   console.log("loaded");
 
-  makeController();
-};
+  controller = new Controller();
 
+  /*
+  game1 = new ExampleGame("game", "https://lichess.org/study/PYEVM2pA/YCdbBWum");
 
-function makeController()
-{
+  saveGame(game1);
 
-  if(notMade)
+  */
+  //test();
+
+  //get any saved reps from storage and add them to local reps
+  const savedGame = loadGame("game");
+
+  console.log(savedGame);
+  if(savedGame != null)
   {
-    notMade = false;
-    controller = new Controller();
-
-    test();
+    controller.changeStudy(savedGame)
   }
-}
+
+  /*
+  //if there is a save, use it
+  if(stringifiedSave != null)
+  {
+    //console.log("save gotten from local storage " + stringifiedSave);
+    //and make a new controller from save
+    controller = load();
+  }
+  else
+  {
+    //else make a new controller
+    controller = new Controller();
+  }
+  */
+
+  //test();
+};
 
 /**
  * transform base lichessURL's into something we can embed
@@ -75,17 +104,15 @@ function makeController()
  */
 export function getEmbeddingStr(URLInput:string): string
 {
-    const liUrl = "https://lichess.org/study/embed/"
+  const liUrl = "https://lichess.org/study/embed/"
 
-    console.log("getEmbeddingStr: URL input: " + URLInput);
+  console.log("getEmbeddingStr: URL input: " + URLInput);
 
-    const embeddableURL = liUrl + URLInput.substring(26);
+  const emendableURL = liUrl + URLInput.substring(26);
 
-    console.log("embeddable str: " + embeddableURL);
-
-    const embeddable:string =  iframeStart + embeddableURL + iframeEnd;
-    console.log("embeddable str: " + embeddable)
-    return embeddable;
+  const emendable:string =  iframeStart + emendableURL + iframeEnd;
+  console.log("emendable str: " + emendable)
+  return emendable;
 }
 
 
@@ -99,7 +126,6 @@ export function test()
   const line2: RepertoireLine = new RepertoireLine("Line 2", "https://lichess.org/study/TAjrrpST/1WyhSAla");
   const line3: RepertoireLine = new RepertoireLine("line 3", "https://lichess.org/study/PYEVM2pA/POney1Ru")
 
-  game1 = new ExampleGame("First Game", "https://lichess.org/study/PYEVM2pA/YCdbBWum");
   game2 = new ExampleGame("second game", "https://lichess.org/study/PYEVM2pA/POney1Ru")
 
   //add games to lines
@@ -126,8 +152,9 @@ export function test()
 
 function showSplashScreen()
 {
-  $( "#chessgroundContainer" ).replaceWith(`<div id="chessgroundContainer" >
-                           <!-- Main Chessboard -->
-                           <img id="chessground" style="object-fit: contain;" src="images/thinking.jpg" frameborder=0></img>
-                         </div>`);
+  $( "#chessgroundContainer" ).replaceWith(
+    ` <div id="chessgroundContainer" >
+        <!-- Main Chessboard -->
+        <img id="chessground" style="object-fit: contain;" src="images/thinking.jpg" frameborder=0></img>
+      </div>`);
 }

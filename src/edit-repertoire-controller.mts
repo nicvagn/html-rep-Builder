@@ -234,7 +234,7 @@ function showLinesToAddGameTo(game: ExampleGame): void
         chessBoardView();
 
         game.showGame(); //display the game on the main board
-        controller.updateLists();
+        controller.updateOpenRepLists();
       });
 
       $(btn).css(
@@ -283,7 +283,7 @@ function showRepsToAddLineTo(line: RepertoireLine): void
 
       controller.changeStudy(line); //display the game on the main board
 
-      controller.updateLists();
+      controller.updateOpenRepLists();
     });
 
     $(btn).css(
@@ -364,7 +364,7 @@ function setAddStudyListeners(): void
         //what line should we add this to?
         showLinesToAddGameTo(game);
         //now, we wait for the uses to click a line then update the lists
-        controller.updateLists();
+        controller.updateOpenRepLists();
       }
     }
   });

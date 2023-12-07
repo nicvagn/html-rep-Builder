@@ -18,10 +18,7 @@
  *********************************************************************************/
 /// <reference types="jquery" />
 /// <reference types="jquery" />
-interface gameJSON {
-    name: string;
-    studyURL: string;
-}
+import { gameJSON } from "./save-controller.js";
 /**
  * a chess repertoire example game. It's primary use is in a rep builder GUI, so it needs to have a visual
  * component :. extends button
@@ -52,4 +49,3 @@ export declare class ExampleGame {
      */
     toJSON(): gameJSON;
 }
-export {};

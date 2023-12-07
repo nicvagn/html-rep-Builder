@@ -92,8 +92,10 @@ export class RepertoireLine
    */
   static fromJSON(json: lineJSON )
   {
+    console.log("REPERTOIRE LINE from json entered, with lineJSON" + JSON.stringify(json));
     if(json.exampleGames != undefined)
     {
+      console.log("json.name: " + json.name + " json.studyURL: " + json.studyURL + " json.exampleGames: " + json.exampleGames);
       return new RepertoireLine(json.name, json.studyURL, json.exampleGames);
     }
     else
@@ -126,7 +128,7 @@ export class RepertoireLine
     //add the game to our list
     this.exampleGames.push(game);
 
-    console.log("this =" + this.name + "this.exampleGames = " + this.exampleGames);
+    console.log("this = " + this.name + " this.exampleGames = " + this.exampleGames.toString);
   }
 
   /**

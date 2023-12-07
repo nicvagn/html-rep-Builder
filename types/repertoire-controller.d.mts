@@ -35,7 +35,7 @@ export declare class Controller {
     /**
      * construct a new repertoire controller
      */
-    constructor();
+    constructor(repList?: Repertoire[]);
     /**
      * add a repertoire to this controller
      * this means add it to the local rep list
@@ -57,7 +57,11 @@ export declare class Controller {
     /**
      * reset the line ang game lists to the ones in the open repertoire
      */
-    updateLists(): void;
+    updateOpenRepLists(): void;
+    /**
+     * update list of repertoires we can access
+     */
+    updateRepList(): void;
     /**
      * set up the new repertoire controls and center pane
      */
@@ -76,9 +80,4 @@ export declare class Controller {
      * change the study on the main board to a provided chess thing's study
      */
     changeStudy(chessThing: RepertoireLine | ExampleGame | Repertoire): void;
-    /**
-     * get an JSON.stringify() of the info to save
-     * @returns the json stringified ready for storage locally
-     */
-    private getSaveData;
 }
