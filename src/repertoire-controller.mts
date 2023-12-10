@@ -25,6 +25,7 @@ import { ExampleGame } from "./example-game.js";
 import { error } from "jquery";
 
 import { controller, getEmbeddingStr } from "./index.js";
+import { save } from "./save-controller.js";
 
 const newRepertoirePane =
 `
@@ -94,7 +95,7 @@ export class Controller
     $( "#saveBrowser" ).on("click", () =>
     {
       console.log("save to browser initialized.");
-      //save(); //save to local storage
+      save(); //save to local storage
     });
 
     if (this.boardSpot == null)
@@ -111,7 +112,7 @@ export class Controller
    * add a repertoire to this controller
    * this means add it to the local rep list
    */
-  private addRepertoire(rep: Repertoire): void
+  public addRepertoire(rep: Repertoire): void
   {
     //add repertoire button to the local rep's list
     this.localReps.append(rep.repertoireBtn);

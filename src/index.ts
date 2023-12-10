@@ -18,9 +18,10 @@
  *********************************************************************************/
 
 import { Controller } from "./repertoire-controller.mjs";
-import { loadGame, saveGame } from "./save-controller";
-import { ExampleGame } from "./example-game";
-import { RepertoireLine } from "./repertoire-line";
+
+//import { saveGame, test } from "./save-controller";
+//import { ExampleGame } from "./example-game";
+//import { RepertoireLine } from "./repertoire-line";
 
 
 /**
@@ -30,17 +31,17 @@ import { RepertoireLine } from "./repertoire-line";
 export const GAMEs = "Example-Games"; // for the saved games
 export const LINEs = "Repertoire-Lines"; // for lines
 export const REPs = "Repertoires";
+export const MAIN = "Repertoire-Builder";
 
 //import our styles, css in ts. We cooking with fire now
 import "../css/lichess-pgn-viewer.css";
 import "../css/styles.css";
+import { test } from "./save-controller";
 
 
 // eslint-disable-next-line no-var
 export var controller:Controller;
 
-//the main key for save data
-export const mainKey = "repBuilderSave";
 
 //iframe properties for imbedded lichess studies
 const iframeHeight: string = 'height="600px"';
@@ -51,8 +52,6 @@ const iframeStart: string = ('<iframe id="chessground" ' + iframeWith + ' ' + if
 // url fragment goes here //
 const iframeEnd: string = '?theme=blue2&bg=light frameborder=0></iframe>';
 
-let game1: ExampleGame;
-let game2: ExampleGame;
 
 //will be called when the page is loaded init stuff here
 window.onload = () =>
@@ -62,39 +61,8 @@ window.onload = () =>
 
   controller = new Controller();
 
-  /*
-  game1 = new ExampleGame("game", "https://lichess.org/study/PYEVM2pA/YCdbBWum");
+  test();
 
-  saveGame(game1);
-
-  */
-  //test();
-
-  //get any saved reps from storage and add them to local reps
-  const savedGame = loadGame("game");
-
-  console.log(savedGame);
-  if(savedGame != null)
-  {
-    controller.changeStudy(savedGame)
-  }
-
-  /*
-  //if there is a save, use it
-  if(stringifiedSave != null)
-  {
-    //console.log("save gotten from local storage " + stringifiedSave);
-    //and make a new controller from save
-    controller = load();
-  }
-  else
-  {
-    //else make a new controller
-    controller = new Controller();
-  }
-  */
-
-  //test();
 };
 
 /**
@@ -116,41 +84,7 @@ export function getEmbeddingStr(URLInput:string): string
 }
 
 
-
-export function test()
-{
-  ///----------------------- testing ---------------------------------
-  //lines
-
-  const line1: RepertoireLine = new RepertoireLine("Line 1", "https://lichess.org/study/TAjrrpST/fLKrg6N9");
-  const line2: RepertoireLine = new RepertoireLine("Line 2", "https://lichess.org/study/TAjrrpST/1WyhSAla");
-  const line3: RepertoireLine = new RepertoireLine("line 3", "https://lichess.org/study/PYEVM2pA/POney1Ru")
-
-  game2 = new ExampleGame("second game", "https://lichess.org/study/PYEVM2pA/POney1Ru")
-
-  //add games to lines
-  line1.addGame(game1);
-  line1.addGame(game2);
-  line2.addGame(game2);
-
-
-
-  const capo = controller.newRepertoire("Capo can not", "https://lichess.org/study/PYEVM2pA/YCdbBWum");
-  capo.addLine(line2);
-  capo.addLine(line1);
-
-  const nope = controller.newRepertoire("something, anything", "https://lichess.org/study/PYEVM2pA/POney1Ru");
-  nope.addLine(line1);
-  nope.addLine(line2);
-  nope.addLine(line3);
-
-
-  showSplashScreen();
-
-  //--------------------------- end ----------------------------------
-}
-
-function showSplashScreen()
+export function showSplashScreen()
 {
   $( "#chessgroundContainer" ).replaceWith(
     ` <div id="chessgroundContainer" >

@@ -116,7 +116,6 @@ export class Repertoire
         });
   }
 
-
   /**
    * add a line to this repertoire object
    * @param repLine - a RepertoireLine

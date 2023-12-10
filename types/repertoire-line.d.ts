@@ -19,11 +19,7 @@
 /// <reference types="jquery" />
 /// <reference types="jquery" />
 import { ExampleGame } from "./example-game.js";
-interface lineJSON {
-    name: string;
-    studyURL: string;
-    exampleGames: ExampleGame[];
-}
+import { lineJSON } from "./save-controller.js";
 /**
  * a chess repertoire line. It's primary use is in a rep builder GUI, so it needs to have a visual
  * component
@@ -72,4 +68,3 @@ export declare class RepertoireLine {
      */
     refreshGameDisplay(): void;
 }
-export {};

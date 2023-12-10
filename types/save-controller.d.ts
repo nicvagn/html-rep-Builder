@@ -19,31 +19,46 @@
 import { Repertoire } from "./repertoire.js";
 import { Controller } from "./repertoire-controller.mjs";
 import { ExampleGame } from "./example-game.js";
+import { RepertoireLine } from "./repertoire-line.js";
+type chessThingJSON = "line" | "game" | "rep";
 export interface gameJSON {
     name: string;
+    type: chessThingJSON;
     studyURL: string;
 }
 export interface lineJSON {
     name: string;
+    type: chessThingJSON;
     studyURL: string;
+    exampleGameKeys: string[];
 }
-/**
- * retrieve from local storage
- * @param {string} key the key of the item to be retrieve
- * @returns the retrieve item as JSON, or null on error
- */
-export declare function getFromLocal(key: string): gameJSON | null;
+export interface repJSON {
+    name: string;
+    type: chessThingJSON;
+    studyURL: string;
+    lineKeys: string[];
+}
 export declare function saveRep(rep: Repertoire): void;
-/**
- * save a chess game. The key will be it's name
- */
-export declare function saveGame(game: ExampleGame): void;
 /**
  * load all the pertinent details from local storage to load an ExampleGame
  * returns null if nothing is found or data is not complete
  * @param key the key the game is stored under
+ * @returns the Example game corresponding to that gameJSON under that key
+ * if it is valid, else throw an error
  */
-export declare function loadGame(key: string): ExampleGame | null;
+export declare function loadGame(key: string): ExampleGame;
+/**
+ * load a line from a key for JSON in local storage
+ * @param key the key for the lineJSON in local storage
+ * @returns a rep line made from that JSON
+ */
+export declare function loadLine(key: string): RepertoireLine;
+/**
+ * load an entire repertoire from local storage
+ * @param key the key to find the rep we have to load under in local storage
+ * @returns the loaded Repertoire
+ */
+export declare function loadRep(key: string): Repertoire;
 /**
  * save everything so the state of the controller can be reconstructed from the save
  */
@@ -53,3 +68,5 @@ export declare function save(): void;
  * @param controller the controller to load the save into
  */
 export declare function load(controller: Controller): void;
+export declare function test(): void;
+export {};

@@ -20,14 +20,7 @@
 //nrv stuff
 import { ExampleGame } from "./example-game.js";
 import { controller } from "./index.js";
-
-interface lineJSON
-{
-  name: string;
-  studyURL: string;
-  exampleGames: ExampleGame[];
-}
-
+import { lineJSON, loadGame } from "./save-controller.js";
 /**
  * a chess repertoire line. It's primary use is in a rep builder GUI, so it needs to have a visual
  * component
@@ -90,18 +83,27 @@ export class RepertoireLine
   /**
    * convert a line line from JSON to object
    */
-  static fromJSON(json: lineJSON )
+  public static fromJSON(json: lineJSON ): RepertoireLine
   {
     console.log("REPERTOIRE LINE from json entered, with lineJSON" + JSON.stringify(json));
-    if(json.exampleGames != undefined)
+
+    const line = new RepertoireLine(json.name, json.studyURL);
+
+    if(json.exampleGameKeys != undefined)
     {
-      console.log("json.name: " + json.name + " json.studyURL: " + json.studyURL + " json.exampleGames: " + json.exampleGames);
-      return new RepertoireLine(json.name, json.studyURL, json.exampleGames);
+      console.log("json.name: " + json.name + " json.studyURL: " + json.studyURL);
+
+      //retrieve all the EX games from the keys we where given
+      for(let x = 0; x < json.exampleGameKeys.length; x++)
+      {
+        //load games from their keys, and add them to the line
+        const key = json.exampleGameKeys[x];
+        const exGame = loadGame(key);
+        line.addGame(exGame);
+      }
     }
-    else
-    {
-      return new RepertoireLine(json.name, json.studyURL)
-    }
+
+    return line;
   }
 
 

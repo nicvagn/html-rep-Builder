@@ -23,14 +23,14 @@ import { Controller } from "./repertoire-controller.mjs";
 export declare const GAMEs = "Example-Games";
 export declare const LINEs = "Repertoire-Lines";
 export declare const REPs = "Repertoires";
+export declare const MAIN = "Repertoire-Builder";
 import "../css/lichess-pgn-viewer.css";
 import "../css/styles.css";
 export declare var controller: Controller;
-export declare const mainKey = "repBuilderSave";
 /**
  * transform base lichessURL's into something we can embed
  * @param URLInput the raw input url
  * @returns embeddable URL string
  */
 export declare function getEmbeddingStr(URLInput: string): string;
-export declare function test(): void;
+export declare function showSplashScreen(): void;

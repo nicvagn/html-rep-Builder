@@ -40,7 +40,7 @@ export declare class Controller {
      * add a repertoire to this controller
      * this means add it to the local rep list
      */
-    private addRepertoire;
+    addRepertoire(rep: Repertoire): void;
     /**
      * set the name element
      */
