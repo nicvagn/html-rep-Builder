@@ -56,7 +56,7 @@ export class RepertoireLine
     }
   }
 
-  private createLineButton(): void
+  public createLineButton(): void
   {
     //create the visual button for the gui
     this.lineBtn = $("<button/>", {
@@ -68,14 +68,31 @@ export class RepertoireLine
   }
 
   /**
+   * get the keys(names) for the games of this line. The keys being what they are stored under in LS
+   * @returns string[] of the game keys for LS fetching
+   */
+  private getGameKeys(): string[]
+  {
+    const keys = new Array<string>();
+    for(let x = 0; x < this.exampleGames.length; x++)
+    {
+      keys.push(this.exampleGames[x].name)
+    }
+    return keys;
+  }
+
+  /**
    * convert this line to JSON
    */
   public toJSON(): lineJSON
   {
     // toJSON is automatically used by JSON.stringify
-    const lineJSON = Object.assign({}, this, {
-      lineBtn: null,  //do not worry about saving the line btn, it can be built again
-    });
+    const lineJSON = {
+      name_key: this.name,
+      type: 'line',
+      studyURL: this.studyURL,
+      exampleGameKeys: this.getGameKeys(),
+    }
 
     return lineJSON;
   }
@@ -87,11 +104,11 @@ export class RepertoireLine
   {
     console.log("REPERTOIRE LINE from json entered, with lineJSON" + JSON.stringify(json));
 
-    const line = new RepertoireLine(json.name, json.studyURL);
+    const line = new RepertoireLine(json.name_key, json.studyURL);
 
     if(json.exampleGameKeys != undefined)
     {
-      console.log("json.name: " + json.name + " json.studyURL: " + json.studyURL);
+      console.log("json.name: " + json.name_key + " json.studyURL: " + json.studyURL);
 
       //retrieve all the EX games from the keys we where given
       for(let x = 0; x < json.exampleGameKeys.length; x++)
@@ -182,5 +199,15 @@ export class RepertoireLine
           event.data.game.showGame(game);
         });
     });
+  }
+
+  public toString(): string
+  {
+    const lineStr = "/// line toString: " + this.name + " /// \n ExampleGames: ";
+    for(let x = 0; x < this.exampleGames.length; x++)
+    {
+      lineStr + this.exampleGames[x] + "\n";
+    }
+    return lineStr;
   }
 }

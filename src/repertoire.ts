@@ -20,14 +20,7 @@
 import { RepertoireLine } from "./repertoire-line.js";
 import { controller } from "./index.js";
 import { saveRep } from "./save-controller.js";
-
-//a representation of a rep that can be stored as json
-interface repJSON
-{
-  name: string;
-  studyURL: string;
-  lineList: RepertoireLine[];
-}
+import { repJSON, loadLine } from "./save-controller.js";
 
 /**
  * A chess repertoire
@@ -37,7 +30,7 @@ export class Repertoire
 
   name: string;
   studyURL: string;
-  lineList: RepertoireLine[] = new Array<RepertoireLine>();  // array of lines in this rep
+  lineList: RepertoireLine[] = new Array<RepertoireLine>;  // array of lines in this rep
   openLine!: RepertoireLine; //the currently open line
   mainLine: RepertoireLine;
 
@@ -60,11 +53,12 @@ export class Repertoire
     this.createRepBtn();
 
     //add the main line to the line list and set it as the open line
-    this.mainLine = new RepertoireLine("Main Line", studyURL);
+    this.mainLine = new RepertoireLine( this.name + ": Main Line", studyURL);
     this.addLine(this.mainLine);
 
     if (lineList != undefined)
     {
+      this.lineList = new Array<RepertoireLine>();
       for(let x = 0; x < lineList.length; x++)
       {
         //add the given line list to our line list
@@ -73,26 +67,52 @@ export class Repertoire
     }
   }
 
+  /* interface repJSON
+  {
+    name_key: string;
+    type: "rep";
+    studyURL: string;
+    lines: RepertoireLine[];
+  }*/
   /**
    * prepare repertoire for saving as json
    * @returns JSON of this object for saving
    */
   public toJSON(): repJSON
   {
-    return Object.assign({}, this, {
-      nameLabel: null,
-      repertoireBtn: null
+    return {
+      name_key: this.name,
+      type: "rep",
+      studyURL: this.studyURL,
+      lineKeys: this.getLineKeys(),
+    }
+  }
+  /**
+   * take a json rep, and create a new rep Object
+   * @param repjson of the repertoire
+   * @returns the new created rep with all the old reps data
+   */
+  public static fromJSON(repjson: repJSON): Repertoire
+  {
+    const loadedLines = new Array<RepertoireLine>();
+    repjson.lineKeys.forEach(lnKey => {
+      loadedLines.push( loadLine(lnKey) );
     });
+    return new Repertoire(repjson.name_key, repjson.studyURL, loadedLines);
   }
 
   /**
-   * take a json rep, and create a new rep Object
-   * @param json of the repertoire
-   * @returns the new created rep with all the old reps data
+   * get the line keys lines are stored under in LS
+   * @returns the line keys for getting lines from LS
    */
-  public static fromJSON(json: repJSON): Repertoire
+  private getLineKeys(): string[]
   {
-    return new Repertoire(json.name, json.studyURL, json.lineList);
+    const lineKeys = new Array<string>();
+    this.lineList.forEach(line => {
+      lineKeys.push(line.name);
+    });
+
+    return lineKeys;
   }
 
   /**
@@ -110,9 +130,9 @@ export class Repertoire
     this.repertoireBtn.addClass("repBtn");
 
     //add lister
-    this.repertoireBtn.on("click", { controller: controller, rep: this }, function (event)
+    this.repertoireBtn.on("click", { rep: this }, function (event)
         {
-          event.data.controller.openRepertoire(event.data.rep);
+          controller.openRepertoire(event.data.rep);
         });
   }
 
@@ -144,6 +164,7 @@ export class Repertoire
     this.lineList.forEach((line) =>
     {
       console.log("line: " + line.name);
+
       line.lineBtn.appendTo($( "#lineList" ));
 
       line.lineBtn.on("click", { line:line }, function (event)
@@ -250,5 +271,16 @@ export class Repertoire
  public getRepButton(): JQuery<HTMLElement>
  {
   return this.repertoireBtn;
+ }
+
+ public toString(){
+  let repSting = "++++++++++++++ repertoire toString:"+ this.name + " +++++++++++++++++\n";
+  if(this.lineList != null)
+  {
+    this.lineList.forEach(line => {
+      repSting += line;
+    });
+  }
+  return repSting;
  }
 }

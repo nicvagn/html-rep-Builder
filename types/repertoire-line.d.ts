@@ -36,7 +36,12 @@ export declare class RepertoireLine {
      * @param exampleGames any example games of this line in action
      */
     constructor(name: string, studyURL: string, exampleGames?: ExampleGame[]);
-    private createLineButton;
+    createLineButton(): void;
+    /**
+     * get the keys(names) for the games of this line. The keys being what they are stored under in LS
+     * @returns string[] of the game keys for LS fetching
+     */
+    private getGameKeys;
     /**
      * convert this line to JSON
      */
@@ -67,4 +72,5 @@ export declare class RepertoireLine {
      * refresh array gameList in html page
      */
     refreshGameDisplay(): void;
+    toString(): string;
 }

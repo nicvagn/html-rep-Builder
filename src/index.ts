@@ -18,11 +18,7 @@
  *********************************************************************************/
 
 import { Controller } from "./repertoire-controller.mjs";
-
-//import { saveGame, test } from "./save-controller";
-//import { ExampleGame } from "./example-game";
-//import { RepertoireLine } from "./repertoire-line";
-
+import { load } from "./save-controller";
 
 /**
  * constants used for setting and getting from local
@@ -31,24 +27,22 @@ import { Controller } from "./repertoire-controller.mjs";
 export const GAMEs = "Example-Games"; // for the saved games
 export const LINEs = "Repertoire-Lines"; // for lines
 export const REPs = "Repertoires";
-export const MAIN = "Repertoire-Builder";
+export const REPKEYS = "Repertoire-Builder";
 
 //import our styles, css in ts. We cooking with fire now
 import "../css/lichess-pgn-viewer.css";
 import "../css/styles.css";
-import { test } from "./save-controller";
 
 
 // eslint-disable-next-line no-var
-export var controller:Controller;
-
+export var controller:Controller = load(); //if no save, load makes a new controller
 
 //iframe properties for imbedded lichess studies
 const iframeHeight: string = 'height="600px"';
 const iframeWith: string = 'width="800px"';
 
 //for embedding the iframe
-const iframeStart: string = ('<iframe id="chessground" ' + iframeWith + ' ' + iframeHeight + " src=");
+const iframeStart: string = '<iframe id="chessground" ' + iframeWith + ' ' + iframeHeight + " src=";
 // url fragment goes here //
 const iframeEnd: string = '?theme=blue2&bg=light frameborder=0></iframe>';
 
@@ -56,12 +50,8 @@ const iframeEnd: string = '?theme=blue2&bg=light frameborder=0></iframe>';
 //will be called when the page is loaded init stuff here
 window.onload = () =>
 {
-  //the main controller, needed to make button be able to call controller functions
-  console.log("loaded");
+  console.log("==== DOM loaded ====");
 
-  controller = new Controller();
-
-  test();
 
 };
 
@@ -83,7 +73,9 @@ export function getEmbeddingStr(URLInput:string): string
   return emendable;
 }
 
-
+/**
+ * show the Repertoire Builder splash screen.
+ */
 export function showSplashScreen()
 {
   $( "#chessgroundContainer" ).replaceWith(

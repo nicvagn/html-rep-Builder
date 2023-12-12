@@ -19,66 +19,93 @@
 
 import { error } from "jquery";
 import { Repertoire } from "./repertoire.js";
-import { Controller } from "./repertoire-controller.mjs";
-import { controller, REPs } from "./index.js";
+import { controller, REPKEYS } from "./index.js";
 import { ExampleGame } from "./example-game.js";
 import { RepertoireLine } from "./repertoire-line.js";
+import { Controller } from "./repertoire-controller.mjs";
 
-//$$$$$$$$$$$$$$$$$$$$$ keys $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-const MAIN = "Repertoire-Builder";
-// $$$$$$$$$$$$$$$$$$$$$$$$ types $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+// $$$$$$$$$$$$$$$$$$$$ types $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
-type chessThingJSON = "line" | "game" | "rep";
-//type chessThing = Repertoire | RepertoireLine | ExampleGame;
+type chessThingJSON = lineJSON | repJSON | gameJSON;
+type chessThing = Repertoire | RepertoireLine | ExampleGame;
 
-// $$$$$$$$$$$$$$$$$$$ JSON interfaces $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+// $$$$$$$$$$$$$$$$$$$ JSON interfaces $$$$$$$$$$$$$$$$$$$$$$$$
 // A representation of the example game for JSON
 export interface gameJSON
 {
-  name: string;
-  type: chessThingJSON;
+  name_key: string;
+  type: string; // "line" | "game" | "rep"
   studyURL: string;
 }
 
 export interface lineJSON
 {
-  name: string;
-  type: chessThingJSON;
+  name_key: string;
+  type: string; // "line" | "game" | "rep"
   studyURL: string;
   exampleGameKeys: string[];
 }
 
 export interface repJSON
 {
-  name: string;
-  type: chessThingJSON;
+  name_key: string;
+  type: string; // "line" | "game" | "rep"
   studyURL: string;
   lineKeys: string[];
 }
 
-interface MAINJSON
-{
-  repertoires: repJSON[];
-}
-
-
-// $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+// $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 
 /**
  * put a string rep of an object in local storage under a key
  * @param key the key to store the JSON.stringified(object)
- * @param object a stringify-able Object
+ * @param chessThing a chessThing, a type we made for convenance
  */
-function putLocal(key: string, object: unknown): void
+function putChessThingLocal(key: string, chessThing: chessThing): void
 {
-  console.log("putLocal() entered. Key: " + key + " object: " + object);
+  console.log("putChessThingLocal() entered. \n Key: " + key + "\n object: " + chessThing.toString());
 
   //create a stringified version of the object
-  const strObject = JSON.stringify(object);
+  const strObject = JSON.stringify(chessThing);
 
   console.log("strObject: " + strObject);
-  window.localStorage.setItem(key, strObject);
+  localStorage.setItem(key, strObject);
+}
+
+/**
+ * get a chess thing's JSON from local Storage and use the key to get the
+ * Repertoire, RepertoireLine, or ExampleGame from LS
+ * @param key the string key to get from LS
+ * @returns parsed JSON object found under the key
+ */
+function getChessThing(key: string): chessThing
+{
+  const grab = getLocal(key);
+
+  const parsed = JSON.parse(grab) as chessThingJSON;
+
+  let chessThing;
+  //use a switch to determine the type of the fetch
+  switch(parsed.type)
+  {
+    case "game":
+      //it is an ExampleGame
+      chessThing = loadGame(key);
+      break;
+    case "line":
+      //it is a RepertoireLine
+      chessThing = loadLine(key);
+      break;
+    case "rep":
+      // if it is a Repertoire
+      chessThing = loadRep(key);
+      break;
+    default:
+      error("getChessThing(): chessThing is not of type line, rep, or game.");
+  }
+
+  return chessThing!;
 }
 
 /**
@@ -88,16 +115,19 @@ function putLocal(key: string, object: unknown): void
  */
 function getLocal(key: string): string
 {
-  const fetch = window.localStorage.getItem(key);
+  const fetch = localStorage.getItem(key);
 
   if(fetch == null)
   {
-    throw error("getItem(" + key + ") got a null fetch.");
+    throw error("getItem( key: " + key + " ) got a null fetch.");
   }
   return fetch;
 }
 
-
+/**
+ * save a rep
+ * @param rep repertoire to save
+ */
 export function saveRep(rep: Repertoire): void
 {
   let key;
@@ -129,7 +159,6 @@ export function saveRep(rep: Repertoire): void
   const repGames = new Array<string>();
   for(let x = 0; x < lineList.length; x++)
   {
-
     const line = lineList.at(x)!;
 
     const lineGames = line.getGames();
@@ -144,34 +173,29 @@ export function saveRep(rep: Repertoire): void
     }
   }
 
-  const flatRep: repJSON =
-  {
-    name: rep.name,
-    type: "rep",
-    studyURL: rep.studyURL,
-    lineKeys: repLines
-  }
-
-  putLocal(key, flatRep) //key in rep.name we built flat rep
+  putChessThingLocal(key, rep) //key in rep.name we built flat rep
 }
 
 /**
  * save a chess game. The key will be it's name
+ * @param game  the game to save
  */
 function saveGame(game: ExampleGame): void
 {
   //save the game
-  putLocal(game.name, game);
+  putChessThingLocal(game.name, game);
 }
 
 /**
  * save a chess repertoire line. The key will be it's name
+ * @param line the line to save
  */
 function saveLine(line: RepertoireLine): void
 {
   //save the line
-  putLocal(line.name, line);
+  putChessThingLocal(line.name, line);
 }
+
 
 /**
  * load all the pertinent details from local storage to load an ExampleGame
@@ -184,7 +208,7 @@ export function loadGame(key: string): ExampleGame
 {
   console.log("loadGame(" + key + ") entered with key: " + key);
 
-  //get the JSONString from local storage
+  //get the JSONString from local sto\rage
   const gameJSON_str = getLocal(key);
 
   return loadGameFromJSONstr(gameJSON_str);
@@ -197,7 +221,7 @@ export function loadGame(key: string): ExampleGame
  */
 function loadGameFromJSONstr(JSONStr: string): ExampleGame
 {
-  const gameObj = JSON.parse(JSONStr);
+  const gameObj = JSON.parse(JSONStr) as gameJSON;
 
   return loadGameFromJSON(gameObj);
 }
@@ -209,14 +233,17 @@ function loadGameFromJSONstr(JSONStr: string): ExampleGame
  */
 function loadGameFromJSON(gameJSON: gameJSON): ExampleGame
 {
-
-  if(gameJSON.name != null || gameJSON.studyURL != null)
+  if(gameJSON.name_key == null)
   {
-    //return new ExampleGame with saved properties
-    return new ExampleGame(gameJSON.name, gameJSON.studyURL);
+    throw error("loadGame: name_key null, studyURL: " + gameJSON.studyURL)
   }
+  if(gameJSON.studyURL == null)
+  {
+    throw error("loadGame: studyURL null, name_key: " + gameJSON.name_key);
 
-  throw error("loadGame: name or studyURL null name: " + gameJSON.name + " studyURL " + gameJSON.studyURL);
+  }
+   //return new ExampleGame with saved properties
+  return new ExampleGame(gameJSON.name_key, gameJSON.studyURL);
 }
 
 /**
@@ -226,7 +253,6 @@ function loadGameFromJSON(gameJSON: gameJSON): ExampleGame
  */
 export function loadLine(key: string): RepertoireLine
 {
-
   const lineJSONstr = getLocal(key);
   //get the lineJSON stored in local storage
   return loadLineFromJSONstr(lineJSONstr);
@@ -245,18 +271,27 @@ function loadLineFromJSONstr(JSONStr: string): RepertoireLine
   return loadLineFromJSON(lineObj);
 }
 
+/**
+ * create a RepertoireLine from lineJSON
+ * @param lineJSON the JSON of this line
+ * @returns loaded RepertoireLine
+ */
 function loadLineFromJSON(lineJSON:lineJSON):RepertoireLine
 {
-  if(lineJSON.name == null || lineJSON.studyURL == null)
+  if(lineJSON.name_key == null || lineJSON.studyURL == null)
   {
-    throw error("ERROR: lineJSON.name = " + lineJSON.name + " lineJSON.studyURL = " + lineJSON.studyURL);
+    throw error("loadLineFromJSON err: lineJSON.name = " + lineJSON.name_key + " lineJSON.studyURL = " + lineJSON.studyURL);
   }
 
   //make a new rep line
-  const line = new RepertoireLine(lineJSON.name, lineJSON.studyURL);
+  const line = new RepertoireLine(lineJSON.name_key, lineJSON.studyURL);
+
+  line.createLineButton();
 
   //check if we have example games to add to it
   const exGames = lineJSON.exampleGameKeys;
+
+  console.log("loadLineFromJson( " + JSON.stringify(lineJSON) + " )")
 
   //if there are example games for this line, add them
   if(exGames != undefined)
@@ -285,11 +320,29 @@ export function loadRep(key: string): Repertoire
 {
   if(key == null)
   {
-    throw error("ERROR: key we got is null.");
+    throw error("save-controller loadRep(): key we got is null.");
   }
 
-  const repJSON = getLocal(key);
-  const rep = loadRepFromJSONstr(repJSON)
+  //get the rep JSON string from local storage
+  const JSONstr = getLocal(key);
+
+  //parse it
+  const rep = loadRepFromJSONstr(JSONstr);
+
+  //for all the lines, completely load them. that means line buttons and exGames
+  for(let x = 0; x < rep.lineList.length; x++)
+  {
+    const line = loadLine(rep.lineList[x].name);
+    //create the line btn
+    line.createLineButton();
+
+    //for each game, load that game
+    for(let i = 0; i < line.exampleGames.length; i++ )
+    {
+      const game = line.exampleGames[i];
+      game.createGameButton();
+    }
+  }
 
   return rep;
 }
@@ -309,97 +362,112 @@ function loadRepFromJSONstr(JSONstr: string):Repertoire
   return rep;
 }
 
+/**
+ * get a Repertoire from JSON object
+ * @param repObj repJSON object
+ * @returns a Repertoire fully parsed from the repJSON
+ */
 function loadRepFromJSON(repObj: repJSON):Repertoire
 {
   //get the repertoire static characteristics
-  const name = repObj.name;
+  const name = repObj.name_key;
   const studyURL = repObj.studyURL;
+  const lineKeys = repObj.lineKeys;
 
-  //create a rep w/o lines.
-  const rep = new Repertoire(name, studyURL);
+  const lines = Array<RepertoireLine>();
+  lineKeys.forEach(key => {
+    lines.push(loadLine(key)); //load all lines in this rep from it's keys
+  });
 
-  //add the needed lines
-  const lnKeys = repObj.lineKeys;
-  for(let x = 0; x < lnKeys.length; x++)
-  {
-    const line = loadLine(lnKeys[x]);
-    //add the required line
-    rep.addLine(line);
-  }
+  const rep = new Repertoire(name, studyURL, lines);
 
   return rep;
 }
-
 /**
- * get a organized list of all the data needed for a save
- * @returns array with all of the info needed for a save
+ * rebuild the repertoire list from local storage
+ * @param repListStr the string loaded from LS with the rep names
+ * @returns the rebuilt Repertoire Array
  */
-function getSaveData(): Map<string, string | object>
+function rebuildRepList(repListStr: string): Array<Repertoire>
 {
-                        // name to JSON.stringify(rep)
-  const saveData = new Map<string, string | object>();
-  //a list of the names of the reps that have to be saved
-  const repList = new Array<string>();
+  const loadedRepList: Array<Repertoire> = [];
+  //parse the repListStr into an array of rep names/keys
+  const repArrayLS: Array<string> = JSON.parse(repListStr);
 
-  $.each(controller.repList, function (_, rep)
+  console.log("rebuildRepList parsed list: " + repArrayLS.toString());
+
+  console.log("rebuildRepList (should come next):");
+  //iterate through the list of keys,
+  //and  load the corresponding reps to rebuild the saved repList
+  try
+  {
+    repArrayLS.forEach(repName =>
     {
-      repList.push(rep.name);  //add the name of the rep to the list
-      saveData.set(rep.name, JSON.stringify(rep));
+      console.log("rebuildRepList(): Rep Name:" + repName);
+      const rep = loadRep(repName);
+      console.log("rep: " + rep);
+      loadedRepList.push(rep);
     });
+  }
+  catch (error)
+  {
+    console.log("load failure." + error);
+  }
 
-  saveData.set(REPs, repList)
-  return saveData;
+  return loadedRepList;
 }
 
+
+
 /**
- * save everything so the state of the controller can be reconstructed from the save
+ * save repertoire keys/names so the state of the
+ * controller can be reconstructed from the save
  */
 export function save(): void
 {
-  //save the main data
-  const mainSaveData = getSaveData();
-  console.log("save() entered on SaveController()");
-  console.log(mainSaveData);
+  const repKeys = new Array<string>;
+  controller.repList.forEach(rep => {
+    //save each rep
+    saveRep(rep);
+    repKeys.push(rep.name);
+  });
 
-  putLocal(MAIN, mainSaveData);
+  //create a stringified version of the repKeys
+  const strRepKeys = JSON.stringify(repKeys);
+  console.log("repKeys: " + strRepKeys);
+
+  //put the repKeys under key REPKEYS
+  localStorage.setItem(REPKEYS, strRepKeys);
+
+  alert("saved.");
 }
 
 /**
- * load save into a controller
- * @param controller the controller to load the save into
+ * load save into a Controller and return it.
+ * @returns Controller made.
  */
-export function load(controller: Controller): void
+export function load(): Controller
 {
+  console.log("================ load() entered  =======================");
   // get the main save data from local storage
-  const saveStr = getLocal(MAIN);
-  console.log("load() entered: getLocal(MAIN) = " + saveStr);
+  let repListSave:string;
+  try
+  {//try to get save data, if fails it returns false
+    repListSave = getLocal(REPKEYS);
+    console.log("=== repList from LS ===");
+    console.log("repListSave: " + repListSave);
 
-  if(saveStr == null)
-  {
-    throw error("load: null save.");
+    const repList: Array<Repertoire> = rebuildRepList(repListSave); //repListSave is a str
+    console.log("save after parsing: " + repList.toString());
+
+    const madeController = new Controller(repList); //the rest of the loading will occur in the Controller
+
+    return madeController;
   }
-  console.log(" SAVE STRING: " + saveStr);
-  const saveObj = JSON.parse(saveStr) as MAINJSON;
-
-  for(let x = 0; x < saveObj.repertoires.length; x++)
-  {
-    //load each rep
-    const repJSON = saveObj.repertoires[x];
-    console.log("repJSON: " + repJSON);
-    const loadedRep = loadRepFromJSON(repJSON);
-    //add all the loaded reps to the controller
-    controller.addRepertoire(loadedRep);
-
+  catch (error)
+  {//if there in no data successful loaded
+    console.log("No save loaded. when we tried to fetch we got: " + error);
   }
-}
-
-//test save controller
-export function test(): void
-{
-
-  const savedLine = loadLine("line test");
-  if(savedLine != null)
-  {
-    controller.changeStudy(savedLine)
-  }
+  //if not...
+  return new Controller();
 }

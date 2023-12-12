@@ -58,7 +58,7 @@ export class Controller
 {
   openRepName?: string; //name of the open rep
   openRep?: Repertoire; //open rep
-  repList: Repertoire[] = new Array<Repertoire>();  //list of reps
+  repList!: Repertoire[];  //list of reps
 
   boardSpot?: JQuery<HTMLElement>;
   localReps: JQuery<HTMLElement> = $( "#localReps" );
@@ -69,10 +69,14 @@ export class Controller
    */
   constructor(repList?: Repertoire[])
   {
-    //allow for creation of a controller with existing reps
+    //allow for creation of a controller from a save
     if(repList)
     {
-      this.repList = repList;
+      this.loadController(repList);
+    }
+    else
+    {
+      this.repList = new Array<Repertoire>()
     }
 
     //construct controllers
@@ -102,10 +106,16 @@ export class Controller
     {
       throw error("ERROR: ============= boardSpot is null ======================");
     }
-    else
-    {
-      console.log("Board spot: " + this.boardSpot);
-    }
+  }
+
+  /**
+   * load a controller with an array of repertoires already loaded.
+   * @param repList the repertoires that are saved
+   */
+  private loadController(repList: Repertoire[]): void
+  {
+    this.repList = repList;
+    this.updateRepList();
   }
 
   /**
@@ -157,6 +167,7 @@ export class Controller
 
   /**
    * open a repertoire
+   * @param rep the repertoire to load
    */
   public openRepertoire(rep: Repertoire): void
   {
@@ -193,7 +204,6 @@ export class Controller
       const rep = this.repList[x];
       this.localReps.append(rep.repertoireBtn);
     }
-
   }
 
   /**
@@ -277,12 +287,8 @@ export class Controller
     console.log("changeStudy() entered, with study: " + chessThing.name +
     "and study url: [" +  chessThing.studyURL + "]" );
 
-
-
     const imbeddingStr = getEmbeddingStr(chessThing.studyURL)
-
     console.log("impeded str: " + imbeddingStr + " was the impeding str");
-
     //set the name element
     if(chessThing.name == null)
     {
@@ -293,7 +299,19 @@ export class Controller
       this.setNameElement(chessThing.name);
     }
 
-    $( "#chessgroundContainer" ).empty();
-    $( "#chessgroundContainer" ).append( $( imbeddingStr ) );
+
+    //change out dom stuff
+    $( "#chessgroundContainer" ).replaceWith( $( imbeddingStr ) );
+  }
+
+  public toString(): string
+  {
+    let controllerStr = "controller toString()";
+    for(let x = 0; x < this.repList.length; x++)
+    {
+      controllerStr += this.repList[x];
+    }
+
+    return controllerStr;
   }
 }

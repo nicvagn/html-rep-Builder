@@ -33,12 +33,11 @@ export class ExampleGame
   public name: string; //game name
   studyURL: string; //the lichess study url
 
-  public gameBtn: JQuery<HTMLElement>;
+  public gameBtn!: JQuery<HTMLElement>;
 
   /**
    * construct a new repertoire game
    * @param {string} name the name of the game
-   * @param {PGN} pgn the pgn of the game
    */
   constructor(name: string, studyURL: string)
   {
@@ -47,11 +46,17 @@ export class ExampleGame
 
     this.studyURL = studyURL;
 
+    this.createGameButton();
+
+  }
+
+  public createGameButton(): void
+  {
     //create the visual button for the gui
     this.gameBtn =
     $('<button/>', {
       text: this.name, //set text 1 to 10
-      id: name,
+      id: this.name,
     });
 
     //create the visual rep of the game on construction
@@ -87,7 +92,7 @@ export class ExampleGame
    */
   public static fromJSON(json: gameJSON): ExampleGame
   {
-    return new ExampleGame(json.name, json.studyURL);
+    return new ExampleGame(json.name_key, json.studyURL);
   }
 
   /**
@@ -95,8 +100,17 @@ export class ExampleGame
    */
   public toJSON(): gameJSON
   {
-    return Object.assign({}, this, {
-      gameBtn: null
-    });
+    // toJSON is automatically used by JSON.stringify
+    const gameJSON = {
+      name_key: this.name,
+      type: 'game',
+      studyURL: this.studyURL,
+    }
+    return gameJSON;
+  }
+
+  public toString():string
+  {
+    return "name: " + this.name + "studyURL: " + this.studyURL;
   }
 }

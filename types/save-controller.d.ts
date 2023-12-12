@@ -17,27 +17,30 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************************/
 import { Repertoire } from "./repertoire.js";
-import { Controller } from "./repertoire-controller.mjs";
 import { ExampleGame } from "./example-game.js";
 import { RepertoireLine } from "./repertoire-line.js";
-type chessThingJSON = "line" | "game" | "rep";
+import { Controller } from "./repertoire-controller.mjs";
 export interface gameJSON {
-    name: string;
-    type: chessThingJSON;
+    name_key: string;
+    type: string;
     studyURL: string;
 }
 export interface lineJSON {
-    name: string;
-    type: chessThingJSON;
+    name_key: string;
+    type: string;
     studyURL: string;
     exampleGameKeys: string[];
 }
 export interface repJSON {
-    name: string;
-    type: chessThingJSON;
+    name_key: string;
+    type: string;
     studyURL: string;
     lineKeys: string[];
 }
+/**
+ * save a rep
+ * @param rep repertoire to save
+ */
 export declare function saveRep(rep: Repertoire): void;
 /**
  * load all the pertinent details from local storage to load an ExampleGame
@@ -60,13 +63,12 @@ export declare function loadLine(key: string): RepertoireLine;
  */
 export declare function loadRep(key: string): Repertoire;
 /**
- * save everything so the state of the controller can be reconstructed from the save
+ * save repertoire keys/names so the state of the
+ * controller can be reconstructed from the save
  */
 export declare function save(): void;
 /**
- * load save into a controller
- * @param controller the controller to load the save into
+ * load save into a Controller and return it.
+ * @returns Controller made.
  */
-export declare function load(controller: Controller): void;
-export declare function test(): void;
-export {};
+export declare function load(): Controller;

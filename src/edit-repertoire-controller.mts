@@ -158,7 +158,7 @@ function buttonLnr(event: Event):void
   }
   else
   {
-    throw Error("event target was: " + event.target + " this is not one of the buttons.");
+    throw error("event target was: " + event.target + " this is not one of the buttons.");
   }
 }
 
@@ -298,7 +298,9 @@ function showRepsToAddLineTo(line: RepertoireLine): void
   }
 }
 
-
+/**
+ * add the listeners to the add study buttons, etc
+ */
 function setAddStudyListeners(): void
 {
   console.log("setting addStudy listeners");
@@ -377,7 +379,7 @@ function setAddStudyListeners(): void
 }
 
 /**
- * prepare the pop up
+ * prepare the embed
  */
 function showAddStudy(): void
 {

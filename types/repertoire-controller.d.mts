@@ -37,6 +37,11 @@ export declare class Controller {
      */
     constructor(repList?: Repertoire[]);
     /**
+     * load a controller with an array of repertoires already loaded.
+     * @param repList the repertoires that are saved
+     */
+    private loadController;
+    /**
      * add a repertoire to this controller
      * this means add it to the local rep list
      */
@@ -52,6 +57,7 @@ export declare class Controller {
     getOpenRep(): Repertoire;
     /**
      * open a repertoire
+     * @param rep the repertoire to load
      */
     openRepertoire(rep: Repertoire): void;
     /**
@@ -80,4 +86,5 @@ export declare class Controller {
      * change the study on the main board to a provided chess thing's study
      */
     changeStudy(chessThing: RepertoireLine | ExampleGame | Repertoire): void;
+    toString(): string;
 }

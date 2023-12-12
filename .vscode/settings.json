@@ -1,8 +1,12 @@
 {
   "cSpell.words": [
     "Embeddable",
-    "regexes"
+    "regexes",
+    "repjson",
+    "REPKEYS",
+    "REPKEYSJSON"
   ],
 
-  "liveServer.settings.port": 5501
+  "liveServer.settings.port": 5501,
+  "liveServer.settings.root": "/dist"
 }

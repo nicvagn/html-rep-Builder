@@ -30,9 +30,9 @@ export declare class ExampleGame {
     /**
      * construct a new repertoire game
      * @param {string} name the name of the game
-     * @param {PGN} pgn the pgn of the game
      */
     constructor(name: string, studyURL: string);
+    createGameButton(): void;
     /**
      * change the main board to display this game
      * @param game the ExampleGame to show
@@ -48,4 +48,5 @@ export declare class ExampleGame {
      * game json example game for saving
      */
     toJSON(): gameJSON;
+    toString(): string;
 }
