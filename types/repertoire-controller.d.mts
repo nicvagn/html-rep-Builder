@@ -84,6 +84,7 @@ export declare class Controller {
     editRepertoire(): void;
     /**
      * change the study on the main board to a provided chess thing's study
+     * @param chessThing the chessThing with a .studyURL to add to the main board
      */
     changeStudy(chessThing: RepertoireLine | ExampleGame | Repertoire): void;
     toString(): string;

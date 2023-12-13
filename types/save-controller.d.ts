@@ -72,3 +72,7 @@ export declare function save(): void;
  * @returns Controller made.
  */
 export declare function load(): Controller;
+/**
+ * prepare a download of the controller, containing all the reps
+ */
+export declare function download(): void;

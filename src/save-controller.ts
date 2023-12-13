@@ -17,7 +17,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************************/
 
-import { error } from "jquery";
+import { data, error } from "jquery";
 import { Repertoire } from "./repertoire.js";
 import { controller, REPKEYS } from "./index.js";
 import { ExampleGame } from "./example-game.js";
@@ -448,7 +448,7 @@ export function save(): void
  */
 export function load(): Controller
 {
-  console.log("================ load() entered  =======================");
+  console.log("================ load() entered =======================");
   // get the main save data from local storage
   let repListSave:string;
   try
@@ -470,4 +470,31 @@ export function load(): Controller
   }
   //if not...
   return new Controller();
+}
+
+/**
+ * prepare a download of the repList, containing all the reps
+ */
+export function download(): void
+{
+  const repListJSONstr = JSON.stringify(controller.repList);
+  //create blob
+  const repListBlob = new Blob([repListJSONstr], { type: 'application/json' });
+
+  const fileName = "repertoires.json";
+
+  //download by creating an <a> and clicking it
+  fetch(URL.createObjectURL(repListBlob), { method: 'get', mode: 'no-cors', referrerPolicy: 'no-referrer' })
+    .then(() => {
+      const aElement = document.createElement('a');
+      aElement.setAttribute('download', fileName);
+      //create a URL whatever that is
+      const href = URL.createObjectURL(repListBlob);
+      aElement.href = href;
+      // aElement.setAttribute('href', href);
+      aElement.setAttribute('target', '_blank');
+      aElement.click();
+      URL.revokeObjectURL(href);
+      aElement.remove();
+      });
 }

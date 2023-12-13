@@ -25,7 +25,7 @@ import { ExampleGame } from "./example-game.js";
 import { error } from "jquery";
 
 import { controller, getEmbeddingStr } from "./index.js";
-import { save } from "./save-controller.js";
+import { save, download } from "./save-controller.js";
 
 const newRepertoirePane =
 `
@@ -100,6 +100,12 @@ export class Controller
     {
       console.log("save to browser initialized.");
       save(); //save to local storage
+    });
+
+    $( "#download" ).on("click",  ( ) =>
+    {
+      //download the repertoires
+      download();
     });
 
     if (this.boardSpot == null)
@@ -280,6 +286,7 @@ export class Controller
 
   /**
    * change the study on the main board to a provided chess thing's study
+   * @param chessThing the chessThing with a .studyURL to add to the main board
    */
   public changeStudy(chessThing: RepertoireLine | ExampleGame | Repertoire): void
   {
@@ -301,7 +308,10 @@ export class Controller
 
 
     //change out dom stuff
-    $( "#chessgroundContainer" ).replaceWith( $( imbeddingStr ) );
+
+    $( "#chessgroundContainer" ).empty();
+    $( "#chessgroundContainer" ).append( $( imbeddingStr ) );
+    //$( "#chessgroundContainer" ).replaceWith( $( imbeddingStr ) ); for some reason, this does not work
   }
 
   public toString(): string
