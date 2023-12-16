@@ -73,6 +73,6 @@ export declare function save(): void;
  */
 export declare function load(): Controller;
 /**
- * prepare a download of the controller, containing all the reps
+ * prepare a download of the repList, containing all the reps
  */
 export declare function download(): void;

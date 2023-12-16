@@ -28,9 +28,10 @@ import { lineJSON, loadGame } from "./save-controller.js";
 export class RepertoireLine
 {
   name: string;
-  studyURL: string;
+  pgn: PGN; //main pgn of the line
 
-  exampleGames: ExampleGame[] = new Array<ExampleGame>(); //example games for th current line
+  line: ExampleGame; //what is a line, if not a game?
+  boardState:BoardState = controller.boardState;
 
 
   //line sutton for display on the DOM
@@ -54,6 +55,17 @@ export class RepertoireLine
       //if there is a value for exampleGames
       this.exampleGames = exampleGames;
     }
+
+    //set up internal representation of line
+    this.line = new ExampleGame(name, pgn);
+  }
+
+  /**
+   * show this line on the main board
+   */
+  public showLine(): void
+  {
+    this.boardState.switchFen(this.line.FEN);
   }
 
   public createLineButton(): void
@@ -187,6 +199,7 @@ export class RepertoireLine
     console.log("example Games List length: " + this.exampleGames.length);
     console.log("example game list: " + this.exampleGames)
 
+    //for each example game add it to the game list and add a listener
     this.exampleGames.forEach((game) =>
     {
       console.log(game);

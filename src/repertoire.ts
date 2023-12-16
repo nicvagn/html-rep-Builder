@@ -171,6 +171,7 @@ export class Repertoire
       {
         //update this lines game display
         event.data.line.open();
+        //update main board to display the game
       });
     });
   }
