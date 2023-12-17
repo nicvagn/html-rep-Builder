@@ -445,6 +445,7 @@ export async function loadFromFile(save: File): Promise<boolean>
 {
   if( !confirm("This will overwrite current repertoires. Continue?") )
   {
+    console.log("load from file canceled.")
     return false;
   }
 

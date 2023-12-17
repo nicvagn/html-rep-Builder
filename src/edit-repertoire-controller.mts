@@ -19,7 +19,7 @@
 
 import { error } from "jquery";
 import { ExampleGame } from "./example-game.js";
-import { controller } from "./index.js";
+import { controller, showSplashScreen } from "./index.js";
 import { RepertoireLine } from "./repertoire-line.js";
 import { loadFromFile } from "./save-controller.js";
 import { Repertoire } from "./repertoire.js";
@@ -29,7 +29,7 @@ const deleteModeBtn = document.getElementById("deleteMode");
 const addStudyBtn = document.getElementById("addStudy");
 const createStudyBtn = document.getElementById("createStudy");
 
-const fileInput = document.getElementById("fileInput") as HTMLInputElement;
+const fileInput = $("#fileInput");
 
 let editRepertoireController: EditRepertoireController; //so the listeners can access
 
@@ -106,10 +106,10 @@ export class EditRepertoireController
     createStudyBtn?.addEventListener("click", buttonLnr);
 
     //file input listener
-    fileInput?.addEventListener("cancel", () => {
+    fileInput.on("cancel", () => {
       console.log("File Input canceled.");
     });
-    fileInput.addEventListener("change", fileInputLnr);
+    fileInput.on("change", fileInputLnr);
     //make a local file scope variable, so the button listeners can access the controller class
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     editRepertoireController = this;
@@ -154,18 +154,31 @@ export class EditRepertoireController
    */
   public delete(thing: RepertoireLine | ExampleGame | Repertoire): void
   {
+    console.log("delete mode entered with thing: " + thing);
     const openRep = controller.getOpenRep(); // get open rep
     if(thing instanceof Repertoire)
     {
+      //if we are deleting the open rep list
+      if(thing == openRep)
+      {
+        //show the splash screen
+        showSplashScreen();
+      }
       const newRepList = new Array<Repertoire>();
       //go through rep list and copy all but our thing
       controller.repList.forEach(rep => {
+        console.log("thing == rep: " + (thing == rep));
         if(rep !== thing)
         {
           newRepList.push(rep);
         }
       });
+      //delete all the lines and games
+      thing.lineList.forEach(line => {
+        this.delete(line);
+      });
       controller.repList = newRepList;
+      console.log("new rep list: " + newRepList)
       controller.updateRepList();
     }
     else if( thing instanceof RepertoireLine )
@@ -177,6 +190,13 @@ export class EditRepertoireController
         if( line !== thing )
         {
           newLineList.push(line);
+        }
+        else
+        {
+          //delete the example games for this line
+          line.exampleGames.forEach( game => {
+            this.delete(game);
+          });
         }
       });
       openRep.lineList = newLineList;
@@ -211,9 +231,9 @@ export class EditRepertoireController
  */
 function fileInputLnr(): void
 {
-  if(fileInput.files?.length == 1)
+  if(fileInput.prop("files").length == 1)
   {
-    loadFromFile(fileInput.files[0]);
+    loadFromFile(fileInput.prop("files")[0]);
   }
   else
   {
@@ -229,7 +249,7 @@ function buttonLnr(event: Event):void
 {
   if(event.target == deleteModeBtn)
   {
-    console.log("delete mode games btn: DeleteMode entered6");
+    console.log("delete mode games btn: DeleteMode entered");
     //enter delete mode
     editRepertoireController.enterDeleteMode();
   }

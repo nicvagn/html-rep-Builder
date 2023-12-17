@@ -132,7 +132,16 @@ export class Repertoire
     //add lister
     this.repertoireBtn.on("click", { rep: this }, function (event)
         {
-          controller.openRepertoire(event.data.rep);
+          //if the delete mode is on, delete this rep
+          if(controller.editRepController.deleteMode)
+          {
+            controller.editRepController.delete(event.data.rep);
+            controller.updateRepList();
+          }
+          else
+          {
+            controller.openRepertoire(event.data.rep);
+          }
         });
   }
 

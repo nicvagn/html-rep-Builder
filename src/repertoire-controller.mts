@@ -205,9 +205,12 @@ export class Controller
    */
   public updateRepList(): void
   {
+    //clear the rep list
+    this.localReps.html('<div id="localReps"></div>');
     for(let x = 0; x < this.repList.length; x++)
     {
       const rep = this.repList[x];
+      console.log(rep.name + " added.");
       this.localReps.append(rep.repertoireBtn);
     }
   }
