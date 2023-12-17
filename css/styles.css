@@ -151,6 +151,7 @@
   outline-style: dashed;
   background: #FDD401;
   color: black;
+  text-align: center;
 }
 
 .repBtn:hover {
@@ -198,6 +199,11 @@ ul {
   display: block;
   text-align: center;
   background-color: #FDD401;
+}
+
+/* the local rep buttons container */
+#localReps {
+  margin-bottom: 50px;
 }
 
 .row {
@@ -261,11 +267,20 @@ ul {
 }
 
 
-
+/* file input/output  */
 #downloadLink {
   visibility: hidden;
   margin: 10px 0px 0px 50px;
   cursor: pointer;
+}
+
+/* for the file upload */
+#fileInput {
+  display: none;
+}
+
+.fileBtn {
+  font-size: medium;
 }
 
 /* New rep css */
@@ -419,26 +434,6 @@ input:checked+.slider:before {
   transform: translateX(26px);
 }
 
-/* add line or game popup */
-#pop {
-  background: #adbebd;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-}
-
-#navbar-pop {
-  background: #1e9c9c;
-}
-
-#done {
-  display: none;
-  height: 30px;
-  width: 100%;
-  background-color: #1e9c9c;
-}
-
 /* The switch - the box around the slider */
 .switch {
   position: relative;
@@ -503,17 +498,6 @@ input:checked + .slider:before {
   border: none;
   text-align: center;
   overflow: hidden;
-}
-
-#pop {
-  background: #adbebd;
-  position: relative;
-  display: flex;
-
-}
-
-#navbar-pop {
-  background:  #1e9c9c;
 }
 
 input {

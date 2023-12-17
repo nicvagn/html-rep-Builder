@@ -26,8 +26,9 @@ import { lineJSON } from "./save-controller.js";
  */
 export declare class RepertoireLine {
     name: string;
-    studyURL: string;
+    line: ExampleGame;
     exampleGames: ExampleGame[];
+    studyURL: string;
     lineBtn: JQuery<HTMLElement>;
     /**
      * construct a new repertoire line

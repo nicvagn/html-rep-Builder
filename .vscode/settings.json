@@ -3,8 +3,8 @@
     "Embeddable",
     "regexes",
     "repjson",
-    "REPKEYS",
-    "REPKEYSJSON"
+    "MAIN",
+    "MAINJSON"
   ],
 
   "liveServer.settings.port": 5501,

@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************************/
-import { PGN } from "./chess-notation.mjs";
 /**
  * a wrapper around Chessground and chess.js
  */
@@ -36,13 +35,14 @@ export declare class BoardState {
      * @param boardSide can be "black" or "white"
      */
     changeOrientation(boardSide: string): void;
-    cfg: {
-        viewOnly: boolean;
-        pgn: string;
-    };
+    /**
+     * make a move
+     * @param move a chess move in Algebraic Notation
+     */
+    move(move: string): void;
     /**
      * change the pgn on the board
      * @param pgn the pgn to switch to
      */
-    setPGN(pgn: PGN): void;
+    moveBack(): void;
 }

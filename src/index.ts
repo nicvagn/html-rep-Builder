@@ -8,10 +8,9 @@ import { load } from "./save-controller";
 export const GAMEs = "Example-Games"; // for the saved games
 export const LINEs = "Repertoire-Lines"; // for lines
 export const REPs = "Repertoires";
-export const REPKEYS = "Repertoire-Builder";
+export const MAIN = "Repertoire-Builder";
 
 //import our styles, css in ts. We cooking with fire now
-import "../css/lichess-pgn-viewer.css";
 import "../css/styles.css";
 
 // eslint-disable-next-line no-var

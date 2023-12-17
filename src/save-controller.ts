@@ -17,16 +17,17 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************************/
 
-import { data, error } from "jquery";
+import { error } from "jquery";
 import { Repertoire } from "./repertoire.js";
-import { controller, REPKEYS } from "./index.js";
+import { controller } from "./index.js";
 import { ExampleGame } from "./example-game.js";
 import { RepertoireLine } from "./repertoire-line.js";
 import { Controller } from "./repertoire-controller.mjs";
+import { MAIN } from "./index.js"
 
 // $$$$$$$$$$$$$$$$$$$$ types $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
-type chessThingJSON = lineJSON | repJSON | gameJSON;
+//type chessThingJSON = lineJSON | repJSON | gameJSON;
 type chessThing = Repertoire | RepertoireLine | ExampleGame;
 
 // $$$$$$$$$$$$$$$$$$$ JSON interfaces $$$$$$$$$$$$$$$$$$$$$$$$
@@ -78,7 +79,7 @@ function putChessThingLocal(key: string, chessThing: chessThing): void
  * Repertoire, RepertoireLine, or ExampleGame from LS
  * @param key the string key to get from LS
  * @returns parsed JSON object found under the key
- */
+ *
 function getChessThing(key: string): chessThing
 {
   const grab = getLocal(key);
@@ -425,19 +426,19 @@ function rebuildRepList(repListStr: string): Array<Repertoire>
  */
 export function save(): void
 {
-  const repKeys = new Array<string>;
+  const main = new Array<string>;
   controller.repList.forEach(rep => {
     //save each rep
     saveRep(rep);
-    repKeys.push(rep.name);
+    main.push(rep.name);
   });
 
-  //create a stringified version of the repKeys
-  const strRepKeys = JSON.stringify(repKeys);
-  console.log("repKeys: " + strRepKeys);
+  //create a stringified version of the MAIN
+  const strMain = JSON.stringify(main);
+  console.log("MAIN: " + strMain);
 
-  //put the repKeys under key REPKEYS
-  localStorage.setItem(REPKEYS, strRepKeys);
+  //put the MAIN under key MAIN
+  localStorage.setItem(MAIN, strMain);
 
   alert("saved.");
 }
@@ -453,7 +454,7 @@ export function load(): Controller
   let repListSave:string;
   try
   {//try to get save data, if fails it returns false
-    repListSave = getLocal(REPKEYS);
+    repListSave = getLocal(MAIN);
     console.log("=== repList from LS ===");
     console.log("repListSave: " + repListSave);
 

@@ -47,12 +47,6 @@
         <li class="navbar__item">
           <button id="newRepTop" class="navbarBtn">New</button>
         </li>
-        <li class="navbar__item">
-          <button id="download" class="navbarBtn openRepNeeded">Download</button>
-        </li>
-        <li class="navbar__item">
-          <button id="saveBrowser" class="navbarBtn openRepNeeded">Save to browser</button>
-        </li>
       </ul>
     </div>
   </nav>
@@ -88,20 +82,26 @@
         <div id="gameList"> </div>
       </div>
 
-      <div>
-        <h1>Local <br>Repertoires:</h1>
+      <div class="column chessBoardView" id="linesColumn">
+        <h1 style="margin-top: 50px;">Repertoires:</h1>
 
         <div id="localReps"></div>
 
-        <a id="downloadLink" href="#" download="Repertoire.json">Download</a>
+        <label class="repBtn fileBtn">
+          <input id="fileInput" type="file" class="repBtn fileBtn"></input>
+          Load JSON file
+        </label>
+
+        <button id="saveBrowser" class="fileBtn repBtn openRepNeeded">Save to browser</button>
+        <button id="download" class="fileBtn repBtn openRepNeeded">Download</button>
       </div>
     </div>
   </div>
 
   <div id="newRepButtons" class="editRep chessBoardView openRepNeeded">
 
-    <button id="resetGames" class="chessBoardView editRep">reset games</button>
-    <button id="resetLines" class="chessBoardView editRep">reset lines</button>
+    <button id="resetGames" class="chessBoardView editRep">delete game</button>
+    <button id="resetLines" class="chessBoardView editRep">delete line</button>
     <button id="createStudy" class="chessBoardView editRep">create study</button>
     <button id="addStudy" class="studyInput chessBoardView editRep">add study</button>
 
