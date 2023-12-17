@@ -21,19 +21,18 @@ import { error } from "jquery";
 import { ExampleGame } from "./example-game.js";
 import { controller } from "./index.js";
 import { RepertoireLine } from "./repertoire-line.js";
+import { loadFromFile } from "./save-controller.js";
+import { Repertoire } from "./repertoire.js";
 
 //get the various NewRepertoire buttons
-const resetLinesBtn = document.getElementById("resetLines");
-const resetGamesBtn = document.getElementById("resetGames");
+const deleteModeBtn = document.getElementById("deleteMode");
 const addStudyBtn = document.getElementById("addStudy");
 const createStudyBtn = document.getElementById("createStudy");
 
+const fileInput = document.getElementById("fileInput") as HTMLInputElement;
+
 let editRepertoireController: EditRepertoireController; //so the listeners can access
 
-
-
-//for popup windows
-// const windowFeatures = "width=900,height=700,popup";
 
 
 /**
@@ -41,6 +40,10 @@ let editRepertoireController: EditRepertoireController; //so the listeners can a
  */
 export class EditRepertoireController
 {
+
+  /** $$$ MODES $$$ */
+  deleteMode: boolean = false; // the next chosen thing will be removed
+
 
   /**
    * html for dom manipulation
@@ -98,18 +101,23 @@ export class EditRepertoireController
   {
     console.log("EditRepertoireController constructed");
     //add listeners
-    resetLinesBtn?.addEventListener("click", buttonLnr);
-    resetGamesBtn?.addEventListener("click", buttonLnr);
+    deleteModeBtn?.addEventListener("click", buttonLnr);
     addStudyBtn?.addEventListener("click", buttonLnr)
     createStudyBtn?.addEventListener("click", buttonLnr);
 
+    //file input listener
+    fileInput?.addEventListener("cancel", () => {
+      console.log("File Input canceled.");
+    });
+    fileInput.addEventListener("change", fileInputLnr);
     //make a local file scope variable, so the button listeners can access the controller class
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     editRepertoireController = this;
   }
 
-
-
+  /**
+   * open lichess study creation
+   */
   public createStudy():void
   {
     //open the lichess study page
@@ -117,14 +125,99 @@ export class EditRepertoireController
     //the rest has to be handled by the user
   }
 
-  public resetLines():void
+  /**
+   * enter mode where the next rep, line or game chosen is removed
+   */
+  public enterDeleteMode():void
   {
-    //reset lines
+    //enter delete mode, set the delete mode bool
+    this.deleteMode = true;
+    $( "#nameLabel" ).text("Delete Mode");
+    $( "#nameLabel" ).css("background", "#DD1810");
+    hideEditRepertoire();
   }
 
-  public resetGames():void
+  /**
+   * exit delete mode
+   */
+  public exitDeleteMode(): void
   {
-    //reset games
+    //exit delete mode, set the delete mode bool
+    this.deleteMode = false;
+    $( "#nameLabel" ).text("nrv");
+    $( "#nameLabel" ).css("background", "#FDD401");
+  }
+
+  /**
+   * delete thing
+   * @param thing
+   */
+  public delete(thing: RepertoireLine | ExampleGame | Repertoire): void
+  {
+    const openRep = controller.getOpenRep(); // get open rep
+    if(thing instanceof Repertoire)
+    {
+      const newRepList = new Array<Repertoire>();
+      //go through rep list and copy all but our thing
+      controller.repList.forEach(rep => {
+        if(rep !== thing)
+        {
+          newRepList.push(rep);
+        }
+      });
+      controller.repList = newRepList;
+      controller.updateRepList();
+    }
+    else if( thing instanceof RepertoireLine )
+    {
+      const newLineList = new Array<RepertoireLine>();
+      const lineList = openRep.lineList;
+
+      lineList.forEach(line => {
+        if( line !== thing )
+        {
+          newLineList.push(line);
+        }
+      });
+      openRep.lineList = newLineList;
+      openRep.updateLineDisplay();
+    }
+    else if( thing instanceof ExampleGame )
+    {
+      const games = openRep.openLine.getGames();
+      const newGames = new Array<ExampleGame>();
+
+      games.forEach( game => {
+        if( game !== thing )
+        {
+          newGames.push(game);
+        }
+      });
+      openRep.openLine.refreshGameDisplay();
+    }
+    else
+    {
+      this.exitDeleteMode();
+      throw error("delete(thing): thing wae not Repertoire, RepertoireLine or ExampleGame: typeOf thing:" + typeof thing);
+    }
+
+    //turn off delete mode
+    this.exitDeleteMode();
+  }
+}
+
+/**
+ * listener for the fileInput input elem
+ */
+function fileInputLnr(): void
+{
+  if(fileInput.files?.length == 1)
+  {
+    loadFromFile(fileInput.files[0]);
+  }
+  else
+  {
+    alert("Exactly one file must be loaded. Nothing was done.")
   }
 }
 
@@ -134,17 +227,11 @@ export class EditRepertoireController
  */
 function buttonLnr(event: Event):void
 {
-  if(event.target == resetLinesBtn)
+  if(event.target == deleteModeBtn)
   {
-    console.log("reset Lines btn");
-    //reset lines
-    editRepertoireController.resetLines();
-  }
-  else if(event.target == resetGamesBtn)
-  {
-    console.log("reset games btn");
-    //reset games
-    editRepertoireController.resetGames();
+    console.log("delete mode games btn: DeleteMode entered6");
+    //enter delete mode
+    editRepertoireController.enterDeleteMode();
   }
   else if(event.target == addStudyBtn)
   {
@@ -178,9 +265,9 @@ export function chessBoardView(): void
   }
 }
 
-  /**
-   * make all the edit repertoire controls hidden
-   */
+/**
+ * make all the edit repertoire controls hidden
+ */
 function hideEditRepertoire(): void
 {
   console.log("edit rep controls should be hidden");
@@ -226,6 +313,7 @@ function showLinesToAddGameTo(game: ExampleGame): void
       btn.on( "click", {  line: openRep.lineList[x] },( event ) =>
       {
         const line = event.data.line;
+
         //when the button is pressed, ad the game to the chosen line
         console.log("line chosen to add game to: " + line.name)
         line.addGame(game);

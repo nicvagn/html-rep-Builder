@@ -130,20 +130,6 @@ export class RepertoireLine
 
 
   /**
-   * reset the gameList to empty
-   */
-  public resetGames(): void {
-    if (this.exampleGames.length == 0) {
-      return; // if game list is already empty
-    }
-    if (confirm("reset games?")) {
-      //confirm reset games
-      //make the example games list empty again
-      this.exampleGames = new Array<ExampleGame>();
-    }
-  }
-
-  /**
    * add an example game to this line
    * @param game ExampleGame to add
    */
@@ -165,10 +151,15 @@ export class RepertoireLine
   }
 
   /**
-   * open this line
+   * open this line, or delete it if delete mode is on
    */
-  public open(): void
+  public select(): void
   {
+    if( controller.editRepController.deleteMode )
+    {
+      //delete this line
+      controller.editRepController.delete(this);
+    }
    //update name display
    controller.setNameElement(this.name);
 

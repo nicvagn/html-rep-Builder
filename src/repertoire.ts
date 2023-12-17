@@ -170,7 +170,7 @@ export class Repertoire
       line.lineBtn.on("click", { line:line }, function (event)
       {
         //update this lines game display
-        event.data.line.open();
+        event.data.line.select();
         //update main board to display the game
       });
     });
@@ -227,7 +227,7 @@ export class Repertoire
     this.openLine = line;
     //set name label
     controller.setNameElement(line.name);
-    line.open();
+    line.select();
   }
 
   /**
@@ -257,7 +257,7 @@ export class Repertoire
      line.lineBtn.on("click", { line:line }, function (event)
        {
          console.log("line btn clicked with name: " + line.name);
-         event.data.line.open();
+         event.data.line.select();
        });
    });
 

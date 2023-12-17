@@ -55,7 +55,6 @@ export interface repJSON
   lineKeys: string[];
 }
 
-// $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 
 /**
@@ -74,40 +73,6 @@ function putChessThingLocal(key: string, chessThing: chessThing): void
   localStorage.setItem(key, strObject);
 }
 
-/**
- * get a chess thing's JSON from local Storage and use the key to get the
- * Repertoire, RepertoireLine, or ExampleGame from LS
- * @param key the string key to get from LS
- * @returns parsed JSON object found under the key
- *
-function getChessThing(key: string): chessThing
-{
-  const grab = getLocal(key);
-
-  const parsed = JSON.parse(grab) as chessThingJSON;
-
-  let chessThing;
-  //use a switch to determine the type of the fetch
-  switch(parsed.type)
-  {
-    case "game":
-      //it is an ExampleGame
-      chessThing = loadGame(key);
-      break;
-    case "line":
-      //it is a RepertoireLine
-      chessThing = loadLine(key);
-      break;
-    case "rep":
-      // if it is a Repertoire
-      chessThing = loadRep(key);
-      break;
-    default:
-      error("getChessThing(): chessThing is not of type line, rep, or game.");
-  }
-
-  return chessThing!;
-}
 
 /**
  * get the string stored in local storage under a key
@@ -418,8 +383,6 @@ function rebuildRepList(repListStr: string): Array<Repertoire>
   return loadedRepList;
 }
 
-
-
 /**
  * save repertoire keys/names so the state of the
  * controller can be reconstructed from the save
@@ -440,7 +403,7 @@ export function save(): void
   //put the MAIN under key MAIN
   localStorage.setItem(MAIN, strMain);
 
-  alert("saved.");
+  alert("Saved. This save is to the browser you are using.");
 }
 
 /**
@@ -474,28 +437,72 @@ export function load(): Controller
 }
 
 /**
+ * load from a json file provided by file input.
+ * @param save the save file, containing save JSON
+ * @returns true if successful loaded else false
+ */
+export async function loadFromFile(save: File): Promise<boolean>
+{
+  if( !confirm("This will overwrite current repertoires. Continue?") )
+  {
+    return false;
+  }
+
+  let saveJSON; //for the save
+  const fileText = await save.text();
+  console.log("file text: " + fileText);
+  try //to parse the gotten save, and set the local storage values accordingly
+  {
+    saveJSON = JSON.parse(fileText);
+    for (const [key, value] of Object.entries(saveJSON))
+    {
+      try
+      {
+        const currentValue = getLocal(key);
+        console.log("old value: " + currentValue)
+      }
+      catch ( error )
+      {
+        console.log("nothing found under key: " + key)
+      }
+      console.log("setting: key-"+ key + " value-" + value);
+      localStorage.setItem(key, value as string);
+    }
+  }
+  catch( error )
+  {
+    alert("File parse failure, error: " + error)
+    return false;
+  }
+
+  console.log("file text parsed as " + JSON.stringify(saveJSON));
+  return true;
+}
+
+/**
  * prepare a download of the repList, containing all the reps
  */
 export function download(): void
 {
-  const repListJSONstr = JSON.stringify(controller.repList);
+  //stringify LS
+  const LS = JSON.stringify(localStorage);
   //create blob
-  const repListBlob = new Blob([repListJSONstr], { type: 'application/json' });
+  const LSBlob = new Blob([LS], { type: 'application/json' });
 
   const fileName = "repertoires.json";
 
   //download by creating an <a> and clicking it
-  fetch(URL.createObjectURL(repListBlob), { method: 'get', mode: 'no-cors', referrerPolicy: 'no-referrer' })
+  fetch(URL.createObjectURL(LSBlob), { method: 'get', mode: 'no-cors', referrerPolicy: 'no-referrer' })
     .then(() => {
       const aElement = document.createElement('a');
       aElement.setAttribute('download', fileName);
       //create a URL whatever that is
-      const href = URL.createObjectURL(repListBlob);
+      const href = URL.createObjectURL(LSBlob);
       aElement.href = href;
       // aElement.setAttribute('href', href);
       aElement.setAttribute('target', '_blank');
       aElement.click();
       URL.revokeObjectURL(href);
       aElement.remove();
-      });
+    });
 }

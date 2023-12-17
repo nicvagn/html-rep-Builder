@@ -52,10 +52,6 @@ export declare class RepertoireLine {
      */
     static fromJSON(json: lineJSON): RepertoireLine;
     /**
-     * reset the gameList to empty
-     */
-    resetGames(): void;
-    /**
      * add an example game to this line
      * @param game ExampleGame to add
      */
@@ -66,9 +62,9 @@ export declare class RepertoireLine {
      */
     getGames(): ExampleGame[];
     /**
-     * open this line
+     * open this line, or delete it if delete mode is on
      */
-    open(): void;
+    select(): void;
     /**
      * refresh array gameList in html page
      */

@@ -73,6 +73,12 @@ export declare function save(): void;
  */
 export declare function load(): Controller;
 /**
+ * load from a json file provided by file input.
+ * @param save the save file, containing save JSON
+ * @returns true if successful loaded else false
+ */
+export declare function loadFromFile(save: File): Promise<boolean>;
+/**
  * prepare a download of the repList, containing all the reps
  */
 export declare function download(): void;

@@ -16,10 +16,15 @@
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************************/
+import { ExampleGame } from "./example-game.js";
+import { RepertoireLine } from "./repertoire-line.js";
+import { Repertoire } from "./repertoire.js";
 /**
  * helper for creating new reps
  */
 export declare class EditRepertoireController {
+    /** $$$ MODES $$$ */
+    deleteMode: boolean;
     /**
      * html for dom manipulation
      */
@@ -28,9 +33,23 @@ export declare class EditRepertoireController {
     readonly LinesToAddGameEmbed = "<div id=\"centerPane\" class=\"centerPane\">\n    <h2 style='margin: 15px 0; text-align: center;'>  Line options: </h2>\n  </div>";
     readonly repsToAddLineToEmbed = "<div id=\"centerPane\" class=\"centerPane\">\n    <h2 style='margin: 15px 0; text-align: center;'> Repertoire options: </h2>\n  </div> ";
     constructor();
+    /**
+     * open lichess study creation
+     */
     createStudy(): void;
-    resetLines(): void;
-    resetGames(): void;
+    /**
+     * enter mode where the next rep, line or game chosen is removed
+     */
+    enterDeleteMode(): void;
+    /**
+     * exit delete mode
+     */
+    exitDeleteMode(): void;
+    /**
+     * delete thing
+     * @param thing
+     */
+    delete(thing: RepertoireLine | ExampleGame | Repertoire): void;
 }
 /**
  * reset back to chessboard view
