@@ -201,10 +201,12 @@ export class Controller
   }
 
   /**
-   * update list of repertoires we can access
+   * update list of repertoires we can access. check LS for new reps
    */
   public updateRepList(): void
   {
+
+    //todo make this load reps from LS
     //clear the rep list
     this.localReps.html('<div id="localReps"></div>');
     for(let x = 0; x < this.repList.length; x++)
