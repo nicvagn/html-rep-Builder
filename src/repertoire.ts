@@ -127,7 +127,7 @@ export class Repertoire
         id: this.name,
         rep: this
         });
-    this.repertoireBtn.addClass("repBtn");
+    this.repertoireBtn.addClass("repBtn delete-mode");
 
     //add lister
     this.repertoireBtn.on("click", { rep: this }, function (event)

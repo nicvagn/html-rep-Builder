@@ -132,8 +132,11 @@ export class EditRepertoireController
   {
     //enter delete mode, set the delete mode bool
     this.deleteMode = true;
-    $( "#nameLabel" ).text("Delete Mode");
+    $( "#nameLabel" ).text("delete Mode");
     $( "#nameLabel" ).css("background", "#DD1810");
+    $( "#delete-mode" ).css("visibility", "visible" );
+    $( "button:not(.delete-mode)" ).css("visibility", "hidden"); //hide all not delete mode shit
+    $( "label" ).css("visibility", "hidden"); //and file-input
     hideEditRepertoire();
   }
 
@@ -146,6 +149,8 @@ export class EditRepertoireController
     this.deleteMode = false;
     $( "#nameLabel" ).text("nrv");
     $( "#nameLabel" ).css("background", "#FDD401");
+    $( "button" ).css("visibility", "visible");
+    $( "label" ).css("visibility", "visible");
   }
 
   /**
@@ -249,9 +254,16 @@ function buttonLnr(event: Event):void
 {
   if(event.target == deleteModeBtn)
   {
-    console.log("delete mode games btn: DeleteMode entered");
+    console.log("delete mode games btn: DeleteMode toggled");
     //enter delete mode
-    editRepertoireController.enterDeleteMode();
+    if( editRepertoireController.deleteMode )//if delete mode is on, turn it off
+    {
+      editRepertoireController.exitDeleteMode();
+    }
+    else //turn it on
+    {
+      editRepertoireController.enterDeleteMode();
+    }
   }
   else if(event.target == addStudyBtn)
   {
@@ -294,6 +306,12 @@ function hideEditRepertoire(): void
   console.log(".editRep class stuff " + $( ".editRep" ));
   //hide the edit rep controls
   $( ".editRep" ).css("visibility", "hidden");
+
+  //if delete mode is on, don't hide the toggle
+  if( controller.editRepController.deleteMode )
+  {
+    $( "#deleteMode" ).css("visibility", "visible");
+  }
 }
 
 /**

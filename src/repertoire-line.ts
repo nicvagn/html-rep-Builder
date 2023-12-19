@@ -69,7 +69,7 @@ export class RepertoireLine
       id: this.name,
       line:this
     });
-    this.lineBtn.addClass("repLine");
+    this.lineBtn.addClass("repLine delete-mode");
   }
 
   /**
