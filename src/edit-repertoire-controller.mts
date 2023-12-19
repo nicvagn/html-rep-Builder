@@ -295,6 +295,9 @@ export function chessBoardView(): void
   {
     controller.setNameElement(openRepName);
   }
+
+  //ensure side panels are visible
+  showColumns();
 }
 
 /**
@@ -505,14 +508,30 @@ function setAddStudyListeners(): void
 }
 
 /**
+ * hide columns
+ */
+function hideColumns(): void
+{
+  //hide lines and rep buttons columns
+  $( ".column" ).css("display", "none");
+}
+
+function showColumns(): void
+{
+  //hide lines and rep buttons
+  $( ".column" ).css("display", "flex");
+}
+
+/**
  * prepare the embed
  */
 function showAddStudy(): void
 {
   console.log("show add study entered");
 
-  //hide the edit rep controls
+  //hide the edit rep controls and side columns
   hideEditRepertoire();
+  hideColumns();
 
   //replace center html with the study input controls
   $( "#centerPane" ).replaceWith(editRepertoireController.addStudyEmbed);

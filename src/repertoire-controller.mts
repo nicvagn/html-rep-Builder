@@ -26,7 +26,7 @@ import { error } from "jquery";
 
 import { controller, getEmbeddingStr } from "./index.js";
 import { save, download } from "./save-controller.js";
-
+/*
 const newRepertoirePane =
 `
 <div id="newRepControls">
@@ -48,7 +48,7 @@ const newRepertoirePane =
   <button id="newRepControlSubmit"> submit </button>
 </div>
 `
-
+*/
 
 
 /**
