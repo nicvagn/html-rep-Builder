@@ -19,7 +19,9 @@
 
 //nrv stuff
 import { ExampleGame } from "./example-game.js";
-import { controller } from "./index.js";
+import { checkDeleteMode } from "./index.js";
+import { EditRepertoireController } from "./edit-repertoire-controller.mjs";
+import { Controller } from "./repertoire-controller.mjs";
 import { lineJSON, loadGame } from "./save-controller.js";
 /**
  * a chess repertoire line. It's primary use is in a rep builder GUI, so it needs to have a visual
@@ -155,17 +157,17 @@ export class RepertoireLine
    */
   public select(): void
   {
-    if( controller.editRepController.deleteMode )
+    if( checkDeleteMode() )
     {
       //delete this line
-      controller.editRepController.delete(this);
+      EditRepertoireController.delete(this);
     }
    //update name display
-   controller.setNameElement(this.name);
+   Controller.setNameElement(this.name);
 
    console.log("================ line opened =====================");
 
-   controller.changeStudy(this); //change the main board to this study
+   Controller.changeStudy(this); //change the main board to this study
 
    this.refreshGameDisplay(); //refresh the game display to be current
   }

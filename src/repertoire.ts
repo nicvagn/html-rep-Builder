@@ -18,8 +18,10 @@
  *********************************************************************************/
 
 import { RepertoireLine } from "./repertoire-line.js";
-import { controller } from "./index.js";
+import { checkDeleteMode, controller } from "./index.js";
 import { saveRep } from "./save-controller.js";
+import { EditRepertoireController } from "./edit-repertoire-controller.mjs";
+import { Controller } from "./repertoire-controller.mjs";
 import { repJSON, loadLine } from "./save-controller.js";
 
 /**
@@ -133,9 +135,9 @@ export class Repertoire
     this.repertoireBtn.on("click", { rep: this }, function (event)
         {
           //if the delete mode is on, delete this rep
-          if(controller.editRepController.deleteMode)
+          if( checkDeleteMode() )
           {
-            controller.editRepController.delete(event.data.rep);
+            EditRepertoireController.delete(event.data.rep);
             controller.updateRepList();
           }
           else
@@ -235,7 +237,7 @@ export class Repertoire
   {
     this.openLine = line;
     //set name label
-    controller.setNameElement(line.name);
+    Controller.setNameElement(line.name);
     line.select();
   }
 
@@ -249,8 +251,8 @@ export class Repertoire
     //set this an open rep
     controller.openRep = this;
     //change the displays
-    controller.setNameElement(this.name!);
-    controller.changeStudy(this);
+    Controller.setNameElement(this.name!);
+    Controller.changeStudy(this);
 
     controller.updateOpenRepLists(); //reset the line and game list
 
@@ -266,6 +268,7 @@ export class Repertoire
      line.lineBtn.on("click", { line:line }, function (event)
        {
          console.log("line btn clicked with name: " + line.name);
+         //select this line. This does different stuff depending on the mode
          event.data.line.select();
        });
    });

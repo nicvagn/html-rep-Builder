@@ -18,3 +18,16 @@ export declare function getEmbeddingStr(URLInput: string): string;
  * show the Repertoire Builder splash screen.
  */
 export declare function showSplashScreen(): void;
+/**
+ * exit delete mode
+ */
+export declare function exitDeleteMode(): void;
+/**
+ * enter a mode where the next deletable thing chosen is deleted
+ */
+export declare function enterDeleteMode(): void;
+/**
+ * check the delete mode bool
+ * @returns deleteMode
+ */
+export declare function checkDeleteMode(): boolean;

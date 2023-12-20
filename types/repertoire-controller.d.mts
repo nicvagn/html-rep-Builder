@@ -37,6 +37,15 @@ export declare class Controller {
      */
     constructor(repList?: Repertoire[]);
     /**
+     * reset back to chessboard view
+     */
+    static chessBoardView(): void;
+    /**
+     * hide columns
+     */
+    static hideColumns(): void;
+    static showColumns(): void;
+    /**
      * load a controller with an array of repertoires already loaded.
      * @param repList the repertoires that are saved
      */
@@ -49,7 +58,7 @@ export declare class Controller {
     /**
      * set the name element
      */
-    setNameElement(name: string): void;
+    static setNameElement(name: string): void;
     /**
      * get currently open repertoire, throws error if no open rep
      * @returns the open rep
@@ -69,10 +78,6 @@ export declare class Controller {
      */
     updateRepList(): void;
     /**
-     * set up the new repertoire controls and center pane
-     */
-    showNewRepPane(): void;
-    /**
      * make a new repertoire, with no user input and do not set it as the open rep
      * or clear the lines
      * @returns a new rep
@@ -81,11 +86,11 @@ export declare class Controller {
     /**
      * display all the controls for editing a rep
      */
-    editRepertoire(): void;
+    static editRepertoire(): void;
     /**
      * change the study on the main board to a provided chess thing's study
      * @param chessThing the chessThing with a .studyURL to add to the main board
      */
-    changeStudy(chessThing: RepertoireLine | ExampleGame | Repertoire): void;
+    static changeStudy(chessThing: RepertoireLine | ExampleGame | Repertoire): void;
     toString(): string;
 }

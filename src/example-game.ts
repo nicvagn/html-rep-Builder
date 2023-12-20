@@ -18,7 +18,8 @@
  *********************************************************************************/
 
 //import { event } from "jquery";
-import { controller } from "./index.js";
+//import { controller } from "./index.js";
+import { Controller } from "./repertoire-controller.mjs";
 import { gameJSON } from "./save-controller.js"
 //import { RepertoireLine } from "./repertoire-line.js";
 
@@ -76,11 +77,11 @@ export class ExampleGame
     //needed for calling from the dom buttons
     if(game == undefined)
     {
-      controller.changeStudy(this);
+      Controller.changeStudy(this);
     }
     else
     {
-      controller.changeStudy(game);
+      Controller.changeStudy(game);
     }
   }
 

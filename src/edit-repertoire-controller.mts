@@ -19,19 +19,18 @@
 
 import { error } from "jquery";
 import { ExampleGame } from "./example-game.js";
-import { controller, showSplashScreen } from "./index.js";
+import { controller, showSplashScreen, enterDeleteMode, exitDeleteMode, checkDeleteMode } from "./index.js";
 import { RepertoireLine } from "./repertoire-line.js";
 import { loadFromFile } from "./save-controller.js";
 import { Repertoire } from "./repertoire.js";
+import { Controller } from "./repertoire-controller.mjs";
 
 //get the various NewRepertoire buttons
 const deleteModeBtn = document.getElementById("deleteMode");
 const addStudyBtn = document.getElementById("addStudy");
 const createStudyBtn = document.getElementById("createStudy");
 
-const fileInput = $("#fileInput");
-
-let editRepertoireController: EditRepertoireController; //so the listeners can access
+const fileInput = $("#fileInput"); //for ease of coding
 
 
 
@@ -40,15 +39,10 @@ let editRepertoireController: EditRepertoireController; //so the listeners can a
  */
 export class EditRepertoireController
 {
-
-  /** $$$ MODES $$$ */
-  deleteMode: boolean = false; // the next chosen thing will be removed
-
-
   /**
    * html for dom manipulation
    */
-  readonly addStudyEmbed =
+  static readonly addStudyEmbed =
   `<div id="centerPane" class="centerPane">
     <div id="addStudyEmbed">
 
@@ -78,7 +72,7 @@ export class EditRepertoireController
     </div>
   </div>`
 
-  readonly chessBoardEmbed =
+  static readonly chessBoardEmbed =
   `<div id="centerPane" class="centerPane">
 
     <div id="chessgroundContainer" >
@@ -87,12 +81,34 @@ export class EditRepertoireController
     </div>
   </div>`
 
-  readonly LinesToAddGameEmbed =
+  static readonly newRepertoirePane =
+  `
+  <div id="newRepControls">
+    <div id="URLInstructions" style="margin: 15px auto;" >
+      <h3 style="margin: 3px auto;">The studies current chapter URL is what is needed. It can be found under at
+        lichess.org/studies/... here: </h3>
+      <br>
+      <img style="margin: 15px auto;" src="./images/url_location.png">
+    </div>
+
+    <h2>Repertoire Creation</h2>
+    <br>
+    <label style="text-align: left" for="repertoireName"> Repertoire  Name: </label>
+    <input type="text" id="repertoireName" name="repertoireName">
+    <br>
+    <label style="text-align: left" for="repertoireURL">Main chapter URL: </label>
+    <input type="text"  id="repertoireURL" name="repertoireURL">
+    <br>
+    <button id="newRepControlSubmit"> submit </button>
+  </div>
+  `
+
+  static readonly LinesToAddGameEmbed =
   `<div id="centerPane" class="centerPane">
     <h2 style='margin: 15px 0; text-align: center;'>  Line options: </h2>
   </div>`
 
-  readonly repsToAddLineToEmbed =
+  static readonly repsToAddLineToEmbed =
   `<div id="centerPane" class="centerPane">
     <h2 style='margin: 15px 0; text-align: center;'> Repertoire options: </h2>
   </div> `
@@ -101,24 +117,59 @@ export class EditRepertoireController
   {
     console.log("EditRepertoireController constructed");
     //add listeners
-    deleteModeBtn?.addEventListener("click", buttonLnr);
-    addStudyBtn?.addEventListener("click", buttonLnr)
-    createStudyBtn?.addEventListener("click", buttonLnr);
+    deleteModeBtn?.addEventListener("click", EditRepertoireController.buttonLnr);
+    addStudyBtn?.addEventListener("click", EditRepertoireController.buttonLnr)
+    createStudyBtn?.addEventListener("click", EditRepertoireController.buttonLnr);
 
     //file input listener
     fileInput.on("cancel", () => {
       console.log("File Input canceled.");
     });
-    fileInput.on("change", fileInputLnr);
-    //make a local file scope variable, so the button listeners can access the controller class
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    editRepertoireController = this;
+    fileInput.on("change", EditRepertoireController.fileInputLnr);
+  }
+
+  /**
+   * set up the new repertoire controls and center pane
+   */
+  public static showNewRepPane(): void
+  {
+    $( "#centerPane" ).html(EditRepertoireController.newRepertoirePane);
+    $( "#newRepControlSubmit" ).on("click", () => {
+      const studyURLInput:HTMLInputElement | null = document.getElementById( "repertoireURL" ) as HTMLInputElement;
+      const studyNameInput:HTMLInputElement | null = document.getElementById( "repertoireName" ) as HTMLInputElement;
+
+      //get the value of the input felids
+      const name = studyNameInput.value;
+      const url = studyURLInput.value;
+
+      if(name == null)
+      {
+        alert("Name can not be null.");
+      }
+      if(url == null)
+      {
+        alert("url can not be null.");
+      }
+
+      Controller.chessBoardView();
+      if(name != null && url != null)
+      {
+        const newRep = controller.newRepertoire(name, url);
+        //open the new rep
+        controller.openRepertoire(newRep);
+        console.log("created a new rep with name: " + newRep.name);
+      }
+      else
+      {
+        throw error(" if(name != null && url != null) did not pass")
+      }
+    });
   }
 
   /**
    * open lichess study creation
    */
-  public createStudy():void
+  public static createStudy():void
   {
     //open the lichess study page
     window.open("https://lichess.org/study");
@@ -126,38 +177,10 @@ export class EditRepertoireController
   }
 
   /**
-   * enter mode where the next rep, line or game chosen is removed
-   */
-  public enterDeleteMode():void
-  {
-    //enter delete mode, set the delete mode bool
-    this.deleteMode = true;
-    $( "#nameLabel" ).text("delete Mode");
-    $( "#nameLabel" ).css("background", "#DD1810");
-    $( "#delete-mode" ).css("visibility", "visible" );
-    $( "button:not(.delete-mode)" ).css("visibility", "hidden"); //hide all not delete mode shit
-    $( "label" ).css("visibility", "hidden"); //and file-input
-    hideEditRepertoire();
-  }
-
-  /**
-   * exit delete mode
-   */
-  public exitDeleteMode(): void
-  {
-    //exit delete mode, set the delete mode bool
-    this.deleteMode = false;
-    $( "#nameLabel" ).text("nrv");
-    $( "#nameLabel" ).css("background", "#FDD401");
-    $( "button" ).css("visibility", "visible");
-    $( "label" ).css("visibility", "visible");
-  }
-
-  /**
    * delete thing
    * @param thing
    */
-  public delete(thing: RepertoireLine | ExampleGame | Repertoire): void
+  public static delete(thing: RepertoireLine | ExampleGame | Repertoire): void
   {
     console.log("delete mode entered with thing: " + thing);
     const openRep = controller.getOpenRep(); // get open rep
@@ -222,147 +245,179 @@ export class EditRepertoireController
     }
     else
     {
-      this.exitDeleteMode();
+      exitDeleteMode();
       throw error("delete(thing): thing wae not Repertoire, RepertoireLine or ExampleGame: typeOf thing:" + typeof thing);
     }
 
     //turn off delete mode
-    this.exitDeleteMode();
+    exitDeleteMode();
   }
-}
 
-/**
- * listener for the fileInput input elem
- */
-function fileInputLnr(): void
-{
-  if(fileInput.prop("files").length == 1)
-  {
-    loadFromFile(fileInput.prop("files")[0]);
-  }
-  else
-  {
-    alert("Exactly one file must be loaded. Nothing was done.")
-  }
-}
 
-/**
- * the listener for the addGame and addLine buttons
- * @param event the event that triggered
- */
-function buttonLnr(event: Event):void
-{
-  if(event.target == deleteModeBtn)
+  /**
+   * listener for the fileInput input elem
+   */
+  public static fileInputLnr(): void
   {
-    console.log("delete mode games btn: DeleteMode toggled");
-    //enter delete mode
-    if( editRepertoireController.deleteMode )//if delete mode is on, turn it off
+    if(fileInput.prop("files").length == 1)
     {
-      editRepertoireController.exitDeleteMode();
+      loadFromFile(fileInput.prop("files")[0]);
     }
-    else //turn it on
+    else
     {
-      editRepertoireController.enterDeleteMode();
+      alert("Exactly one file must be loaded. Nothing was done.")
     }
   }
-  else if(event.target == addStudyBtn)
-  {
-    console.log("study input clicked");
-    showAddStudy();
-  }
-  else if(event.target == createStudyBtn)
-  {
-    console.log("createStudyBtn clicked");
-    editRepertoireController.createStudy();
-  }
-  else
-  {
-    throw error("event target was: " + event.target + " this is not one of the buttons.");
-  }
-}
 
-/**
- * reset back to chessboard view
- */
-export function chessBoardView(): void
-{
-  $( ".chessBoardView" ).css("visibility", "visible");
-  //reset the center pane
-  $( "#centerPane" ).replaceWith(editRepertoireController.chessBoardEmbed);
-
-  const openRepName = controller.openRep?.name;
-  if(openRepName) //if open rep name is a value != false
+  /**
+   * the listener for the addGame and addLine buttons
+   * @param event the event that triggered
+   */
+  public static buttonLnr(event: Event):void
   {
-    controller.setNameElement(openRepName);
-  }
-
-  //ensure side panels are visible
-  showColumns();
-}
-
-/**
- * make all the edit repertoire controls hidden
- */
-function hideEditRepertoire(): void
-{
-  console.log("edit rep controls should be hidden");
-  console.log(".editRep class stuff " + $( ".editRep" ));
-  //hide the edit rep controls
-  $( ".editRep" ).css("visibility", "hidden");
-
-  //if delete mode is on, don't hide the toggle
-  if( controller.editRepController.deleteMode )
-  {
-    $( "#deleteMode" ).css("visibility", "visible");
-  }
-}
-
-/**
- * show the lines you can add an example game to
- * @param game example game to add on click
- */
-function showLinesToAddGameTo(game: ExampleGame): void
-{
-  console.log("showLinesToAddGameTo entered with a game named: " + game.name);
-  //hide the edit rep controls
-  hideEditRepertoire();
-  const openRep = controller.openRep;
-  if(openRep == null)
-  {
-    throw error("No open rep to add this game to")
-  }
-
-  //set up the center pane
-  $( "#centerPane" ).replaceWith(editRepertoireController.LinesToAddGameEmbed)
-
-  //if there are no lines
-  if(openRep.lineList == null || openRep.lineList.length == 0)
-  {
-    alert("you have to have a line to add a game to.");
-  }
-  else
-  {
-    for(let x = 0; x < openRep.lineList.length; x++)
+    if(event.target == deleteModeBtn)
     {
-      //create a button with each of the line names
+      console.log("delete mode games btn: DeleteMode toggled");
+      //enter delete mode
+      if( checkDeleteMode() )//if delete mode is on, turn it off
+      {
+        exitDeleteMode();
+      }
+      else //turn it on
+      {
+        enterDeleteMode();
+      }
+    }
+    else if(event.target == addStudyBtn)
+    {
+      console.log("study input clicked");
+      EditRepertoireController.showAddStudy();
+    }
+    else if(event.target == createStudyBtn)
+    {
+      console.log("createStudyBtn clicked");
+      EditRepertoireController.createStudy();
+    }
+    else
+    {
+      throw error("event target was: " + event.target + " this is not one of the buttons.");
+    }
+  }
+
+
+
+  /**
+   * make all the edit repertoire controls hidden
+   */
+  public static hideEditRepertoire(): void
+  {
+    console.log("edit rep controls should be hidden");
+    console.log(".editRep class stuff " + $( ".editRep" ));
+    //hide the edit rep controls
+    $( ".editRep" ).css("visibility", "hidden");
+
+    //if delete mode is on, don't hide the toggle
+    if( checkDeleteMode() )
+    {
+      $( "#deleteMode" ).css("visibility", "visible");
+    }
+  }
+
+  /**
+   * show the lines you can add an example game to
+   * @param game example game to add on click
+   */
+  public static showLinesToAddGameTo(game: ExampleGame): void
+  {
+    console.log("showLinesToAddGameTo entered with a game named: " + game.name);
+    //hide the edit rep controls
+    this.hideEditRepertoire();
+    const openRep = controller.openRep;
+    if(openRep == null)
+    {
+      throw error("No open rep to add this game to")
+    }
+
+    //set up the center pane
+    $( "#centerPane" ).replaceWith(this.LinesToAddGameEmbed)
+
+    //if there are no lines
+    if(openRep.lineList == null || openRep.lineList.length == 0)
+    {
+      alert("you have to have a line to add a game to.");
+    }
+    else
+    {
+      for(let x = 0; x < openRep.lineList.length; x++)
+      {
+        //create a button with each of the line names
+        const btn = $("<button/>",
+        {
+          text: openRep.lineList[x].name,
+        });
+
+        //attach event handler to the game. Event handler adds game to line
+        btn.on( "click", {  line: openRep.lineList[x] },( event ) =>
+        {
+          const line = event.data.line;
+
+          //when the button is pressed, ad the game to the chosen line
+          console.log("line chosen to add game to: " + line.name)
+          line.addGame(game);
+
+          //return to the chessboard view with that game opened
+          Controller.chessBoardView();
+
+          game.showGame(); //display the game on the main board
+          controller.updateOpenRepLists();
+        });
+
+        $(btn).css(
+          {
+            "margin": "0 auto",
+            "min-width": "450px",
+            "width": "fit-content",
+            "hight": "45px"
+          });
+
+        $( "#centerPane" ).append(btn);
+      }
+    }
+  }
+
+  /**
+   * display a list of repertoires repButtons that you can add line to
+   * @param line the line to add to the chosen rep
+   */
+  public static showRepsToAddLineTo(line: RepertoireLine): void
+  {
+    //hide the edit rep controls
+    this.hideEditRepertoire();
+
+    $( "#centerPane" ).html(this.repsToAddLineToEmbed);
+    console.log( $( "#centerPane" ).css );
+    for(let x = 0; x < controller.repList.length; x++)
+    {
+      //create a button with each of the rep names
       const btn = $("<button/>",
       {
-        text: openRep.lineList[x].name,
+        text: controller.repList[x].name,
+        //add a lister to add the line to that rep
       });
 
       //attach event handler to the game. Event handler adds game to line
-      btn.on( "click", {  line: openRep.lineList[x] },( event ) =>
+      btn.on( "click", {  rep:controller.repList[x] },( event ) =>
       {
-        const line = event.data.line;
-
-        //when the button is pressed, ad the game to the chosen line
-        console.log("line chosen to add game to: " + line.name)
-        line.addGame(game);
+        const rep = event.data.rep;
+        //when the button is pressed, ad the line to the chosen rep
+        console.log("rep chosen to add line to: " + rep.name);
+        rep.addLine(line);
 
         //return to the chessboard view with that game opened
-        chessBoardView();
+        Controller.chessBoardView();
 
-        game.showGame(); //display the game on the main board
+        Controller.changeStudy(line); //display the game on the main board
+
         controller.updateOpenRepLists();
       });
 
@@ -377,89 +432,40 @@ function showLinesToAddGameTo(game: ExampleGame): void
       $( "#centerPane" ).append(btn);
     }
   }
-}
 
-/**
- * display a list of repertoires repButtons that you can add line to
- * @param line the line to add to the chosen rep
- */
-function showRepsToAddLineTo(line: RepertoireLine): void
-{
-  //hide the edit rep controls
-  hideEditRepertoire();
-
-  $( "#centerPane" ).html(editRepertoireController.repsToAddLineToEmbed);
-  console.log( $( "#centerPane" ).css );
-  for(let x = 0; x < controller.repList.length; x++)
+  /**
+   * add the listeners to the add study buttons, etc
+   */
+  public static setAddStudyListeners(): void
   {
-    //create a button with each of the rep names
-    const btn = $("<button/>",
+    console.log("setting addStudy listeners");
+
+    const addUrlBtn = $( "#addURL" );
+
+    if(addUrlBtn == null)
     {
-      text: controller.repList[x].name,
-      //add a lister to add the line to that rep
-    });
-
-    //attach event handler to the game. Event handler adds game to line
-    btn.on( "click", {  rep:controller.repList[x] },( event ) =>
-    {
-      const rep = event.data.rep;
-      //when the button is pressed, ad the line to the chosen rep
-      console.log("rep chosen to add line to: " + rep.name);
-      rep.addLine(line);
-
-      //return to the chessboard view with that game opened
-      chessBoardView();
-
-      controller.changeStudy(line); //display the game on the main board
-
-      controller.updateOpenRepLists();
-    });
-
-    $(btn).css(
-      {
-        "margin": "0 auto",
-        "min-width": "450px",
-        "width": "fit-content",
-        "hight": "45px"
-      });
-
-    $( "#centerPane" ).append(btn);
-  }
-}
-
-/**
- * add the listeners to the add study buttons, etc
- */
-function setAddStudyListeners(): void
-{
-  console.log("setting addStudy listeners");
-
-  const addUrlBtn = $( "#addURL" );
-
-  if(addUrlBtn == null)
-  {
-    throw error("addUrlBtn in null");
-  }
-
-  //add lister to the addURL button
-  addUrlBtn.on("click", () =>
-  {
-    //hide instructions
-    $( "#URLInstructions" ).css("display", "none");
-
-    //get study url
-    const studyURLInput:HTMLInputElement| null = document.getElementById( "studyTextField" ) as HTMLInputElement;
-
-    if(studyURLInput == null)
-    {
-      throw error("studyURLInput is null");
+      throw error("addUrlBtn in null");
     }
 
-    //get the embedding URL for given input
-    const studyURL = studyURLInput.value;
+    //add lister to the addURL button
+    addUrlBtn.on("click", () =>
+    {
+      //hide instructions
+      $( "#URLInstructions" ).css("display", "none");
 
-    const isLine = document.getElementById("lineToggle") as HTMLInputElement;
-    console.log("is the line toggle checked? (if it exists, true): " + isLine.checked);
+      //get study url
+      const studyURLInput:HTMLInputElement| null = document.getElementById( "studyTextField" ) as HTMLInputElement;
+
+      if(studyURLInput == null)
+      {
+        throw error("studyURLInput is null");
+      }
+
+      //get the embedding URL for given input
+      const studyURL = studyURLInput.value;
+
+      const isLine = document.getElementById("lineToggle") as HTMLInputElement;
+      console.log("is the line toggle checked? (if it exists, true): " + isLine.checked);
 
 
     if(typeof studyURL === "string" && studyURL != null) // if url is typeof string
@@ -477,7 +483,7 @@ function setAddStudyListeners(): void
         //construct line
         const line = new RepertoireLine(lineName, studyURL);
 
-        showRepsToAddLineTo(line);
+        this.showRepsToAddLineTo(line);
       }
       else  // must be a game
       {
@@ -493,53 +499,39 @@ function setAddStudyListeners(): void
         const game = new ExampleGame(gameName, studyURL);
 
         //what line should we add this to?
-        showLinesToAddGameTo(game);
+        this.showLinesToAddGameTo(game);
         //now, we wait for the uses to click a line then update the lists
         controller.updateOpenRepLists();
+        }
       }
-    }
-  });
+    });
 
-  //when done is clicked return to the chessboard view
-  $( "#done" ).on("click", () =>
+    //when done is clicked return to the chessboard view
+    $( "#done" ).on("click", () =>
+    {
+      Controller.chessBoardView();
+    });
+  }
+
+  /**
+   * prepare the embed
+   */
+  public static showAddStudy(): void
   {
-    chessBoardView();
-  });
-}
+    console.log("show add study entered");
 
-/**
- * hide columns
- */
-function hideColumns(): void
-{
-  //hide lines and rep buttons columns
-  $( ".column" ).css("display", "none");
-}
+    //hide the edit rep controls and side columns
+    this.hideEditRepertoire();
+    Controller.hideColumns();
 
-function showColumns(): void
-{
-  //hide lines and rep buttons
-  $( ".column" ).css("display", "flex");
-}
+    //replace center html with the study input controls
+    $( "#centerPane" ).replaceWith(this.addStudyEmbed);
 
-/**
- * prepare the embed
- */
-function showAddStudy(): void
-{
-  console.log("show add study entered");
+    //hide chessboard view
+    $( ".chessboardView" ).css("visibility", "hidden");
 
-  //hide the edit rep controls and side columns
-  hideEditRepertoire();
-  hideColumns();
-
-  //replace center html with the study input controls
-  $( "#centerPane" ).replaceWith(editRepertoireController.addStudyEmbed);
-
-  //hide chessboard view
-  $( ".chessboardView" ).css("visibility", "hidden");
-
-  //add listeners to new content
-  setAddStudyListeners();
+    //add listeners to new content
+    this.setAddStudyListeners();
+  }
 }
 

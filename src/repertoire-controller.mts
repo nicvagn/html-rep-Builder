@@ -19,36 +19,13 @@
 
 //nrv stuff
 import { Repertoire } from "./repertoire.js";
-import { EditRepertoireController, chessBoardView } from "./edit-repertoire-controller.mjs";
+import { EditRepertoireController } from "./edit-repertoire-controller.mjs";
 import { RepertoireLine } from "./repertoire-line.js";
 import { ExampleGame } from "./example-game.js";
 import { error } from "jquery";
 
 import { controller, getEmbeddingStr } from "./index.js";
 import { save, download } from "./save-controller.js";
-/*
-const newRepertoirePane =
-`
-<div id="newRepControls">
-  <div id="URLInstructions" style="margin: 15px auto;" >
-    <h3 style="margin: 3px auto;">The studies current chapter URL is what is needed. It can be found under at
-      lichess.org/studies/... here: </h3>
-    <br>
-    <img style="margin: 15px auto;" src="./images/url_location.png">
-  </div>
-
-  <h2>Repertoire Creation</h2>
-  <br>
-  <label style="text-align: left" for="repertoireName"> Repertoire  Name: </label>
-  <input type="text" id="repertoireName" name="repertoireName">
-  <br>
-  <label style="text-align: left" for="repertoireURL">Main chapter URL: </label>
-  <input type="text"  id="repertoireURL" name="repertoireURL">
-  <br>
-  <button id="newRepControlSubmit"> submit </button>
-</div>
-`
-*/
 
 
 /**
@@ -84,16 +61,16 @@ export class Controller
 
     this.boardSpot = $( "#chessground" ); //the place to init the chessboard
     //add event handlers to top btn's
-    $("#newRepTop").on("click", { controller: this }, function (event)
+    $("#newRepTop").on("click", function ()
     {
       //make new rep
-      event.data.controller.showNewRepPane();
+      EditRepertoireController.showNewRepPane();
     });
 
-    $("#editRepTop").on("click", { controller: this }, function (event)
+    $("#editRepTop").on("click", function ()
     {
       //show all the controls for editing
-      event.data.controller.editRepertoire();
+      Controller.editRepertoire();
     });
 
     $( "#saveBrowser" ).on("click", () =>
@@ -113,6 +90,41 @@ export class Controller
       throw error("ERROR: ============= boardSpot is null ======================");
     }
   }
+
+  /**
+   * reset back to chessboard view
+   */
+  public static chessBoardView(): void
+  {
+    $( ".chessBoardView" ).css("visibility", "visible");
+    //reset the center pane
+    $( "#centerPane" ).replaceWith(EditRepertoireController.chessBoardEmbed);
+
+    const openRepName = controller.openRep?.name;
+    if(openRepName) //if open rep name is a value != false
+    {
+      Controller.setNameElement(openRepName);
+    }
+
+    //ensure side panels are visible
+    this.showColumns();
+  }
+
+  /**
+   * hide columns
+   */
+  public static hideColumns(): void
+  {
+    //hide lines and rep buttons columns
+    $( ".column" ).css("display", "none");
+  }
+
+  public static showColumns(): void
+  {
+    //hide lines and rep buttons
+    $( ".column" ).css("display", "flex");
+  }
+
 
   /**
    * load a controller with an array of repertoires already loaded.
@@ -139,7 +151,7 @@ export class Controller
   /**
    * set the name element
    */
-  public setNameElement(name: string): void
+  public static setNameElement(name: string): void
   {
     console.log("set name element entered with name: " + name)
     //set the name element
@@ -183,7 +195,7 @@ export class Controller
 
     console.log("```````````````` open Repertoire entered ````````````````````````````");
     //change the default study to the rep. starting one
-    controller.changeStudy(rep);
+    Controller.changeStudy(rep);
 
     // clear the line and instructive games displays
     rep.open();
@@ -205,7 +217,6 @@ export class Controller
    */
   public updateRepList(): void
   {
-
     //todo make this load reps from LS
     //clear the rep list
     this.localReps.html('<div id="localReps"></div>');
@@ -215,44 +226,6 @@ export class Controller
       console.log(rep.name + " added.");
       this.localReps.append(rep.repertoireBtn);
     }
-  }
-
-  /**
-   * set up the new repertoire controls and center pane
-   */
-  public showNewRepPane(): void
-  {
-    $( "#centerPane" ).html(newRepertoirePane);
-    $( "#newRepControlSubmit" ).on("click", () => {
-      const studyURLInput:HTMLInputElement | null = document.getElementById( "repertoireURL" ) as HTMLInputElement;
-      const studyNameInput:HTMLInputElement | null = document.getElementById( "repertoireName" ) as HTMLInputElement;
-
-      //get the value of the input felids
-      const name = studyNameInput.value;
-      const url = studyURLInput.value;
-
-      if(name == null)
-      {
-        alert("Name can not be null.");
-      }
-      if(url == null)
-      {
-        alert("url can not be null.");
-      }
-
-      chessBoardView();
-      if(name != null && url != null)
-      {
-        const newRep = this.newRepertoire(name, url);
-        //open the new rep
-        this.openRepertoire(newRep);
-        console.log("created a new rep with name: " + newRep.name);
-      }
-      else
-      {
-        throw error(" if(name != null && url != null) did not pass")
-      }
-    });
   }
 
 
@@ -276,7 +249,7 @@ export class Controller
   /**
    * display all the controls for editing a rep
    */
-  public editRepertoire(): void
+  public static editRepertoire(): void
   {
     //get all the edit repertoire buttons
     const newRepItems: Array<HTMLElement> = Array.from(
@@ -293,7 +266,7 @@ export class Controller
    * change the study on the main board to a provided chess thing's study
    * @param chessThing the chessThing with a .studyURL to add to the main board
    */
-  public changeStudy(chessThing: RepertoireLine | ExampleGame | Repertoire): void
+  public static changeStudy(chessThing: RepertoireLine | ExampleGame | Repertoire): void
   {
 
     console.log("changeStudy() entered, with study: " + chessThing.name +
@@ -308,12 +281,10 @@ export class Controller
     }
     else
     {
-      this.setNameElement(chessThing.name);
+      Controller.setNameElement(chessThing.name);
     }
 
-
     //change out dom stuff
-
     $( "#chessgroundContainer" ).empty();
     $( "#chessgroundContainer" ).append( $( imbeddingStr ) );
     //$( "#chessgroundContainer" ).replaceWith( $( imbeddingStr ) ); for some reason, this does not work
