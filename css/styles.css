@@ -359,7 +359,7 @@ ul {
   text-align: center;
   margin: 15px;
 }
-#newRepControlSubmit
+.newRepControl
 {
   margin: 10px auto;
   width: 450px;
@@ -491,7 +491,7 @@ input:checked + .slider:before {
 /* add line or game css */
 #addStudyEmbed{
   display: block;
-  width: 900px;
+  width: 950px;
   height: 600px;
   margin: 25px auto;
   background: none;
@@ -519,9 +519,4 @@ input {
   align-items: center;
   justify-content: center;
   width: 100%;
-}
-
-#done {
-  display: none;
-  background-color: #1e9c9c;
 }

@@ -62,6 +62,8 @@ export function getEmbeddingStr(URLInput:string): string
  */
 export function showSplashScreen()
 {
+  //go to the chessboard view
+  Controller.chessBoardView();
   $( "#chessgroundContainer" ).replaceWith(
     ` <div id="chessgroundContainer" >
         <!-- Main Chessboard -->

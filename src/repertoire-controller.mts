@@ -205,11 +205,9 @@ export class Controller
     $( ".openRepNeeded" ).css("visibility", "visible"); // make controls that need an open rep visible
 
     console.log("```````````````` open Repertoire entered ````````````````````````````");
-    //change the default study to the rep. starting one
-    Controller.changeStudy(rep);
 
-    // clear the line and instructive games displays
-    rep.open();
+    //select the rep's main line
+    rep.mainLine.select();
   }
 
   /**
@@ -277,7 +275,7 @@ export class Controller
    * change the study on the main board to a provided chess thing's study
    * @param chessThing the chessThing with a .studyURL to add to the main board
    */
-  public static changeStudy(chessThing: RepertoireLine | ExampleGame | Repertoire): void
+  public static changeStudy(chessThing: RepertoireLine | ExampleGame ): void
   {
 
     console.log("changeStudy() entered, with study: " + chessThing.name +

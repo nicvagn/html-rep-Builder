@@ -95,6 +95,6 @@ export declare class Controller {
      * change the study on the main board to a provided chess thing's study
      * @param chessThing the chessThing with a .studyURL to add to the main board
      */
-    static changeStudy(chessThing: RepertoireLine | ExampleGame | Repertoire): void;
+    static changeStudy(chessThing: RepertoireLine | ExampleGame): void;
     toString(): string;
 }

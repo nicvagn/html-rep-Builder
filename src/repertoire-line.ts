@@ -167,6 +167,8 @@ export class RepertoireLine
 
     console.log("================ line opened =====================");
 
+    //change the study
+    Controller.changeStudy(this);
 
     this.refreshGameDisplay(); //refresh the game display to be current
   }

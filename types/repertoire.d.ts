@@ -87,9 +87,9 @@ export declare class Repertoire {
      */
     openLine(line: RepertoireLine): void;
     /**
-     * open this repertoire
+     * select this repertoire, for deletion or to be put on big board
      */
-    open(): void;
+    select(): void;
     /**
     * get the rep button for this repertoire
     * @returns the RepButton element

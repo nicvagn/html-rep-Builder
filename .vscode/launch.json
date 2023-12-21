@@ -2,9 +2,18 @@
   "configurations": [
     {
       "type": "chrome",
-      "request": "attach",
-      "name": "Attach to browser",
-      "port": 9222
+      "request": "launch",
+      "name": "launch crome",
+      "port": 5501
+    },
+    {
+      // Start Debug -> Open Firefox, Open Debug console, Click an line in JS File and F5
+      "type": "firefox",
+      "request": "launch",
+      "name": "Firefox + Server",
+      //"url": "http://localhost:8080/${fileBasename}",
+      "url": "http://localhost:5501/index.html",
+      "webRoot": "${workspaceFolder}/dist/"
     }
   ]
 }

@@ -76,19 +76,26 @@ export class ExampleGame
    */
   public select(game?:ExampleGame)
   {
-    //check if it should be deleted, not opened
-    if( checkDeleteMode() )
-    {
-      EditRepertoireController.delete(this);
-      return;
-    }
+
     //needed for calling from the dom buttons
     if(game == undefined)
     {
+      //check if it should be deleted, not opened
+      if( checkDeleteMode() )
+      {
+        EditRepertoireController.delete(this);
+        return;
+      }
       Controller.changeStudy(this);
     }
     else
     {
+      //check if it should be deleted, not opened
+      if( checkDeleteMode() )
+      {
+        EditRepertoireController.delete(game);
+        return;
+      }
       Controller.changeStudy(game);
     }
   }

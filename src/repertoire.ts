@@ -246,17 +246,24 @@ export class Repertoire
   }
 
   /**
-   * open this repertoire
+   * select this repertoire, for deletion or to be put on big board
    */
-  public open(): void
+  public select(): void
   {
-    console.log("open entered on rep: " + this.name);
+    console.log("select() entered on rep: " + this.name);
+
+    //check for delete mode
+    if( checkDeleteMode() )
+    {
+      EditRepertoireController.delete(this);
+      return;
+    }
 
     //set this an open rep
     controller.openRep = this;
     //change the displays
     Controller.setNameElement(this.name!);
-    Controller.changeStudy(this);
+    Controller.changeStudy(this.mainLine);
 
     controller.updateOpenRepLists(); //reset the line and game list
 

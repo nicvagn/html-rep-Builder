@@ -66,7 +66,7 @@ export class EditRepertoireController
           <label for="studyTextField">Lichess study chapter url: </label>
           <input type="text" id="studyTextField" name="studyTextField">
           <button id="addURL" style="width: 35px;">Add</button>
-          <button id="done" style="width: 35px;"></button>
+          <button id="exit" style="width: 35px;">Exit</button>
         </span>
       </div>
     </div>
@@ -99,7 +99,8 @@ export class EditRepertoireController
     <label style="text-align: left" for="repertoireURL">Main chapter URL: </label>
     <input type="text"  id="repertoireURL" name="repertoireURL">
     <br>
-    <button id="newRepControlSubmit"> submit </button>
+    <button id="newRepControlSubmit" class="newRepControl"> submit </button>
+    <button id="exit" class="newRepControl"> exit without submitting </button>
   </div>
   `
 
@@ -143,6 +144,7 @@ export class EditRepertoireController
     //display new rep pane
     $( "#centerPane" ).html(EditRepertoireController.newRepertoirePane);
     $( "#newRepControlSubmit" ).on("click", this.submitNewRepPane);
+    $( "#exit" ).on("click", this.exitNewRepPane)
   }
 
   private static submitNewRepPane(): void
@@ -184,6 +186,22 @@ export class EditRepertoireController
   }
 
   /**
+   * exit the new rep pane without submitting
+   */
+  private static exitNewRepPane(): void
+  {
+    //show columns
+    Controller.showColumns();
+
+    //show top buttons
+    $( ".navbarBtn" ).css("display", "block");
+
+    Controller.chessBoardView();
+
+    showSplashScreen();  //show the splash screen
+  }
+
+  /**
    * open lichess study creation
    */
   public static createStudy():void
@@ -199,16 +217,13 @@ export class EditRepertoireController
    */
   public static delete(thing: RepertoireLine | ExampleGame | Repertoire): void
   {
+    //show the splash screen
+    showSplashScreen();
+
     console.log("delete mode entered with thing: " + thing);
     const openRep = controller.getOpenRep(); // get open rep
     if(thing instanceof Repertoire)
     {
-      //if we are deleting the open rep list
-      if(thing == openRep)
-      {
-        //show the splash screen
-        showSplashScreen();
-      }
       const newRepList = new Array<Repertoire>();
       //go through rep list and copy all but our thing
       controller.repList.forEach(rep => {
@@ -250,7 +265,7 @@ export class EditRepertoireController
     else if( thing instanceof ExampleGame )
     {
       //get the current open line
-      const openLine = controller.getOpenRep().getOpenLine();
+      const openLine = openRep.getOpenLine();
       const games = openLine.getGames();
       const newGames = new Array<ExampleGame>();
 
@@ -260,6 +275,8 @@ export class EditRepertoireController
           newGames.push(game);
         }
       });
+      //set the list of games with the deleted one removed
+      openLine.exampleGames = newGames;
       openLine.refreshGameDisplay();
     }
     else
@@ -495,10 +512,15 @@ export class EditRepertoireController
           console.log("addURL clicked with a line url");
           $( "#URLInstructions" ).css("display", "none"); //hide instructions
 
-          let lineName: string | null;
-          do{
-            lineName = prompt("What do you want to call this line?");
-          } while(lineName == null) //do not let the lineName be null
+          const lineName = prompt("What do you want to call this line?");
+          if(lineName == null)
+          {
+            //do not let the lineName be null. If no name given show splash screen and exit
+            alert("The line must have a name, exiting");
+            Controller.chessBoardView(); //return to the chessboard view
+            showSplashScreen();
+            return;
+          }
           //construct line
           const line = new RepertoireLine(lineName, studyURL);
 
@@ -509,24 +531,29 @@ export class EditRepertoireController
           console.log("addURL pressed with a gameURL");
           $( "#URLInstructions" ).css("display", "none");
 
-          let gameName: string | null;
           //ask user what to call this game
-          do{
-            gameName = prompt("What do you want to call this game?");
-          } while(gameName == null) //do not let the gameName be null
+          const gameName = prompt("What do you want to call this game?");
+
+          if(gameName == null)
+          {
+            //do not let the gameName be null. If no name given show splash screen and exit
+            alert("The game must have a name, exiting");
+            Controller.chessBoardView; //return to the chessboard view
+            showSplashScreen();
+            return;
+          }
 
           const game = new ExampleGame(gameName, studyURL);
 
           //what line should we add this to?
           this.showLinesToAddGameTo(game);
-          //now, we wait for the uses to click a line then update the lists
-          controller.updateOpenRepLists();
+          //now, we wait for the uses to click a line
         }
       }
     });
 
-    //when done is clicked return to the chessboard view
-    $( "#done" ).on("click", () =>
+    //when exit is clicked return to the chessboard view
+    $( "#exit" ).on("click", () =>
       {
         Controller.chessBoardView();
       });
