@@ -1,6 +1,6 @@
 import { Controller } from "./repertoire-controller.mjs";
 import { EditRepertoireController } from "./edit-repertoire-controller.mjs";
-import { load } from "./save-controller";
+import { load } from "./save-control";
 
 /**
  * constants used for setting and getting from local

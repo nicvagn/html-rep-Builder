@@ -19,13 +19,12 @@
 /// <reference types="jquery" />
 /// <reference types="jquery" />
 import { RepertoireLine } from "./repertoire-line.js";
-import { repJSON } from "./save-controller.js";
+import { repJSON } from "./save-control.js";
 /**
  * A chess repertoire
  */
 export declare class Repertoire {
     name: string;
-    studyURL: string;
     lineList: RepertoireLine[];
     private currentOpenLine;
     mainLine: RepertoireLine;
@@ -34,7 +33,7 @@ export declare class Repertoire {
     /**
      * make a new Rep
      * @param {string} name name to give
-     * @param studyURL the lichess url of the primary study chapter of this
+     * @param studyURL the lichess url of the primary study chapter of this rep
      * @param lineList list of lines in this rep
      */
     constructor(name: string, studyURL: string, lineList?: RepertoireLine[]);

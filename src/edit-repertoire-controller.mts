@@ -21,7 +21,7 @@ import { error } from "jquery";
 import { ExampleGame } from "./example-game.js";
 import { controller, showSplashScreen, enterDeleteMode, exitDeleteMode, checkDeleteMode } from "./index.js";
 import { RepertoireLine } from "./repertoire-line.js";
-import { loadFromFile } from "./save-controller.js";
+import { loadFromFile } from "./save-control.js";
 import { Repertoire } from "./repertoire.js";
 import { Controller } from "./repertoire-controller.mjs";
 

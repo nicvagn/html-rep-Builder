@@ -19,7 +19,7 @@
 /// <reference types="jquery" />
 /// <reference types="jquery" />
 import { ExampleGame } from "./example-game.js";
-import { lineJSON } from "./save-controller.js";
+import { lineJSON } from "./save-control.js";
 /**
  * a chess repertoire line. It's primary use is in a rep builder GUI, so it needs to have a visual
  * component
@@ -37,6 +37,9 @@ export declare class RepertoireLine {
      * @param exampleGames any example games of this line in action
      */
     constructor(name: string, studyURL: string, exampleGames?: ExampleGame[]);
+    /**
+     * create the Line Button on the DOM
+     */
     createLineButton(): void;
     /**
      * get the keys(names) for the games of this line. The keys being what they are stored under in LS

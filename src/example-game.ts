@@ -22,7 +22,7 @@
 import { EditRepertoireController } from "./edit-repertoire-controller.mjs";
 import { checkDeleteMode } from "./index.js";
 import { Controller } from "./repertoire-controller.mjs";
-import { gameJSON } from "./save-controller.js"
+import { gameJSON } from "./save-control.js";
 //import { RepertoireLine } from "./repertoire-line.js";
 
 

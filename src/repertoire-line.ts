@@ -22,7 +22,7 @@ import { ExampleGame } from "./example-game.js";
 import { checkDeleteMode } from "./index.js";
 import { EditRepertoireController } from "./edit-repertoire-controller.mjs";
 import { Controller } from "./repertoire-controller.mjs";
-import { lineJSON, loadGame } from "./save-controller.js";
+import { lineJSON, loadGame } from "./save-control.js";
 /**
  * a chess repertoire line. It's primary use is in a rep builder GUI, so it needs to have a visual
  * component
@@ -63,6 +63,9 @@ export class RepertoireLine
   }
 
 
+  /**
+   * create the Line Button on the DOM
+   */
   public createLineButton(): void
   {
     //create the visual button for the gui
@@ -72,6 +75,7 @@ export class RepertoireLine
       line:this
     });
     this.lineBtn.addClass("repLine delete-mode");
+
   }
 
   /**

@@ -78,7 +78,7 @@ export declare class Controller {
      */
     updateOpenRepLists(): void;
     /**
-     * update list of repertoires we can access. check LS for new reps
+     * update list of repertoires we can access.
      */
     updateRepList(): void;
     /**

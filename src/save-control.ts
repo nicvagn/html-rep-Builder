@@ -477,8 +477,9 @@ export async function loadFromFile(save: File): Promise<boolean>
   }
 
   console.log("file text parsed as " + JSON.stringify(saveJSON));
-  //update the rep list
+  //update the rep lists
   controller.updateRepList();
+  controller.updateOpenRepLists();
   return true;
 }
 

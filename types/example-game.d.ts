@@ -18,7 +18,7 @@
  *********************************************************************************/
 /// <reference types="jquery" />
 /// <reference types="jquery" />
-import { gameJSON } from "./save-controller.js";
+import { gameJSON } from "./save-control.js";
 /**
  * a chess repertoire example game.
  */

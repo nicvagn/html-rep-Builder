@@ -23,7 +23,7 @@ import { EditRepertoireController } from "./edit-repertoire-controller.mjs";
 import { RepertoireLine } from "./repertoire-line.js";
 import { ExampleGame } from "./example-game.js";
 import { getEmbeddingStr, controller } from "./index.js";
-import { save, download } from "./save-controller.js";
+import { save, download } from "./save-control.js";
 
 //other stuff
 import { error } from "jquery";
@@ -144,6 +144,7 @@ export class Controller
   private loadController(repList: Repertoire[]): void
   {
     this.repList = repList;
+
     this.updateRepList();
   }
 
@@ -222,11 +223,10 @@ export class Controller
   }
 
   /**
-   * update list of repertoires we can access. check LS for new reps
+   * update list of repertoires we can access.
    */
   public updateRepList(): void
   {
-    //todo make this load reps from LS
     //clear the rep list
     this.localReps.html('<div id="localReps"></div>');
     for(let x = 0; x < this.repList.length; x++)
@@ -236,7 +236,6 @@ export class Controller
       this.localReps.append(rep.repertoireBtn);
     }
   }
-
 
   /**
    * make a new repertoire, with no user input and do not set it as the open rep

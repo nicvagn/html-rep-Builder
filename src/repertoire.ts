@@ -19,10 +19,10 @@
 
 import { RepertoireLine } from "./repertoire-line.js";
 import { checkDeleteMode, controller } from "./index.js";
-import { saveRep } from "./save-controller.js";
+import { saveRep } from "./save-control.js";
 import { EditRepertoireController } from "./edit-repertoire-controller.mjs";
 import { Controller } from "./repertoire-controller.mjs";
-import { repJSON, loadLine } from "./save-controller.js";
+import { repJSON, loadLine } from "./save-control.js";
 
 /**
  * A chess repertoire
@@ -31,7 +31,6 @@ export class Repertoire
 {
 
   name: string;
-  studyURL: string;
   lineList: RepertoireLine[] = new Array<RepertoireLine>;  // array of lines in this rep
   private currentOpenLine: RepertoireLine; //the currently open line
   mainLine: RepertoireLine;
@@ -43,14 +42,13 @@ export class Repertoire
   /**
    * make a new Rep
    * @param {string} name name to give
-   * @param studyURL the lichess url of the primary study chapter of this
+   * @param studyURL the lichess url of the primary study chapter of this rep
    * @param lineList list of lines in this rep
    */
   constructor(name: string, studyURL: string, lineList?: RepertoireLine[])
   {
     console.log("rep with name:" + name + ", Line List: " + lineList +" studyURL: " + studyURL + "made");
 
-    this.studyURL = studyURL;
     this.name = name;
     //add the main line to the line list and set it as the open line
     this.mainLine = new RepertoireLine( this.name + ": Main Line", studyURL);
@@ -58,8 +56,6 @@ export class Repertoire
     this.addLine(this.mainLine);
 
     this.createRepBtn();
-
-
 
     if (lineList != undefined)
     {
@@ -69,6 +65,8 @@ export class Repertoire
         //add the given line list to our line list
         this.lineList.push( lineList[x] );
       }
+      //update line list on dom
+      this.updateLineDisplay();
     }
   }
 
@@ -87,8 +85,8 @@ export class Repertoire
   {
     return {
       name_key: this.name,
+      studyURL: this.mainLine.studyURL, //the main line's study url is considered the URL
       type: "rep",
-      studyURL: this.studyURL,
       lineKeys: this.getLineKeys(),
     }
   }
@@ -100,7 +98,7 @@ export class Repertoire
   public static fromJSON(repjson: repJSON): Repertoire
   {
     const loadedLines = new Array<RepertoireLine>();
-    repjson.lineKeys.forEach(lnKey => {
+    repjson.lineKeys.forEach((lnKey: string) => {
       loadedLines.push( loadLine(lnKey) );
     });
     return new Repertoire(repjson.name_key, repjson.studyURL, loadedLines);
