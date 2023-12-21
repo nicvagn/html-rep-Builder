@@ -19,6 +19,8 @@
 
 //import { event } from "jquery";
 //import { controller } from "./index.js";
+import { EditRepertoireController } from "./edit-repertoire-controller.mjs";
+import { checkDeleteMode } from "./index.js";
 import { Controller } from "./repertoire-controller.mjs";
 import { gameJSON } from "./save-controller.js"
 //import { RepertoireLine } from "./repertoire-line.js";
@@ -64,16 +66,22 @@ export class ExampleGame
 
     this.gameBtn.on("click", {game:this}, function (event)
     {
-      event.data.game.showGame(event.data.game);
+      event.data.game.select(event.data.game);
     });
   }
 
   /**
-   * change the main board to display this game
+   * select this game
    * @param game the ExampleGame to show
    */
-  public showGame(game?:ExampleGame)
+  public select(game?:ExampleGame)
   {
+    //check if it should be deleted, not opened
+    if( checkDeleteMode() )
+    {
+      EditRepertoireController.delete(this);
+      return;
+    }
     //needed for calling from the dom buttons
     if(game == undefined)
     {

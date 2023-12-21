@@ -41,6 +41,10 @@ export declare class Controller {
      */
     static chessBoardView(): void;
     /**
+     * hide the ChessBoardView this consists of the main board pane and side columns
+     */
+    static hideChessBoardView(): void;
+    /**
      * hide columns
      */
     static hideColumns(): void;

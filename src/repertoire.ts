@@ -33,7 +33,7 @@ export class Repertoire
   name: string;
   studyURL: string;
   lineList: RepertoireLine[] = new Array<RepertoireLine>;  // array of lines in this rep
-  openLine!: RepertoireLine; //the currently open line
+  private currentOpenLine: RepertoireLine; //the currently open line
   mainLine: RepertoireLine;
 
   nameLabel: HTMLElement = document.getElementById("#nameLabel")!; //for the current rep name
@@ -52,11 +52,14 @@ export class Repertoire
 
     this.studyURL = studyURL;
     this.name = name;
-    this.createRepBtn();
-
     //add the main line to the line list and set it as the open line
     this.mainLine = new RepertoireLine( this.name + ": Main Line", studyURL);
+    this.currentOpenLine = this.mainLine;
     this.addLine(this.mainLine);
+
+    this.createRepBtn();
+
+
 
     if (lineList != undefined)
     {
@@ -220,7 +223,7 @@ export class Repertoire
   {
     if (this.openLine != undefined)
     {
-      return this.openLine;
+      return this.currentOpenLine;
     }
     else
     {
@@ -233,11 +236,12 @@ export class Repertoire
    * open a RepLine line and corresponding game list
    * @param line Line to open
    */
-  public setOpenLine(line: RepertoireLine): void
+  public openLine(line: RepertoireLine): void
   {
-    this.openLine = line;
+    this.currentOpenLine = line;
     //set name label
     Controller.setNameElement(line.name);
+    //select the line to open it on the board
     line.select();
   }
 
@@ -259,41 +263,41 @@ export class Repertoire
     console.log("line List length: " + this.lineList.length);
     console.log("main line example game list: " + this.mainLine.exampleGames)
 
-   this.lineList.forEach((line) =>
-   {
-     console.log(line);
-     console.log("line added to lineList: " + line.name);
-     line.lineBtn.appendTo($( '#lineList' ));
+    this.lineList.forEach((line) =>
+    {
+      console.log(line);
+      console.log("line added to lineList: " + line.name);
+      line.lineBtn.appendTo($( '#lineList' ));
 
-     line.lineBtn.on("click", { line:line }, function (event)
-       {
-         console.log("line btn clicked with name: " + line.name);
-         //select this line. This does different stuff depending on the mode
-         event.data.line.select();
-       });
-   });
+      line.lineBtn.on("click", { line:line }, function (event)
+      {
+        console.log("line btn clicked with name: " + line.name);
+        //select this line. This does different stuff depending on the mode
+        event.data.line.select();
+        });
+      });
 
-   //open the main lines example games
-   this.mainLine.refreshGameDisplay();
- }
+      //open the main lines example games
+    this.mainLine.refreshGameDisplay();
+  }
 
- /**
+  /**
   * get the rep button for this repertoire
   * @returns the RepButton element
   */
- public getRepButton(): JQuery<HTMLElement>
- {
-  return this.repertoireBtn;
- }
-
- public toString(){
-  let repSting = "++++++++++++++ repertoire toString:"+ this.name + " +++++++++++++++++\n";
-  if(this.lineList != null)
+  public getRepButton(): JQuery<HTMLElement>
   {
-    this.lineList.forEach(line => {
-      repSting += line;
-    });
+    return this.repertoireBtn;
   }
-  return repSting;
- }
+
+  public toString(){
+    let repSting = "++++++++++++++ repertoire toString:"+ this.name + " +++++++++++++++++\n";
+    if(this.lineList != null)
+    {
+      this.lineList.forEach(line => {
+      repSting += line;
+      });
+    }
+    return repSting;
+  }
 }

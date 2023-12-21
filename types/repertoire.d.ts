@@ -27,7 +27,7 @@ export declare class Repertoire {
     name: string;
     studyURL: string;
     lineList: RepertoireLine[];
-    openLine: RepertoireLine;
+    private currentOpenLine;
     mainLine: RepertoireLine;
     nameLabel: HTMLElement;
     repertoireBtn: JQuery<HTMLElement>;
@@ -85,15 +85,15 @@ export declare class Repertoire {
      * open a RepLine line and corresponding game list
      * @param line Line to open
      */
-    setOpenLine(line: RepertoireLine): void;
+    openLine(line: RepertoireLine): void;
     /**
      * open this repertoire
      */
     open(): void;
     /**
-     * get the rep button for this repertoire
-     * @returns the RepButton element
-     */
+    * get the rep button for this repertoire
+    * @returns the RepButton element
+    */
     getRepButton(): JQuery<HTMLElement>;
     toString(): string;
 }

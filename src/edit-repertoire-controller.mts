@@ -133,37 +133,54 @@ export class EditRepertoireController
    */
   public static showNewRepPane(): void
   {
+    // hide the columns
+    Controller.hideColumns();
+    //hide edit rep
+    this.hideEditRepertoire();
+    // and the top buttons, because they will not work as intended
+    $( ".navbarBtn" ).css("display", "none");
+
+    //display new rep pane
     $( "#centerPane" ).html(EditRepertoireController.newRepertoirePane);
-    $( "#newRepControlSubmit" ).on("click", () => {
-      const studyURLInput:HTMLInputElement | null = document.getElementById( "repertoireURL" ) as HTMLInputElement;
-      const studyNameInput:HTMLInputElement | null = document.getElementById( "repertoireName" ) as HTMLInputElement;
+    $( "#newRepControlSubmit" ).on("click", this.submitNewRepPane);
+  }
 
-      //get the value of the input felids
-      const name = studyNameInput.value;
-      const url = studyURLInput.value;
+  private static submitNewRepPane(): void
+  {
+    //show columns
+    Controller.showColumns();
 
-      if(name == null)
-      {
-        alert("Name can not be null.");
-      }
-      if(url == null)
-      {
-        alert("url can not be null.");
-      }
+    //show top buttons
+    $( ".navbarBtn" ).css("display", "block");
 
-      Controller.chessBoardView();
-      if(name != null && url != null)
-      {
-        const newRep = controller.newRepertoire(name, url);
-        //open the new rep
-        controller.openRepertoire(newRep);
-        console.log("created a new rep with name: " + newRep.name);
-      }
-      else
-      {
-        throw error(" if(name != null && url != null) did not pass")
-      }
-    });
+    const studyURLInput:HTMLInputElement | null = document.getElementById( "repertoireURL" ) as HTMLInputElement;
+    const studyNameInput:HTMLInputElement | null = document.getElementById( "repertoireName" ) as HTMLInputElement;
+
+    //get the value of the input felids
+    const name = studyNameInput.value;
+    const url = studyURLInput.value;
+
+    if(name == null)
+    {
+      alert("Name can not be null.");
+    }
+    if(url == null)
+    {
+      alert("url can not be null.");
+    }
+
+    Controller.chessBoardView();
+    if(name != null && url != null)
+    {
+      const newRep = controller.newRepertoire(name, url);
+      //open the new rep
+      controller.openRepertoire(newRep);
+      console.log("created a new rep with name: " + newRep.name);
+    }
+    else
+    {
+      throw error(" if(name != null && url != null) did not pass")
+    }
   }
 
   /**
@@ -232,7 +249,9 @@ export class EditRepertoireController
     }
     else if( thing instanceof ExampleGame )
     {
-      const games = openRep.openLine.getGames();
+      //get the current open line
+      const openLine = controller.getOpenRep().getOpenLine();
+      const games = openLine.getGames();
       const newGames = new Array<ExampleGame>();
 
       games.forEach( game => {
@@ -241,7 +260,7 @@ export class EditRepertoireController
           newGames.push(game);
         }
       });
-      openRep.openLine.refreshGameDisplay();
+      openLine.refreshGameDisplay();
     }
     else
     {
@@ -357,7 +376,7 @@ export class EditRepertoireController
         });
 
         //attach event handler to the game. Event handler adds game to line
-        btn.on( "click", {  line: openRep.lineList[x] },( event ) =>
+        btn.on( "click", {  line: openRep.lineList[x] }, ( event ) =>
         {
           const line = event.data.line;
 
@@ -368,7 +387,7 @@ export class EditRepertoireController
           //return to the chessboard view with that game opened
           Controller.chessBoardView();
 
-          game.showGame(); //display the game on the main board
+          game.select(); //display the game on the main board
           controller.updateOpenRepLists();
         });
 
@@ -468,49 +487,49 @@ export class EditRepertoireController
       console.log("is the line toggle checked? (if it exists, true): " + isLine.checked);
 
 
-    if(typeof studyURL === "string" && studyURL != null) // if url is typeof string
-    {
-      console.log("the given url: " + studyURL);
-      if(isLine.checked) //if is line is checked. Is a line
+      if(typeof studyURL === "string" && studyURL != null) // if url is typeof string
       {
-        console.log("addURL clicked with a line url");
-        $( "#URLInstructions" ).css("display", "none"); //hide instructions
+        console.log("the given url: " + studyURL);
+        if(isLine.checked) //if is line is checked. Is a line
+        {
+          console.log("addURL clicked with a line url");
+          $( "#URLInstructions" ).css("display", "none"); //hide instructions
 
-        let lineName: string | null;
-        do{
-          lineName = prompt("What do you want to call this line?");
-        } while(lineName == null) //do not let the lineName be null
-        //construct line
-        const line = new RepertoireLine(lineName, studyURL);
+          let lineName: string | null;
+          do{
+            lineName = prompt("What do you want to call this line?");
+          } while(lineName == null) //do not let the lineName be null
+          //construct line
+          const line = new RepertoireLine(lineName, studyURL);
 
-        this.showRepsToAddLineTo(line);
-      }
-      else  // must be a game
-      {
-        console.log("addURL pressed with a gameURL");
-        $( "#URLInstructions" ).css("display", "none");
+          this.showRepsToAddLineTo(line);
+        }
+        else  // must be a game
+        {
+          console.log("addURL pressed with a gameURL");
+          $( "#URLInstructions" ).css("display", "none");
 
-        let gameName: string | null;
-        //ask user what to call this game
-        do{
-          gameName = prompt("What do you want to call this game?");
-        } while(gameName == null) //do not let the gameName be null
+          let gameName: string | null;
+          //ask user what to call this game
+          do{
+            gameName = prompt("What do you want to call this game?");
+          } while(gameName == null) //do not let the gameName be null
 
-        const game = new ExampleGame(gameName, studyURL);
+          const game = new ExampleGame(gameName, studyURL);
 
-        //what line should we add this to?
-        this.showLinesToAddGameTo(game);
-        //now, we wait for the uses to click a line then update the lists
-        controller.updateOpenRepLists();
+          //what line should we add this to?
+          this.showLinesToAddGameTo(game);
+          //now, we wait for the uses to click a line then update the lists
+          controller.updateOpenRepLists();
         }
       }
     });
 
     //when done is clicked return to the chessboard view
     $( "#done" ).on("click", () =>
-    {
-      Controller.chessBoardView();
-    });
+      {
+        Controller.chessBoardView();
+      });
   }
 
   /**
@@ -528,7 +547,7 @@ export class EditRepertoireController
     $( "#centerPane" ).replaceWith(this.addStudyEmbed);
 
     //hide chessboard view
-    $( ".chessboardView" ).css("visibility", "hidden");
+    $( ".chessBoardView" ).css("visibility", "hidden");
 
     //add listeners to new content
     this.setAddStudyListeners();

@@ -22,10 +22,11 @@ import { Repertoire } from "./repertoire.js";
 import { EditRepertoireController } from "./edit-repertoire-controller.mjs";
 import { RepertoireLine } from "./repertoire-line.js";
 import { ExampleGame } from "./example-game.js";
-import { error } from "jquery";
-
-import { controller, getEmbeddingStr } from "./index.js";
+import { getEmbeddingStr, controller } from "./index.js";
 import { save, download } from "./save-controller.js";
+
+//other stuff
+import { error } from "jquery";
 
 
 /**
@@ -61,13 +62,13 @@ export class Controller
 
     this.boardSpot = $( "#chessground" ); //the place to init the chessboard
     //add event handlers to top btn's
-    $("#newRepTop").on("click", function ()
+    $("#newRepTop").on("click", () =>
     {
       //make new rep
       EditRepertoireController.showNewRepPane();
     });
 
-    $("#editRepTop").on("click", function ()
+    $("#editRepTop").on("click", () =>
     {
       //show all the controls for editing
       Controller.editRepertoire();
@@ -96,6 +97,8 @@ export class Controller
    */
   public static chessBoardView(): void
   {
+    //make side panels visible
+    this.showColumns();
     $( ".chessBoardView" ).css("visibility", "visible");
     //reset the center pane
     $( "#centerPane" ).replaceWith(EditRepertoireController.chessBoardEmbed);
@@ -105,9 +108,17 @@ export class Controller
     {
       Controller.setNameElement(openRepName);
     }
+  }
 
-    //ensure side panels are visible
-    this.showColumns();
+  /**
+   * hide the ChessBoardView this consists of the main board pane and side columns
+   */
+  public static hideChessBoardView(): void
+  {
+    //hide all elements with class chessboard view
+    $( ".chessBoardView" ).css("visibility", "hidden");
+    //hide the side columns
+    this.hideColumns();
   }
 
   /**
@@ -122,7 +133,7 @@ export class Controller
   public static showColumns(): void
   {
     //hide lines and rep buttons
-    $( ".column" ).css("display", "flex");
+    $( ".column" ).css("display", "block");
   }
 
 

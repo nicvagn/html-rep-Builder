@@ -162,14 +162,13 @@ export class RepertoireLine
       //delete this line
       EditRepertoireController.delete(this);
     }
-   //update name display
-   Controller.setNameElement(this.name);
+    //update name display
+    Controller.setNameElement(this.name);
 
-   console.log("================ line opened =====================");
+    console.log("================ line opened =====================");
 
-   Controller.changeStudy(this); //change the main board to this study
 
-   this.refreshGameDisplay(); //refresh the game display to be current
+    this.refreshGameDisplay(); //refresh the game display to be current
   }
 
   /**
@@ -195,7 +194,7 @@ export class RepertoireLine
       game.gameBtn.on("click", { game:game }, function (event)
         {
           console.log("game clicked with name: " + game.name);
-          event.data.game.showGame(game);
+          event.data.game.select(game);
         });
     });
   }

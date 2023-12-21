@@ -36,6 +36,7 @@ export declare class EditRepertoireController {
      * set up the new repertoire controls and center pane
      */
     static showNewRepPane(): void;
+    private static submitNewRepPane;
     /**
      * open lichess study creation
      */

@@ -33,10 +33,10 @@ export declare class ExampleGame {
     constructor(name: string, studyURL: string);
     createGameButton(): void;
     /**
-     * change the main board to display this game
+     * select this game
      * @param game the ExampleGame to show
      */
-    showGame(game?: ExampleGame): void;
+    select(game?: ExampleGame): void;
     /**
      * take a json example game, and make a real one
      * @param json the json representation of the example game

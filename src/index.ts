@@ -91,7 +91,7 @@ export function enterDeleteMode(): void
   deleteMode = true;
   $( "#nameLabel" ).text("delete Mode");
   $( "#nameLabel" ).css("background", "#DD1810");
-  $( "#delete-mode" ).css("visibility", "visible" );
+  $( "#delete-mode" ).css("visibility", "visible" );  //show hidden delete mode btn's
   $( "button:not(.delete-mode)" ).css("visibility", "hidden"); //hide all not delete mode shit
   $( "label" ).css("visibility", "hidden"); //and file-input
   EditRepertoireController.hideEditRepertoire();
