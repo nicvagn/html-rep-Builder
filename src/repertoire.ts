@@ -18,7 +18,7 @@
  *********************************************************************************/
 
 import { RepertoireLine } from "./repertoire-line.js";
-import { checkDeleteMode, controller } from "./index.js";
+import { checkDeleteMode, controller, showSplashScreen } from "./index.js";
 import { saveRep } from "./save-control.js";
 import { EditRepertoireController } from "./edit-repertoire-controller.mjs";
 import { Controller } from "./repertoire-controller.mjs";
@@ -33,7 +33,7 @@ export class Repertoire
   name: string;
   lineList: RepertoireLine[] = new Array<RepertoireLine>;  // array of lines in this rep
   private currentOpenLine: RepertoireLine; //the currently open line
-  mainLine: RepertoireLine;
+  private mainLine: RepertoireLine;
 
   nameLabel: HTMLElement = document.getElementById("#nameLabel")!; //for the current rep name
   //line button for display on the DOM
@@ -66,16 +66,7 @@ export class Repertoire
 
     this.repertoireBtn.on("click", { rep: this }, function (event)
         {
-            //if the delete mode is on, delete this rep
-            if( checkDeleteMode() )
-          {
-            EditRepertoireController.delete(event.data.rep);
-            controller.updateRepList();
-          }
-          else
-          {
-            controller.openRepertoire(event.data.rep);
-          }
+          Repertoire.onClickLnr(event);
         });
 
     if (lineList != undefined)
@@ -171,6 +162,14 @@ export class Repertoire
   }
 
   /**
+   * get the main line
+   * @returns main line for this rep
+   */
+  public getMainLine(): RepertoireLine
+  {
+    return this.mainLine;
+  }
+  /**
    * add a line to this repertoire object
    * @param repLine - a RepertoireLine
    */
@@ -180,6 +179,7 @@ export class Repertoire
     console.log(repLine.name + "added to Line list");
     this.lineList.push(repLine);
     this.updateLineDisplay();
+    this.openLine
   }
 
   /**
@@ -283,7 +283,8 @@ export class Repertoire
     controller.openRep = this;
     //change the displays
     Controller.setNameElement(this.name!);
-    Controller.changeStudy(this.mainLine);
+    //show the splash screen
+    showSplashScreen();
 
     controller.updateOpenRepLists(); //reset the line and game list
 
@@ -303,9 +304,6 @@ export class Repertoire
         event.data.line.select();
         });
       });
-
-      //open the main lines example games
-    this.mainLine.refreshGameDisplay();
   }
 
   /**

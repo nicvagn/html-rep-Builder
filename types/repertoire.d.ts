@@ -27,7 +27,7 @@ export declare class Repertoire {
     name: string;
     lineList: RepertoireLine[];
     private currentOpenLine;
-    mainLine: RepertoireLine;
+    private mainLine;
     nameLabel: HTMLElement;
     repertoireBtn: JQuery<HTMLElement>;
     /**
@@ -54,6 +54,11 @@ export declare class Repertoire {
      */
     private getLineKeys;
     static onClickLnr(event: JQuery.ClickEvent): void;
+    /**
+     * get the main line
+     * @returns main line for this rep
+     */
+    getMainLine(): RepertoireLine;
     /**
      * add a line to this repertoire object
      * @param repLine - a RepertoireLine

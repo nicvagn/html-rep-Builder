@@ -51,8 +51,6 @@ export class RepertoireLine
     this.name = name;
     this.studyURL = studyURL;
 
-    this.createLineButton();
-
     if (exampleGames != undefined) {
       //if there is a value for exampleGames
       this.exampleGames = exampleGames;
@@ -60,6 +58,9 @@ export class RepertoireLine
 
     //set up internal representation of line
     this.line = new ExampleGame(name, studyURL);
+
+    //create the line btn
+    this.createLineButton();
   }
 
 
@@ -75,7 +76,6 @@ export class RepertoireLine
       line:this
     });
     this.lineBtn.addClass("repLine delete-mode");
-
   }
 
   /**
@@ -185,7 +185,7 @@ export class RepertoireLine
     console.log("refreshGameDisplay() entered");
 
     //empty the doc game list
-    $("#gameList").replaceWith("<div id='gameList'> </div>");
+    $( "#gameList" ).replaceWith( "<div id='gameList'> </div>" );
 
     console.log("example Games List length: " + this.exampleGames.length);
     console.log("example game list: " + this.exampleGames)

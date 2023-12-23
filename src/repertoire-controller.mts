@@ -197,10 +197,10 @@ export class Controller
 
     $( ".openRepNeeded" ).css("visibility", "visible"); // make controls that need an open rep visible
 
-    console.log("``` open Repertoire entered.");
+    console.log("opened repertoire.");
 
-    //select the rep's main line
-    rep.mainLine.select();
+    //update the sep list's on the DOM
+    controller.openRep.select();
   }
 
   /**
