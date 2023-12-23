@@ -53,11 +53,7 @@ export declare class Repertoire {
      * @returns the line keys for getting lines from LS
      */
     private getLineKeys;
-    /**
-     * create the rep button and add it to the DOM
-     * with a lister attached the rep must have a name
-     */
-    private createRepBtn;
+    static onClickLnr(event: JQuery.ClickEvent): void;
     /**
      * add a line to this repertoire object
      * @param repLine - a RepertoireLine

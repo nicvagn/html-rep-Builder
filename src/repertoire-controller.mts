@@ -36,7 +36,7 @@ export class Controller
 {
   openRepName?: string; //name of the open rep
   openRep?: Repertoire; //open rep
-  repList!: Repertoire[];  //list of reps
+  repList: Repertoire[] = new Array<Repertoire>() ;  //list of reps
 
   boardSpot?: JQuery<HTMLElement>;
   localReps: JQuery<HTMLElement> = $( "#localReps" );
@@ -45,30 +45,20 @@ export class Controller
   /**
    * construct a new repertoire controller
    */
-  constructor(repList?: Repertoire[])
+  constructor()
   {
-    //allow for creation of a controller from a save
-    if(repList)
-    {
-      this.loadController(repList);
-    }
-    else
-    {
-      this.repList = new Array<Repertoire>()
-    }
-
     //construct controllers
     this.editRepController = new EditRepertoireController();
 
     this.boardSpot = $( "#chessground" ); //the place to init the chessboard
     //add event handlers to top btn's
-    $("#newRepTop").on("click", () =>
+    $( "#newRepTop" ).on("click", () =>
     {
       //make new rep
       EditRepertoireController.showNewRepPane();
     });
 
-    $("#editRepTop").on("click", () =>
+    $( "#editRepTop" ).on("click", () =>
     {
       //show all the controls for editing
       Controller.editRepertoire();
@@ -86,7 +76,7 @@ export class Controller
       download();
     });
 
-    if (this.boardSpot == null)
+    if ( this.boardSpot == null )
     {
       throw error("ERROR: ============= boardSpot is null ======================");
     }
@@ -104,9 +94,9 @@ export class Controller
     $( "#centerPane" ).replaceWith(EditRepertoireController.chessBoardEmbed);
 
     const openRepName = controller.openRep?.name;
-    if(openRepName) //if open rep name is a value != false
+    if( openRepName ) //if open rep name is a value != false
     {
-      Controller.setNameElement(openRepName);
+      Controller.setNameElement( openRepName );
     }
   }
 
@@ -138,26 +128,28 @@ export class Controller
 
 
   /**
-   * load a controller with an array of repertoires already loaded.
-   * @param repList the repertoires that are saved
+   * load a list of repertoires into this controller
+   * @param givenRepList the repertoires that are saved
    */
-  private loadController(repList: Repertoire[]): void
+  public loadRepList( givenRepList: Repertoire[] ): void
   {
-    this.repList = repList;
-
-    this.updateRepList();
+    givenRepList.forEach( givenRep =>
+      {
+        controller.addRepertoire( givenRep );
+      });
   }
 
   /**
    * add a repertoire to this controller
    * this means add it to the local rep list
    */
-  public addRepertoire(rep: Repertoire): void
+  public addRepertoire( rep: Repertoire ): void
   {
     //add repertoire button to the local rep's list
-    this.localReps.append(rep.repertoireBtn);
+    this.localReps.append( rep.repertoireBtn );
+
     //add rep to our rep list
-    this.repList.push(rep);
+    this.repList.push( rep );
   }
 
   /**
@@ -167,7 +159,7 @@ export class Controller
   {
     console.log("set name element entered with name: " + name)
     //set the name element
-    const nameEl = $("#nameLabel")[0];
+    const nameEl = $( "#nameLabel" )[0];
     if( nameEl )
     {
       nameEl.innerText = name;
@@ -205,7 +197,7 @@ export class Controller
 
     $( ".openRepNeeded" ).css("visibility", "visible"); // make controls that need an open rep visible
 
-    console.log("```````````````` open Repertoire entered ````````````````````````````");
+    console.log("``` open Repertoire entered.");
 
     //select the rep's main line
     rep.mainLine.select();
@@ -234,6 +226,8 @@ export class Controller
       const rep = this.repList[x];
       console.log(rep.name + " added.");
       this.localReps.append(rep.repertoireBtn);
+      //add the listener
+      //rep.repertoireBtn.on("click", () => { alert("fuck me")});
     }
   }
 
@@ -248,7 +242,7 @@ export class Controller
     console.log("newRepertoire entered with name: " + name);
     const newRep = new Repertoire(name, studyURL);
 
-    this.addRepertoire(newRep);
+    controller.addRepertoire(newRep);
 
     return newRep;
   }

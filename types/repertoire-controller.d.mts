@@ -35,7 +35,7 @@ export declare class Controller {
     /**
      * construct a new repertoire controller
      */
-    constructor(repList?: Repertoire[]);
+    constructor();
     /**
      * reset back to chessboard view
      */
@@ -50,10 +50,10 @@ export declare class Controller {
     static hideColumns(): void;
     static showColumns(): void;
     /**
-     * load a controller with an array of repertoires already loaded.
-     * @param repList the repertoires that are saved
+     * load a list of repertoires into this controller
+     * @param givenRepList the repertoires that are saved
      */
-    private loadController;
+    loadRepList(givenRepList: Repertoire[]): void;
     /**
      * add a repertoire to this controller
      * this means add it to the local rep list

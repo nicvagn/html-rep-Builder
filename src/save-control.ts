@@ -22,7 +22,6 @@ import { Repertoire } from "./repertoire.js";
 import { controller } from "./index.js";
 import { ExampleGame } from "./example-game.js";
 import { RepertoireLine } from "./repertoire-line.js";
-import { Controller } from "./repertoire-controller.mjs";
 import { MAIN } from "./index.js"
 
 // $$$$$$$$$$$$$$$$$$$$ types $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
@@ -295,19 +294,10 @@ export function loadRep(key: string): Repertoire
   //parse it
   const rep = loadRepFromJSONstr(JSONstr);
 
-  //for all the lines, completely load them. that means line buttons and exGames
+  //for all the lines, load them
   for(let x = 0; x < rep.lineList.length; x++)
   {
-    const line = loadLine(rep.lineList[x].name);
-    //create the line btn
-    line.createLineButton();
-
-    //for each game, load that game
-    for(let i = 0; i < line.exampleGames.length; i++ )
-    {
-      const game = line.exampleGames[i];
-      game.createGameButton();
-    }
+    loadLine(rep.lineList[x].name);
   }
 
   return rep;
@@ -356,6 +346,7 @@ function loadRepFromJSON(repObj: repJSON):Repertoire
  */
 function rebuildRepList(repListStr: string): Array<Repertoire>
 {
+  //todo this is the problem
   const loadedRepList: Array<Repertoire> = [];
   //parse the repListStr into an array of rep names/keys
   const repArrayLS: Array<string> = JSON.parse(repListStr);
@@ -367,13 +358,15 @@ function rebuildRepList(repListStr: string): Array<Repertoire>
   //and  load the corresponding reps to rebuild the saved repList
   try
   {
-    repArrayLS.forEach(repName =>
+
+    for( let x = 0; x < repArrayLS.length; x++ )
     {
-      console.log("rebuildRepList(): Rep Name:" + repName);
-      const rep = loadRep(repName);
-      console.log("rep: " + rep);
-      loadedRepList.push(rep);
-    });
+      console.log( "rebuildRepList(): Rep Name:" + repArrayLS[x] );
+      const rep = loadRep( repArrayLS[x] );
+      console.log( "rep: " + rep );
+      loadedRepList.push( rep );
+      console.log(rep.repertoireBtn);
+    }
   }
   catch (error)
   {
@@ -407,16 +400,17 @@ export function save(): void
 }
 
 /**
- * load save into a Controller and return it.
+ * load save into the controller.
  * @returns Controller made.
  */
-export function load(): Controller
+export function load(): void
 {
   console.log("================ load() entered =======================");
   // get the main save data from local storage
   let repListSave:string;
   try
-  {//try to get save data, if fails it returns false
+  {
+    //try to get save data, if fails it returns false
     repListSave = getLocal(MAIN);
     console.log("=== repList from LS ===");
     console.log("repListSave: " + repListSave);
@@ -424,16 +418,12 @@ export function load(): Controller
     const repList: Array<Repertoire> = rebuildRepList(repListSave); //repListSave is a str
     console.log("save after parsing: " + repList.toString());
 
-    const madeController = new Controller(repList); //the rest of the loading will occur in the Controller
-
-    return madeController;
+    controller.loadRepList( repList ); //the rest of the loading will occur in the Controller
   }
   catch (error)
   {//if there in no data successful loaded
     console.log("No save loaded. when we tried to fetch we got: " + error);
   }
-  //if not...
-  return new Controller();
 }
 
 /**
@@ -466,7 +456,7 @@ export async function loadFromFile(save: File): Promise<boolean>
       {
         console.log("nothing found under key: " + key)
       }
-      console.log("setting: key-"+ key + " value-" + value);
+      console.log("new value: setting: key-"+ key + " value-" + value);
       localStorage.setItem(key, value as string);
     }
   }

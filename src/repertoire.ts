@@ -55,7 +55,28 @@ export class Repertoire
     this.currentOpenLine = this.mainLine;
     this.addLine(this.mainLine);
 
-    this.createRepBtn();
+    //create rep button
+    //create the visual button for the gui
+    this.repertoireBtn = $("<button/>", {
+        text: this.name,
+        id: this.name,
+        rep: this
+        });
+    this.repertoireBtn.addClass("repBtn delete-mode");
+
+    this.repertoireBtn.on("click", { rep: this }, function (event)
+        {
+            //if the delete mode is on, delete this rep
+            if( checkDeleteMode() )
+          {
+            EditRepertoireController.delete(event.data.rep);
+            controller.updateRepList();
+          }
+          else
+          {
+            controller.openRepertoire(event.data.rep);
+          }
+        });
 
     if (lineList != undefined)
     {
@@ -67,6 +88,7 @@ export class Repertoire
       }
       //update line list on dom
       this.updateLineDisplay();
+      controller.updateOpenRepLists(); //reset the line and game list
     }
   }
 
@@ -118,22 +140,8 @@ export class Repertoire
     return lineKeys;
   }
 
-  /**
-   * create the rep button and add it to the DOM
-   * with a lister attached the rep must have a name
-   */
-  private createRepBtn(): void
-  {
-    //create the visual button for the gui
-    this.repertoireBtn = $("<button/>", {
-        text: this.name,
-        id: this.name,
-        rep: this
-        });
-    this.repertoireBtn.addClass("repBtn delete-mode");
-
-    //add lister
-    this.repertoireBtn.on("click", { rep: this }, function (event)
+  /*
+      this.repertoireBtn.on("click", { rep: this }, function (event)
         {
           //if the delete mode is on, delete this rep
           if( checkDeleteMode() )
@@ -146,6 +154,20 @@ export class Repertoire
             controller.openRepertoire(event.data.rep);
           }
         });
+  */
+
+  public static onClickLnr(event: JQuery.ClickEvent): void
+  {
+    //if the delete mode is on, delete this rep
+    if( checkDeleteMode() )
+    {
+      EditRepertoireController.delete(event.data.rep);
+      controller.updateRepList();
+    }
+    else
+    {
+      controller.openRepertoire(event.data.rep);
+    }
   }
 
   /**
@@ -296,7 +318,7 @@ export class Repertoire
   }
 
   public toString(){
-    let repSting = "++++++++++++++ repertoire toString:"+ this.name + " +++++++++++++++++\n";
+    let repSting = "+++ rep toString:"+ this.name;
     if(this.lineList != null)
     {
       this.lineList.forEach(line => {

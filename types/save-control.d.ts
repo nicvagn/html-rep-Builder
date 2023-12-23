@@ -19,7 +19,6 @@
 import { Repertoire } from "./repertoire.js";
 import { ExampleGame } from "./example-game.js";
 import { RepertoireLine } from "./repertoire-line.js";
-import { Controller } from "./repertoire-controller.mjs";
 export interface gameJSON {
     name_key: string;
     type: string;
@@ -68,10 +67,10 @@ export declare function loadRep(key: string): Repertoire;
  */
 export declare function save(): void;
 /**
- * load save into a Controller and return it.
+ * load save into the controller.
  * @returns Controller made.
  */
-export declare function load(): Controller;
+export declare function load(): void;
 /**
  * load from a json file provided by file input.
  * @param save the save file, containing save JSON

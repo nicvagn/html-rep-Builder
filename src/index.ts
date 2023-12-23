@@ -16,7 +16,8 @@ export const MAIN = "Repertoire-Builder";
 import "../css/styles.css";
 
 // eslint-disable-next-line no-var
-export var controller:Controller = load(); //if no save, load makes a new controller
+export var controller:Controller;
+
 
 //iframe properties for imbedded lichess studies
 const iframeHeight: string = 'height="600px"';
@@ -37,7 +38,10 @@ var deleteMode:boolean = false;
 window.onload = () =>
 {
   console.log("==== DOM loaded ====");
-
+  //create controller
+  controller = new Controller();
+  //load save from ls if it exists
+  load();
 }
 /**
  * transform base lichessURL's into something we can embed
@@ -70,6 +74,7 @@ export function showSplashScreen()
         <img id="chessground" style="object-fit: contain;" src="images/thinking.jpg" frameborder=0></img>
       </div>`);
 }
+
 /**
  * exit delete mode
  */
