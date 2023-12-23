@@ -23,6 +23,7 @@ import { saveRep } from "./save-control.js";
 import { EditRepertoireController } from "./edit-repertoire-controller.mjs";
 import { Controller } from "./repertoire-controller.mjs";
 import { repJSON, loadLine } from "./save-control.js";
+import { error } from "jquery";
 
 /**
  * A chess repertoire
@@ -32,8 +33,10 @@ export class Repertoire
 
   name: string;
   lineList: RepertoireLine[] = new Array<RepertoireLine>;  // array of lines in this rep
-  private currentOpenLine: RepertoireLine; //the currently open line
+
   private mainLine: RepertoireLine;
+  public currentOpenLine: RepertoireLine; //the currently open line
+
 
   nameLabel: HTMLElement = document.getElementById("#nameLabel")!; //for the current rep name
   //line button for display on the DOM
@@ -169,6 +172,7 @@ export class Repertoire
   {
     return this.mainLine;
   }
+
   /**
    * add a line to this repertoire object
    * @param repLine - a RepertoireLine
@@ -179,7 +183,6 @@ export class Repertoire
     console.log(repLine.name + "added to Line list");
     this.lineList.push(repLine);
     this.updateLineDisplay();
-    this.openLine
   }
 
   /**
@@ -198,6 +201,9 @@ export class Repertoire
     this.lineList.forEach((line) =>
     {
       console.log("line: " + line.name);
+
+      //update the line btn?
+      line.createLineButton();
 
       line.lineBtn.appendTo($( "#lineList" ));
 
@@ -238,7 +244,7 @@ export class Repertoire
   /**
    * get the open line, throws error if no open line
    * @returns the open repertoire line
-   */
+   *
   public getOpenLine(): RepertoireLine
   {
     if (this.openLine != undefined)
@@ -302,8 +308,25 @@ export class Repertoire
         console.log("line btn clicked with name: " + line.name);
         //select this line. This does different stuff depending on the mode
         event.data.line.select();
-        });
       });
+    });
+  }
+
+  /**
+   * get line with given key\name
+   */
+  public getLine(key: string): RepertoireLine
+  {
+    for(let x = 0; x < this.lineList.length; x++)
+    {
+      const line = this.lineList[x];
+      if( line.name == key)
+      {
+        return line;
+      }
+    }
+
+    throw error("RepertoireLine not found with key: " + key);
   }
 
   /**

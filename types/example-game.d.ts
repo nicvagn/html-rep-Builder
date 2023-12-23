@@ -34,9 +34,8 @@ export declare class ExampleGame {
     createGameButton(): void;
     /**
      * select this game
-     * @param game the ExampleGame to show
      */
-    select(game?: ExampleGame): void;
+    select(): void;
     /**
      * take a json example game, and make a real one
      * @param json the json representation of the example game

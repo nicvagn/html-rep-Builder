@@ -30,7 +30,6 @@ import { lineJSON, loadGame } from "./save-control.js";
 export class RepertoireLine
 {
   name: string;
-
   line: ExampleGame; //what is a line, if not a game?
   exampleGames = new Array<ExampleGame>();
   studyURL: string;
@@ -151,9 +150,43 @@ export class RepertoireLine
    * get the example games for this line
    * @returns this lines example games
    */
-  public getGames():ExampleGame[]
+  public getGames(): ExampleGame[]
   {
     return this.exampleGames;
+  }
+
+  /**
+   * set this lines example games
+   * @param newGames the new array of example games
+   */
+  public setGames(newGames: ExampleGame[]): void
+  {
+    this.exampleGames = newGames;
+    this.refreshGameDisplay();
+  }
+  /**
+   * delete a game from this line
+   * @param game game to be deleted
+   */
+  public deleteGame(game: ExampleGame): void
+  {
+    //make a new example game list with that game removed
+    const newGames = new Array<ExampleGame>();
+
+    this.exampleGames.forEach(exGame =>
+      {
+        if( game.studyURL != exGame.studyURL )
+        {
+          newGames.push(exGame);
+        }
+        else
+        {
+          console.log(exGame + " Deleted")
+        }
+      });
+
+      //update example games
+      this.exampleGames = newGames;
   }
 
   /**
@@ -165,6 +198,7 @@ export class RepertoireLine
     {
       //delete this line
       EditRepertoireController.delete(this);
+      return;
     }
     //update name display
     Controller.setNameElement(this.name);
@@ -193,14 +227,15 @@ export class RepertoireLine
     //for each example game add it to the game list and add a listener
     this.exampleGames.forEach((game) =>
     {
-      console.log(game);
+      game.createGameButton(); //create a updated game button
+
       console.log("game added to gameList: " + game.name);
       game.gameBtn.appendTo($( '#gameList' ));
 
       game.gameBtn.on("click", { game:game }, function (event)
         {
           console.log("game clicked with name: " + game.name);
-          event.data.game.select(game);
+          event.data.game.select();
         });
     });
   }

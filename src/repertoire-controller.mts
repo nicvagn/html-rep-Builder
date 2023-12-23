@@ -209,7 +209,7 @@ export class Controller
   public updateOpenRepLists(): void
   {
     //refresh the game display
-    this.openRep?.getOpenLine().refreshGameDisplay();
+    this.openRep?.currentOpenLine.refreshGameDisplay();
 
     this.openRep?.updateLineDisplay();
   }
@@ -238,7 +238,6 @@ export class Controller
    */
   public newRepertoire(name:string, studyURL: string): Repertoire
   {
-
     console.log("newRepertoire entered with name: " + name);
     const newRep = new Repertoire(name, studyURL);
 

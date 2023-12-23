@@ -346,7 +346,6 @@ function loadRepFromJSON(repObj: repJSON):Repertoire
  */
 function rebuildRepList(repListStr: string): Array<Repertoire>
 {
-  //todo this is the problem
   const loadedRepList: Array<Repertoire> = [];
   //parse the repListStr into an array of rep names/keys
   const repArrayLS: Array<string> = JSON.parse(repListStr);
@@ -379,9 +378,14 @@ function rebuildRepList(repListStr: string): Array<Repertoire>
 /**
  * save repertoire keys/names so the state of the
  * controller can be reconstructed from the save
+ * Only one save can be in browser, this clears LS
+ * and set's the new save
  */
 export function save(): void
 {
+  //clear local storage, only one save can be saved to browser at a time
+  localStorage.clear();
+
   const main = new Array<string>;
   controller.repList.forEach(rep => {
     //save each rep

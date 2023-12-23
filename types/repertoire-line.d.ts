@@ -65,6 +65,16 @@ export declare class RepertoireLine {
      */
     getGames(): ExampleGame[];
     /**
+     * set this lines example games
+     * @param newGames the new array of example games
+     */
+    setGames(newGames: ExampleGame[]): void;
+    /**
+     * delete a game from this line
+     * @param game game to be deleted
+     */
+    deleteGame(game: ExampleGame): void;
+    /**
      * open this line, or delete it if delete mode is on
      */
     select(): void;

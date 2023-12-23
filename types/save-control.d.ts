@@ -64,6 +64,8 @@ export declare function loadRep(key: string): Repertoire;
 /**
  * save repertoire keys/names so the state of the
  * controller can be reconstructed from the save
+ * Only one save can be in browser, this clears LS
+ * and set's the new save
  */
 export declare function save(): void;
 /**

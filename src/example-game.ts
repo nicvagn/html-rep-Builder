@@ -23,7 +23,6 @@ import { EditRepertoireController } from "./edit-repertoire-controller.mjs";
 import { checkDeleteMode } from "./index.js";
 import { Controller } from "./repertoire-controller.mjs";
 import { gameJSON } from "./save-control.js";
-//import { RepertoireLine } from "./repertoire-line.js";
 
 
 /**
@@ -33,6 +32,7 @@ export class ExampleGame
 {
 
   public name: string; //game name
+
   studyURL: string; //the lichess study url
 
   public gameBtn!: JQuery<HTMLElement>;
@@ -59,6 +59,7 @@ export class ExampleGame
     $('<button/>', {
       text: this.name, //set text 1 to 10
       id: this.name,
+      game: this
     });
 
     //create the visual rep of the game on construction
@@ -66,37 +67,23 @@ export class ExampleGame
 
     this.gameBtn.on("click", {game:this}, function (event)
     {
-      event.data.game.select(event.data.game);
+      event.data.game.select();
     });
   }
 
   /**
    * select this game
-   * @param game the ExampleGame to show
    */
-  public select(game?:ExampleGame)
+  public select()
   {
-
-    //needed for calling from the dom buttons
-    if(game == undefined)
+    //check if it should be deleted, not opened
+    if( checkDeleteMode() )
     {
-      //check if it should be deleted, not opened
-      if( checkDeleteMode() )
-      {
-        EditRepertoireController.delete(this);
-        return;
-      }
-      Controller.changeStudy(this);
+      EditRepertoireController.delete(this);
     }
     else
     {
-      //check if it should be deleted, not opened
-      if( checkDeleteMode() )
-      {
-        EditRepertoireController.delete(game);
-        return;
-      }
-      Controller.changeStudy(game);
+      Controller.changeStudy(this);
     }
   }
 

@@ -26,8 +26,8 @@ import { repJSON } from "./save-control.js";
 export declare class Repertoire {
     name: string;
     lineList: RepertoireLine[];
-    private currentOpenLine;
     private mainLine;
+    currentOpenLine: RepertoireLine;
     nameLabel: HTMLElement;
     repertoireBtn: JQuery<HTMLElement>;
     /**
@@ -79,8 +79,20 @@ export declare class Repertoire {
     /**
      * get the open line, throws error if no open line
      * @returns the open repertoire line
-     */
-    getOpenLine(): RepertoireLine;
+     *
+    public getOpenLine(): RepertoireLine
+    {
+      if (this.openLine != undefined)
+      {
+        return this.currentOpenLine;
+      }
+      else
+      {
+        //return the main line
+        return this.mainLine;
+      }
+    }
+  
     /**
      * open a RepLine line and corresponding game list
      * @param line Line to open
@@ -90,6 +102,10 @@ export declare class Repertoire {
      * select this repertoire, for deletion or to be put on big board
      */
     select(): void;
+    /**
+     * get line with given key\name
+     */
+    getLine(key: string): RepertoireLine;
     /**
     * get the rep button for this repertoire
     * @returns the RepButton element

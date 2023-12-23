@@ -222,11 +222,16 @@ export class EditRepertoireController
 
     console.log("delete mode entered with thing: " + thing);
     const openRep = controller.getOpenRep(); // get open rep
+    if( openRep == null )
+    {
+      throw error("openRep is null");
+    }
     if(thing instanceof Repertoire)
     {
       const newRepList = new Array<Repertoire>();
       //go through rep list and copy all but our thing
-      controller.repList.forEach(rep => {
+      controller.repList.forEach(rep =>
+      {
         console.log("thing == rep: " + (thing == rep));
         if(rep !== thing)
         {
@@ -234,7 +239,8 @@ export class EditRepertoireController
         }
       });
       //delete all the lines and games
-      thing.lineList.forEach(line => {
+      thing.lineList.forEach(line =>
+      {
         this.delete(line);
       });
       controller.repList = newRepList;
@@ -246,37 +252,35 @@ export class EditRepertoireController
       const newLineList = new Array<RepertoireLine>();
       const lineList = openRep.lineList;
 
-      lineList.forEach(line => {
-        if( line !== thing )
+      lineList.forEach(line =>
         {
-          newLineList.push(line);
-        }
-        else
-        {
-          //delete the example games for this line
-          line.exampleGames.forEach( game => {
-            this.delete(game);
-          });
-        }
-      });
+          if( line !== thing )
+          {
+            newLineList.push(line);
+          }
+          else
+          {
+            //delete the example games for this line
+            line.exampleGames.forEach( game => {
+              this.delete(game);
+            });
+          }
+        });
       openRep.lineList = newLineList;
       openRep.updateLineDisplay();
     }
     else if( thing instanceof ExampleGame )
     {
       //get the current open line
-      const openLine = openRep.getOpenLine();
-      const games = openLine.getGames();
-      const newGames = new Array<ExampleGame>();
+      const openLine = openRep.getLine(openRep.currentOpenLine.name);
 
-      games.forEach( game => {
-        if( game !== thing )
-        {
-          newGames.push(game);
-        }
-      });
-      //set the list of games with the deleted one removed
-      openLine.exampleGames = newGames;
+      if( openLine == undefined)
+      {
+        throw error("delete(): openRep is undefined.");
+      }
+
+      openLine.deleteGame(thing as ExampleGame);
+      openRep.updateLineDisplay();
       openLine.refreshGameDisplay();
     }
     else
@@ -393,7 +397,7 @@ export class EditRepertoireController
         });
 
         //attach event handler to the game. Event handler adds game to line
-        btn.on( "click", {  line: openRep.lineList[x] }, ( event ) =>
+        btn.on( "click", { line: openRep.lineList[x] }, ( event ) =>
         {
           const line = event.data.line;
 
