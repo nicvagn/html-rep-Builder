@@ -74,16 +74,16 @@ export class ExampleGame
   /**
    * select this game
    */
-  public select()
+  public select(): void
   {
     //check if it should be deleted, not opened
     if( checkDeleteMode() )
     {
-      EditRepertoireController.delete(this);
+      EditRepertoireController.delete( this );
     }
     else
     {
-      Controller.changeStudy(this);
+      Controller.changeStudy( this );
     }
   }
 
@@ -113,6 +113,6 @@ export class ExampleGame
 
   public toString():string
   {
-    return "name: " + this.name + "studyURL: " + this.studyURL;
+    return "Example Game with name: " + this.name + " studyURL: " + this.studyURL;
   }
 }

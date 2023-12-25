@@ -25,8 +25,10 @@ import { Controller } from "./repertoire-controller.mjs";
 import { lineJSON, loadGame } from "./save-control.js";
 /**
  * a chess repertoire line. It's primary use is in a rep builder GUI, so it needs to have a visual
- * component
- */
+ * component.
+ *
+ * the lineBtn is this visual component
+ **/
 export class RepertoireLine
 {
   name: string;
@@ -187,6 +189,9 @@ export class RepertoireLine
 
       //update example games
       this.exampleGames = newGames;
+
+      //refresh game display
+      this.refreshGameDisplay();
   }
 
   /**

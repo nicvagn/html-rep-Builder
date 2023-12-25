@@ -5,7 +5,21 @@
       "request": "launch",
       "name": "launch crome",
       "port": 5502
+    },
+    {
+      "type": "chrome",
+      "request": "attach",
+      "name": "launch crome",
+      "port": 5502
+    },
+    {
+      "name": "Launch Firefox",
+      "type": "firefox",
+      "request": "launch",
+      "url": "https://127.0.0.1:5502",
+      "file": "${workspaceFolder}/dist/index.html"
     }
+
   ]
 }
 // /usr/bin/chromium-browser --remote-debugging-port=9222 --user-data-dir=remote-debug-profile

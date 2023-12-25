@@ -22,8 +22,10 @@ import { ExampleGame } from "./example-game.js";
 import { lineJSON } from "./save-control.js";
 /**
  * a chess repertoire line. It's primary use is in a rep builder GUI, so it needs to have a visual
- * component
- */
+ * component.
+ *
+ * the lineBtn is this visual component
+ **/
 export declare class RepertoireLine {
     name: string;
     line: ExampleGame;

@@ -471,6 +471,9 @@ export async function loadFromFile(save: File): Promise<boolean>
   }
 
   console.log("file text parsed as " + JSON.stringify(saveJSON));
+
+  load();  //load the save from LS into controller
+
   //update the rep lists
   controller.updateRepList();
   controller.updateOpenRepLists();
