@@ -207,7 +207,7 @@ export class Repertoire
 
       line.lineBtn.appendTo($( "#lineList" ));
 
-      line.lineBtn.on("click", { line:line }, function (event)
+      line.lineBtn.on("click", { line:line }, function ( event )
       {
         //update this lines game display
         event.data.line.select();
@@ -264,11 +264,17 @@ export class Repertoire
    */
   public openLine(line: RepertoireLine): void
   {
-    this.currentOpenLine = line;
-    //set name label
-    Controller.setNameElement(line.name);
-    //select the line to open it on the board
     line.select();
+
+    //if not in delete mode
+    if( !checkDeleteMode() )
+    {
+      this.currentOpenLine = line;
+      //set name label
+      Controller.setNameElement(line.name);
+      //select the line to open it on the board
+      line.select();
+    }
   }
 
   /**

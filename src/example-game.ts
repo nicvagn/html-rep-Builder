@@ -65,7 +65,7 @@ export class ExampleGame
     //create the visual rep of the game on construction
     this.gameBtn.addClass("repGame delete-mode");
 
-    this.gameBtn.on("click", {game:this}, function (event)
+    this.gameBtn.on("click", { game:this }, function ( event )
     {
       event.data.game.select();
     });

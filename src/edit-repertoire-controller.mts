@@ -226,8 +226,13 @@ export class EditRepertoireController
     {
       throw error("openRep is null");
     }
+
+
     if(thing instanceof Repertoire)
     {
+      //disable the handler
+      $( thing.repertoireBtn ).off();
+
       const newRepList = new Array<Repertoire>();
       //go through rep list and copy all but our thing
       controller.repList.forEach(rep =>
@@ -238,17 +243,22 @@ export class EditRepertoireController
           newRepList.push(rep);
         }
       });
+      controller.repList = newRepList;
+
       //delete all the lines and games
       thing.lineList.forEach(line =>
       {
-        this.delete(line);
+        this.delete( line );
       });
-      controller.repList = newRepList;
-      console.log("new rep list: " + newRepList)
+      console.log("new rep list: " + newRepList);
+      //update list of rep's we can access
       controller.updateRepList();
     }
     else if( thing instanceof RepertoireLine )
     {
+      //disable line btn handler
+      $( thing.lineBtn ).off();
+
       const newLineList = new Array<RepertoireLine>();
       const lineList = openRep.lineList;
 
@@ -271,6 +281,9 @@ export class EditRepertoireController
     }
     else if( thing instanceof ExampleGame )
     {
+      //remove handlers
+      thing.gameBtn.off();
+
       //get the current open line
       const openLine = openRep.getLine(openRep.currentOpenLine.name);
 
